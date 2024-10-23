@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Wrapped</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(270deg, #ff416c, #ff4b2b, #1db954, #0072ff);
+            background-size: 800% 800%;
+            animation: gradientMove 12s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: #000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #1db954;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-top: 60px;
+            padding: 90px 0; /* Slightly increased padding */
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 1px;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 10px;
+            color: #ddd;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            background-color: #1db954;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #1aab49;
+        }
+
+        /* Lowered Statistics Section */
+        .stats-container {
+            background-color: #000;
+            margin-top: 30px; /* Added margin to lower the section */
+            padding: 50px 0;
+        }
+
+        .stats-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .stats-container p {
+            font-size: 1rem;
+            color: #ccc;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            color: #1db954;
+        }
+
+        .stat h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat p {
+            font-size: 1.2rem;
+            color: white;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: black;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header section -->
+    <header>
+        <h1>Spotify Wrapped</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <main class="hero">
+        <h2>Me in 2024 Reveals Your Listening</h2>
+        <p>Explore the data that defined your year in music.</p>
+        <a href="#" class="btn">Get Started</a>
+    </main>
+
+    <!-- Lowered Statistics section with black background -->
+    <section class="stats-container">
+        <h2>All together now.</h2>
+        <p>Songstats aggregates all of your music data into one comprehensive analytics platform.</p>
+        <div class="stats">
+            <div class="stat">
+                <h3>2.1M+</h3>
+                <p>Artists</p>
+            </div>
+            <div class="stat">
+                <h3>97M+</h3>
+                <p>Playlists</p>
+            </div>
+            <div class="stat">
+                <h3>54K+</h3>
+                <p>Labels</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer section -->
+    <footer>
+        <p>© 2024 Spotify Wrapped</p>
+    </footer>
+
+</body>
+</html>
