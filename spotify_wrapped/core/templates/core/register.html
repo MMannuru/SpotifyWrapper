@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff416c, #1db954, #0072ff);
+            background-size: 200% 200%;
+            animation: gradientMove 8s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .register-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            text-align: center;
+        }
+
+        .register-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .register-container input[type="text"],
+        .register-container input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .register-container input[type="text"]:focus,
+        .register-container input[type="password"]:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .register-container button {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .register-container button:hover {
+            background-color: #1aa34a;
+        }
+
+        .register-container p {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .register-container p a {
+            color: #1db954;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-container p a:hover {
+            color: #1aa34a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+
+</body>
+</html>
