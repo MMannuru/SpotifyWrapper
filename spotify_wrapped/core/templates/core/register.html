@@ -89,6 +89,14 @@
         .register-container p a:hover {
             color: #1aa34a;
         }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -1rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -98,10 +106,34 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Register</button>
+            <p id="password-error" class="error-message">Password does not meet the requirements!</p>
+            <button type="submit" id="submit-btn">Register</button>
         </form>
         <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
     </div>
 
+    <script>
+        const passwordInput = document.querySelector('input[type="password"]');
+        const errorMessage = document.getElementById('password-error');
+        const submitButton = document.getElementById('submit-btn');
+
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            const minLength = 8;
+            const hasNumber = /\d/;
+            const hasUpperCase = /[A-Z]/;
+            const hasLowerCase = /[a-z]/;
+
+            if (password.length >= minLength && hasNumber.test(password) && hasUpperCase.test(password) && hasLowerCase.test(password)) {
+                errorMessage.style.display = 'none';
+                submitButton.disabled = false;
+            } else {
+                errorMessage.style.display = 'block';
+                submitButton.disabled = true;
+            }
+        });
+    </script>
+
 </body>
 </html>
+
