@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
     path('register/', views.register, name='register'),  # custom registration view
-    # You can add other app-specific routes here
+    path('describe-music/', views.describe_music_taste, name='describe_music_taste'),
 ]
 

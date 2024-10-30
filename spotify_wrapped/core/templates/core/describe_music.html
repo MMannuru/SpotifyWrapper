@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe My Music Taste</title>
+
+    <!-- Inline CSS Styling -->
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-color: #000000;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(45deg, #ff3e3e, #ff6e00);
+            color: #ffffff;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            margin-bottom: 1.5em;
+        }
+
+        .discover-button {
+            font-size: 1em;
+            padding: 0.7em 1.5em;
+            color: #000;
+            background-color: #00ff85;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .discover-button:hover {
+            background-color: #00e075;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        #music-form {
+            display: flex;
+            gap: 15px;
+        }
+
+        #music_data {
+            width: 300px;
+            padding: 0.7em;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #music-form button {
+            padding: 0.7em 1.5em;
+            font-size: 1em;
+            background-color: #00ff85;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #music-form button:hover {
+            background-color: #00e075;
+        }
+
+        /* Result Section */
+        .result-section {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .result-card {
+            width: 80%;
+            max-width: 600px;
+            background-color: #121212;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .result-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            color: #ff3e3e;
+        }
+
+        .result-card p {
+            font-size: 1.1em;
+            color: #ffffff;
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Gradient Header Section -->
+    <header class="header">
+        <h1>Uncover Your Music Personality</h1>
+        <p>Get a dynamic description based on your unique music taste.</p>
+        <button class="discover-button" onclick="getMusicDescription()">Discover Now</button>
+    </header>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <form id="music-form" method="POST">
+            {% csrf_token %}
+            <input type="text" id="music_data" name="music_data" placeholder="Enter your favorite artists or genres" required>
+            <button type="button" onclick="getMusicDescription()">Describe Me</button>
+        </form>
+    </section>
+
+    <!-- Result Section -->
+    <section id="description-result" class="result-section hidden">
+        <div class="result-card">
+            <h2>Your Music Description</h2>
+            <p id="description-text"></p>
+        </div>
+    </section>
+
+    <script>
+        function getMusicDescription() {
+            const musicData = document.getElementById("music_data").value;
+
+            fetch("{% url 'describe_music_taste' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                body: `music_data=${encodeURIComponent(musicData)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("description-text").innerText = "Error: " + data.error;
+                } else {
+                    document.getElementById("description-text").innerHTML = data.description.replace(/\n/g, "<br>");
+                }
+                document.getElementById("description-result").classList.remove("hidden");
+            });
+        }
+    </script>
+</html>
