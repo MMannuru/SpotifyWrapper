@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "core"
+    'core',  # Make sure core is included
 ]
 
 MIDDLEWARE = [
@@ -55,8 +55,8 @@ ROOT_URLCONF = "spotify_wrapped.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # This should be empty if you're using app-based templates
-        'APP_DIRS': True,  # This must be True to tell Django to look in app's 'templates' folder
+        'DIRS': [BASE_DIR / 'templates'],  # You can define global templates here if needed
+        'APP_DIRS': True,  # This should be True to search inside app directories like core/templates/
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -67,6 +67,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "spotify_wrapped.wsgi.application"
 
@@ -124,5 +125,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # settings.py
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'  # This points to the 'login' URL you defined for Spotify login
+
