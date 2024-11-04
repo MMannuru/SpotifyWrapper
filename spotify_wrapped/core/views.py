@@ -115,31 +115,80 @@ def spotify_callback(request):
     return redirect('show_summary')
 
 
-# Function to fetch user's top tracks using the access token
+import requests
+
 def get_user_top_tracks(token):
     url = "https://api.spotify.com/v1/me/top/tracks"
     headers = {
         "Authorization": f"Bearer {token}"
     }
     response = requests.get(url, headers=headers)
-    return response.json()
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve top tracks:", response.status_code, response.text)
+        return None
+
+def get_user_top_artists(token):
+    url = "https://api.spotify.com/v1/me/top/artists"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve top artists:", response.status_code, response.text)
+        return None
+
+def get_recently_played(token):
+    url = "https://api.spotify.com/v1/me/player/recently-played"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve recently played tracks:", response.status_code, response.text)
+        return None
 
 
 # Show summary view to display top tracks
 def show_summary(request):
-    # Get the access token from session
     token = request.session.get('spotify_token')
-
     if token:
-        # Fetch user's top tracks
         top_tracks = get_user_top_tracks(token)
+        top_artists = get_user_top_artists(token)
+        recently_played = get_recently_played(token)
 
-        # Render the summary page and pass the top tracks data to the template
-        return render(request, 'core/summary.html', {
-            'top_tracks': top_tracks['items'],
-        })
+        # Debugging: print data to console
+        print("Top Tracks Response:", top_tracks)
+        print("Top Artists Response:", top_artists)
+        print("Recently Played Response:", recently_played)
+
+        if top_tracks and top_artists and recently_played:
+            genres = [artist['genres'] for artist in top_artists.get('items', [])]
+            unique_genres = set(genre for sublist in genres for genre in sublist)
+
+            return render(request, 'core/summary.html', {
+                'top_tracks': top_tracks.get('items', []),
+                'top_artists': top_artists.get('items', []),
+                'genres': unique_genres,
+                'recently_played': recently_played.get('items', []),
+            })
+        else:
+            return render(request, 'core/error.html', {
+                'error': "Failed to retrieve Spotify data. Please try again later."
+            })
     else:
-        # If no token is found, redirect to login
         return redirect('login')
+
+
+
 
 

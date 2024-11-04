@@ -1,17 +1,159 @@
-<!-- core/templates/summary.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Top Tracks</title>
+    <title>Spotify Summary</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Slide container */
+        .slide {
+            display: none;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 24px;
+            transition: opacity 1s ease-in-out;
+            padding: 20px;
+        }
+
+        /* Different background colors for each slide */
+        .slide:nth-child(1) { background-color: #1db954; }  /* Spotify Green */
+        .slide:nth-child(2) { background-color: #ff5733; }
+        .slide:nth-child(3) { background-color: #33aaff; }
+        .slide:nth-child(4) { background-color: #ffcc00; }
+        .slide:nth-child(5) { background-color: #a833ff; }
+        .slide:nth-child(6) { background-color: #ff3384; }
+        .slide:nth-child(7) { background-color: #33ffaa; }
+        .slide:nth-child(8) { background-color: #3399ff; }
+
+        /* Active slide styling */
+        .active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Title and content styling */
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            font-size: 18px;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Your Top Tracks</h1>
-    <ul>
-        {% for track in top_tracks %}
-            <li>{{ track.name }} by {{ track.artists.0.name }}</li>
-        {% endfor %}
-    </ul>
+
+    <!-- Slide 1: Welcome -->
+    <div class="slide active" id="slide1">
+        <div>
+            <h2>Welcome, {{ user.username }}</h2>
+            <p>Your personalized Spotify summary</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Top Tracks -->
+    <div class="slide" id="slide2">
+        <div>
+            <h2>Your Top Tracks</h2>
+            <ul>
+                {% for track in top_tracks %}
+                    <li>{{ track.name }} by {% for artist in track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                {% empty %}
+                    <li>No top tracks available</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3: Top Artists -->
+    <div class="slide" id="slide3">
+        <div>
+            <h2>Your Top Artists</h2>
+            <ul>
+                {% for artist in top_artists %}
+                    <li>{{ artist.name }}</li>
+                {% empty %}
+                    <li>No top artists available</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 4: Favorite Genres -->
+    <div class="slide" id="slide4">
+        <div>
+            <h2>Favorite Genres</h2>
+            <ul>
+                {% for genre in genres %}
+                    <li>{{ genre }}</li>
+                {% empty %}
+                    <li>No genres available</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 5: Recent Listening History -->
+    <div class="slide" id="slide5">
+        <div>
+            <h2>Recent Listening History</h2>
+            <ul>
+                {% for track in recently_played %}
+                    <li>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                {% empty %}
+                    <li>No recent listening history available</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Add more slides as needed -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    slide.style.display = i === index ? 'flex' : 'none';
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Show the first slide and start the automatic transition
+            showSlide(currentSlide);
+            setInterval(nextSlide, 5000);  // 5 seconds per slide
+        });
+    </script>
+
 </body>
 </html>
