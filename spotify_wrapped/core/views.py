@@ -126,7 +126,6 @@ def get_user_top_tracks(token):
 
 
 # Show summary view to display top tracks
-# @login_required
 def show_summary(request):
     # Get the access token from session
     token = request.session.get('spotify_token')
