@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Summary</title>
+    <title>Spotify Wrapped</title>
     <style>
         /* Basic reset */
         * {
@@ -14,9 +14,10 @@
 
         /* Body styling */
         body {
-            font-family: Arial, sans-serif;
-            color: white;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
+            background-color: #000;
+            color: white;
         }
 
         /* Slide container */
@@ -27,20 +28,16 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 24px;
-            transition: opacity 1s ease-in-out;
             padding: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Different background colors for each slide */
-        .slide:nth-child(1) { background-color: #1db954; }  /* Spotify Green */
-        .slide:nth-child(2) { background-color: #ff5733; }
-        .slide:nth-child(3) { background-color: #33aaff; }
-        .slide:nth-child(4) { background-color: #ffcc00; }
-        .slide:nth-child(5) { background-color: #a833ff; }
-        .slide:nth-child(6) { background-color: #ff3384; }
-        .slide:nth-child(7) { background-color: #33ffaa; }
-        .slide:nth-child(8) { background-color: #3399ff; }
+        /* Different gradient backgrounds for each slide */
+        .slide:nth-child(1) { background: linear-gradient(45deg, #1DB954, #191414); }
+        .slide:nth-child(2) { background: linear-gradient(45deg, #FF5733, #900C3F); }
+        .slide:nth-child(3) { background: linear-gradient(45deg, #33A8FF, #006494); }
+        .slide:nth-child(4) { background: linear-gradient(45deg, #FFD700, #FFA500); }
+        .slide:nth-child(5) { background: linear-gradient(45deg, #A833FF, #6A0DAD); }
 
         /* Active slide styling */
         .active {
@@ -50,27 +47,98 @@
 
         /* Title and content styling */
         h2 {
+            font-size: 3rem;
             margin-bottom: 20px;
+            color: #FFF;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
 
         ul {
             list-style-type: none;
-            font-size: 18px;
             padding: 0;
+            font-size: 1.5rem;
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            color: #FFF;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Icon and Image styling */
+        .track-info, .artist-info, .genre-info, .history-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .track-info img, .artist-info img, .history-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .spotify-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        #prev {
+            left: 20px;
+        }
+
+        #next {
+            right: 20px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Spotify logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" class="spotify-logo" alt="Spotify Logo">
+
     <!-- Slide 1: Welcome -->
     <div class="slide active" id="slide1">
         <div>
             <h2>Welcome, {{ user.username }}</h2>
-            <p>Your personalized Spotify summary</p>
+            <p>Your personalized Spotify Wrapped 2024</p>
         </div>
     </div>
 
@@ -80,7 +148,10 @@
             <h2>Your Top Tracks</h2>
             <ul>
                 {% for track in top_tracks %}
-                    <li>{{ track.name }} by {% for artist in track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                    <li class="track-info">
+                        <img src="{{ track.album.images.0.url }}" alt="{{ track.name }} album cover">
+                        <span>{{ track.name }} by {% for artist in track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    </li>
                 {% empty %}
                     <li>No top tracks available</li>
                 {% endfor %}
@@ -94,7 +165,10 @@
             <h2>Your Top Artists</h2>
             <ul>
                 {% for artist in top_artists %}
-                    <li>{{ artist.name }}</li>
+                    <li class="artist-info">
+                        <img src="{{ artist.images.0.url }}" alt="{{ artist.name }} profile picture">
+                        <span>{{ artist.name }}</span>
+                    </li>
                 {% empty %}
                     <li>No top artists available</li>
                 {% endfor %}
@@ -108,7 +182,7 @@
             <h2>Favorite Genres</h2>
             <ul>
                 {% for genre in genres %}
-                    <li>{{ genre }}</li>
+                    <li class="genre-info">{{ genre }}</li>
                 {% empty %}
                     <li>No genres available</li>
                 {% endfor %}
@@ -122,7 +196,10 @@
             <h2>Recent Listening History</h2>
             <ul>
                 {% for track in recently_played %}
-                    <li>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                    <li class="history-info">
+                        <img src="{{ track.track.album.images.0.url }}" alt="{{ track.track.name }} album cover">
+                        <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    </li>
                 {% empty %}
                     <li>No recent listening history available</li>
                 {% endfor %}
@@ -130,7 +207,9 @@
         </div>
     </div>
 
-    <!-- Add more slides as needed -->
+    <!-- Navigation buttons -->
+    <button class="nav-button" id="prev">&#9664;</button>
+    <button class="nav-button" id="next">&#9654;</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -142,16 +221,19 @@
                     slide.classList.remove('active');
                     slide.style.display = i === index ? 'flex' : 'none';
                 });
+                slides[index].classList.add('active');
+                currentSlide = index;
             }
 
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            }
+            document.getElementById('prev').addEventListener('click', () => {
+                showSlide((currentSlide - 1 + slides.length) % slides.length);
+            });
 
-            // Show the first slide and start the automatic transition
+            document.getElementById('next').addEventListener('click', () => {
+                showSlide((currentSlide + 1) % slides.length);
+            });
+
             showSlide(currentSlide);
-            setInterval(nextSlide, 5000);  // 5 seconds per slide
         });
     </script>
 
