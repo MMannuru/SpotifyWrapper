@@ -262,15 +262,21 @@ def play_top_tracks(request):
 
     if token:
         # Retrieve top tracks with a limit of 5
-        top_tracks = get_user_top_tracks(token, limit=5)
+        top_tracks = get_user_top_tracks(token)
 
         if top_tracks:
             return render(request, 'core/play_top_tracks.html', {
-                'top_tracks': top_tracks.get('items', [])
+                'top_tracks': top_tracks.get('items', [])[:5]  # Limit to 5 tracks
             })
         else:
-            # Redirect to Spotify authorization page if user isn't logged in
-            return redirect(spotify_auth_url())
+            # If top tracks retrieval fails, redirect to the login page or an error page
+            return render(request, 'core/error.html', {
+                'error': "Failed to retrieve top tracks."
+            })
+    else:
+        # Redirect to Spotify's login if user isn't authenticated
+        return redirect(spotify_auth_url())
+
 
 
 # views.py

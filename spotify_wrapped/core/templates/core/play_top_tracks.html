@@ -6,7 +6,14 @@
     <title>Your Top Tracks</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
-        /* Styling for the page */
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #000;
@@ -19,40 +26,89 @@
             min-height: 100vh;
         }
 
+        /* Heading styling */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            color: #FFF;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Instructions text */
+        p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-top: 10px;
+        }
+
+        /* Track list container */
         .track-list {
             max-width: 700px;
             width: 100%;
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
+        /* Individual track container */
         .track {
+            display: flex;
+            align-items: center;
             padding: 20px;
             margin: 15px 0;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
+        .track:hover {
+            transform: scale(1.02);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Album cover image */
+        .track img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        /* Track info styling */
         .track-info {
             flex: 1;
             text-align: left;
         }
 
+        .track-info p {
+            margin: 0;
+        }
+
+        .track-info .track-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1db954;
+        }
+
+        .track-info .artist-name {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Play and pause buttons */
         .track-buttons {
             display: flex;
             gap: 10px;
         }
 
         .button {
-            padding: 10px 20px;
+            padding: 8px 18px;
             background-color: #1db954;
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .button:hover {
@@ -68,9 +124,16 @@
     <div class="track-list">
         {% for track in top_tracks %}
             <div class="track">
+                <!-- Album cover image -->
+                <img src="{{ track.album.images.0.url }}" alt="{{ track.name }} album cover" onerror="this.src='/static/images/default-cover.jpg'">
+
+                <!-- Track and artist info -->
                 <div class="track-info">
-                    <p><strong>{{ track.name }}</strong> by {{ track.artists.0.name }}</p>
+                    <p class="track-name">{{ track.name }}</p>
+                    <p class="artist-name">{{ track.artists.0.name }}</p>
                 </div>
+
+                <!-- Play and pause buttons -->
                 <div class="track-buttons">
                     <button class="button play-track-button" data-uri="{{ track.uri }}">Play</button>
                     <button class="button pause-track-button">Pause</button>
