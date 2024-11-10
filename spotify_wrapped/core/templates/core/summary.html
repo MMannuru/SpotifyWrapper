@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Wrapped</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
         /* Basic reset */
         * {
@@ -14,30 +15,25 @@
 
         /* Body styling */
         body {
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
             background-color: #000;
             color: white;
+            overflow: hidden;
         }
 
-        /* Slide container */
+        /* Slide container with creative background */
         .slide {
             display: none;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
-            animation: fadeIn 1s ease-in-out;
+            position: relative;
+            overflow: hidden;
         }
-
-        /* Different gradient backgrounds for each slide */
-        .slide:nth-child(1) { background: linear-gradient(45deg, #1DB954, #191414); }
-        .slide:nth-child(2) { background: linear-gradient(45deg, #FF5733, #900C3F); }
-        .slide:nth-child(3) { background: linear-gradient(45deg, #33A8FF, #006494); }
-        .slide:nth-child(4) { background: linear-gradient(45deg, #FFD700, #FFA500); }
-        .slide:nth-child(5) { background: linear-gradient(45deg, #A833FF, #6A0DAD); }
 
         /* Active slide styling */
         .active {
@@ -45,63 +41,109 @@
             opacity: 1;
         }
 
-        /* Title and content styling */
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #FFF;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        /* Abstract animated shapes */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            animation: float 15s infinite alternate ease-in-out;
         }
 
+        /* Position specific shapes */
+        .shape1 { top: 20%; left: 10%; }
+        .shape2 { top: 60%; right: 15%; animation-delay: 5s; }
+        .shape3 { bottom: 10%; left: 30%; animation-delay: 10s; }
+        .shape4 { top: 40%; left: 70%; animation-delay: 7s; }
+
+        /* Animation for floating shapes */
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        /* Header styling with retro 3D effect */
+        h2 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            color: #FFF;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: #FF007A;
+            z-index: -1;
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: -5px 5px 0 #00D4FF;
+        }
+
+        /* Subtext styling */
+        p {
+            font-size: 1.5rem;
+            color: #FFF;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* List styling for tracks, genres, etc. */
         ul {
             list-style-type: none;
             padding: 0;
             font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
         }
 
+        /* Item styling with hover effect */
         li {
             margin-bottom: 12px;
-            padding: 10px;
+            padding: 15px;
             background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
+            border-radius: 15px;
             color: #FFF;
+            font-weight: 500;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+        /* Hover effect on items */
         li:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Icon and Image styling */
-        .track-info, .artist-info, .genre-info, .history-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .track-info img, .artist-info img, .history-info img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
+        /* Spotify Logo styling */
         .spotify-logo {
             position: absolute;
             top: 20px;
             left: 20px;
             width: 50px;
             height: 50px;
+            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.6));
+            z-index: 2;
         }
 
-        /* Navigation buttons */
+        /* Navigation button styling */
         .nav-button {
             position: absolute;
             top: 50%;
@@ -113,13 +155,16 @@
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 2;
         }
 
         .nav-button:hover {
             background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
+        /* Left and right button positioning */
         #prev {
             left: 20px;
         }
@@ -134,78 +179,105 @@
     <!-- Spotify logo -->
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" class="spotify-logo" alt="Spotify Logo">
 
-    <!-- Slide 1: Welcome -->
-    <div class="slide active" id="slide1">
-        <div>
-            <h2>Welcome, {{ user.username }}</h2>
-            <p>Your personalized Spotify Wrapped 2024</p>
-        </div>
+    <!-- Background Shapes for Abstract Effect -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
+    <!-- Entry Slide -->
+    <div class="slide active" id="entry">
+        <h2>Welcome, {{ user.username }}</h2>
+        <p>Your personalized Spotify Wrapped 2024</p>
     </div>
 
-    <!-- Slide 2: Top Tracks -->
-    <div class="slide" id="slide2">
-        <div>
-            <h2>Your Top Tracks</h2>
-            <ul>
-                {% for track in top_tracks %}
+    <div class="slide" id="slide6">
+        <h2>The Total Time You Spent Jamming This year</h2>
+        <p>{{ total_minutes|floatformat:2 }} minutes</p>
+    </div>
+
+    <!-- Transition Slide 1 -->
+    <div class="slide" id="transition1">
+        <h2>These tracks had your heart in 2024</h2>
+    </div>
+
+    <!-- Slide 1: Top Tracks -->
+    <div class="slide" id="slide1">
+        <h2>Your Top Tracks</h2>
+        <ul>
+            {% if top_tracks %}
+                {% for track in top_tracks|slice:":8" %}
                     <li class="track-info">
-                        <img src="{{ track.album.images.0.url }}" alt="{{ track.name }} album cover">
-                        <span>{{ track.name }} by {% for artist in track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                        <img src="{{ track.album.images.0.url|default:'' }}"
+                             onerror="this.src='/static/images/default-cover.jpg'"
+                             alt="{{ track.name|default:'Unknown Track' }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
+                        <span>{{ track.name|default:'Unknown Track' }} by {% for artist in track.artists %}{{ artist.name|default:'Unknown Artist' }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                     </li>
                 {% empty %}
                     <li>No top tracks available</li>
                 {% endfor %}
-            </ul>
-        </div>
+            {% else %}
+                <li>Spotify does not have enough data to show your top tracks.</li>
+            {% endif %}
+        </ul>
     </div>
 
-    <!-- Slide 3: Top Artists -->
+
+    <!-- Transition Slide 2 -->
+    <div class="slide" id="transition2">
+        <h2>Genres that defined your vibe</h2>
+    </div>
+
+    <!-- Slide 2: Favorite Genres -->
+    <div class="slide" id="slide2">
+        <h2>Favorite Genres</h2>
+        <ul>
+            {% for genre in genres|slice:":8" %}
+                <li class="genre-info">{{ genre }}</li>
+            {% empty %}
+                <li>No genres available</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Transition Slide 3 -->
+    <div class="slide" id="transition3">
+        <h2>Reliving your recent hits</h2>
+    </div>
+
+    <!-- Slide 3: Recent Listening History -->
     <div class="slide" id="slide3">
-        <div>
-            <h2>Your Top Artists</h2>
-            <ul>
-                {% for artist in top_artists %}
-                    <li class="artist-info">
-                        <img src="{{ artist.images.0.url }}" alt="{{ artist.name }} profile picture">
-                        <span>{{ artist.name }}</span>
-                    </li>
-                {% empty %}
-                    <li>No top artists available</li>
-                {% endfor %}
-            </ul>
-        </div>
+        <h2>Recent Listening History</h2>
+        <ul>
+            {% for track in recently_played|slice:":8" %}
+                <li class="history-info">
+                    <img src="{{ track.track.album.images.0.url }}"
+                         onerror="this.src='/static/images/default-cover.jpg'"
+                         alt="{{ track.track.name }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
+                    <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                </li>
+            {% empty %}
+                <li>No recent listening history available</li>
+            {% endfor %}
+        </ul>
     </div>
 
-    <!-- Slide 4: Favorite Genres -->
-    <div class="slide" id="slide4">
-        <div>
-            <h2>Favorite Genres</h2>
-            <ul>
-                {% for genre in genres %}
-                    <li class="genre-info">{{ genre }}</li>
-                {% empty %}
-                    <li>No genres available</li>
-                {% endfor %}
-            </ul>
-        </div>
+    <!-- Slide 6: Most Played Song -->
+    <div class="slide" id="slide6">
+        <h2>And Lastly, The Song You Could Not Stop Listenting To...</h2>
+        {% if most_played_track %}
+            <div class="track-info">
+                <img src="{{ most_played_track.album.images.0.url|default:'/static/images/default-cover.jpg' }}"
+                    alt="{{ most_played_track.name|default:'Unknown Song' }} album cover" style="width: 150px; height: 150px; border-radius: 8px;">
+                <h3>{{ most_played_track.name|default:"Unknown Song" }}</h3>
+                <p>by {% for artist in most_played_track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <p>Album: {{ most_played_track.album.name|default:"Unknown Album" }}</p>
+            </div>
+        {% else %}
+            <p>No data available for your most played song.</p>
+        {% endif %}
     </div>
 
-    <!-- Slide 5: Recent Listening History -->
-    <div class="slide" id="slide5">
-        <div>
-            <h2>Recent Listening History</h2>
-            <ul>
-                {% for track in recently_played %}
-                    <li class="history-info">
-                        <img src="{{ track.track.album.images.0.url }}" alt="{{ track.track.name }} album cover">
-                        <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                    </li>
-                {% empty %}
-                    <li>No recent listening history available</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 
     <!-- Navigation buttons -->
     <button class="nav-button" id="prev">&#9664;</button>

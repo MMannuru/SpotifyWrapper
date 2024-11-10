@@ -131,18 +131,55 @@ def get_user_top_tracks(token):
         print("Failed to retrieve top tracks:", response.status_code, response.text)
         return None
 
+import requests
+import json
+
 def get_user_top_artists(token):
     url = "https://api.spotify.com/v1/me/top/artists"
     headers = {
         "Authorization": f"Bearer {token}"
     }
-    response = requests.get(url, headers=headers)
+    params = {
+        "limit": 10  # Limit to 10 artists for testing
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        top_artists = response.json()
+
+        # Debug: Print the entire response to verify data structure
+        print("Top artists response:", json.dumps(top_artists, indent=2))
+
+        # Check if genres exist in the response
+        for artist in top_artists.get("items", []):
+            if "genres" in artist:
+                print(f"Artist: {artist['name']}, Genres: {artist['genres']}")
+            else:
+                print(f"Artist: {artist['name']} has no genres listed.")
+
+        return top_artists
+    else:
+        print("Failed to retrieve top artists:", response.status_code, response.text)
+        return None
+
+def get_user_top_tracks(token, time_range="long_term"):
+    url = "https://api.spotify.com/v1/me/top/tracks"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "time_range": time_range,  # Use long-term to get the most-played tracks over all time
+        "limit": 8  # Limit to 1 to get only the top track
+    }
+    response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
         return response.json()
     else:
-        print("Failed to retrieve top artists:", response.status_code, response.text)
+        print("Failed to retrieve top tracks:", response.status_code, response.text)
         return None
+
 
 def get_recently_played(token):
     url = "https://api.spotify.com/v1/me/player/recently-played"
@@ -157,22 +194,49 @@ def get_recently_played(token):
         print("Failed to retrieve recently played tracks:", response.status_code, response.text)
         return None
 
+def get_recently_played(token, limit=50):
+    url = "https://api.spotify.com/v1/me/player/recently-played"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "limit": limit
+    }
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve recently played tracks:", response.status_code, response.text)
+        return None
+
+import json
 
 # Show summary view to display top tracks
 def show_summary(request):
     token = request.session.get('spotify_token')
     if token:
+        # Retrieve data
         top_tracks = get_user_top_tracks(token)
         top_artists = get_user_top_artists(token)
         recently_played = get_recently_played(token)
 
-        # Debugging: print data to console
-        print("Top Tracks Response:", top_tracks)
-        print("Top Artists Response:", top_artists)
-        print("Recently Played Response:", recently_played)
+        # Get the most played song (top track from long-term)
+        most_played_track_data = get_user_top_tracks(token, time_range="long_term")
+        most_played_track = most_played_track_data['items'][0] if most_played_track_data and 'items' in most_played_track_data else None
 
-        if top_tracks and top_artists and recently_played:
-            genres = [artist['genres'] for artist in top_artists.get('items', [])]
+        # Calculate total minutes listened
+        total_minutes = 0
+        if recently_played:
+            total_duration_ms = sum(item['track']['duration_ms'] for item in recently_played.get('items', []))
+            total_minutes = total_duration_ms / 60000  # Convert milliseconds to minutes
+
+        # Debugging output
+        print(f"Total Minutes Listened: {total_minutes:.2f}")
+
+        # Check if data is present
+        if top_tracks and top_artists and recently_played and most_played_track:
+            genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
             unique_genres = set(genre for sublist in genres for genre in sublist)
 
             return render(request, 'core/summary.html', {
@@ -180,14 +244,15 @@ def show_summary(request):
                 'top_artists': top_artists.get('items', []),
                 'genres': unique_genres,
                 'recently_played': recently_played.get('items', []),
+                'most_played_track': most_played_track,
+                'total_minutes': total_minutes  # Pass total minutes to template
             })
         else:
             return render(request, 'core/error.html', {
-                'error': "Failed to retrieve Spotify data. Please try again later."
+                'error': "Failed to retrieve all Spotify data. Please try again later."
             })
     else:
         return redirect('login')
-
 
 
 
