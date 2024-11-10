@@ -45,7 +45,7 @@ def describe_music_taste(request):
             api_key=settings.GROQ_API_KEY
         )
 
-        question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress."
+        question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress. Keep it short and sweet."
 
         try:
             chat_completion = client.chat.completions.create(

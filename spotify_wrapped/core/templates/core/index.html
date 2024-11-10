@@ -227,7 +227,7 @@
         <h1>Spotify Wrapped</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'play_top_tracks' %}">Listen to Your Top Tracks</a></li>
+                <li><a href="{% url 'play_top_tracks' %}">Listen to Your Top Tracks</a>
                 <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'contact_developers' %}">Contact Us!</a></li>
@@ -240,7 +240,7 @@
     <main class="hero">
         <h2>Your Music Journey in 2024</h2>
         <p>Discover the songs, artists, and moments that defined your year.</p>
-        <a href="{% url 'login' %}" class="btn">Discover Now</a>
+        <a href="{% url 'show_summary' %}" class="btn">Discover Now</a>
     </main>
 
 </body>
