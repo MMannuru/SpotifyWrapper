@@ -15,4 +15,5 @@ urlpatterns = [
     path('describe-music/', views.describe_music_taste, name='describe_music_taste'),
     path('contact/', views.contact_developers, name='contact_developers'),
     path('thank-you/', views.thank_you, name='thank_you'),
+    path('play-top-tracks/', views.play_top_tracks, name='play_top_tracks'),
 ]

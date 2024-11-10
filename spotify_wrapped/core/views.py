@@ -112,7 +112,7 @@ def spotify_callback(request):
     request.session['spotify_token'] = access_token
 
     # Redirect to the summary page or any other page where you will show the user's Spotify data
-    return redirect('show_summary')
+    return redirect('index')
 
 
 import requests
@@ -163,14 +163,14 @@ def get_user_top_artists(token):
         print("Failed to retrieve top artists:", response.status_code, response.text)
         return None
 
-def get_user_top_tracks(token, time_range="long_term"):
+def get_user_top_tracks(token, time_range="long_term", limit=8):
     url = "https://api.spotify.com/v1/me/top/tracks"
     headers = {
         "Authorization": f"Bearer {token}"
     }
     params = {
-        "time_range": time_range,  # Use long-term to get the most-played tracks over all time
-        "limit": 8  # Limit to 1 to get only the top track
+        "time_range": time_range,
+        "limit": limit
     }
     response = requests.get(url, headers=headers, params=params)
 
@@ -179,6 +179,7 @@ def get_user_top_tracks(token, time_range="long_term"):
     else:
         print("Failed to retrieve top tracks:", response.status_code, response.text)
         return None
+
 
 
 def get_recently_played(token):
@@ -253,6 +254,23 @@ def show_summary(request):
             })
     else:
         return redirect('login')
+
+from django.shortcuts import render
+
+def play_top_tracks(request):
+    token = request.session.get('spotify_token')
+
+    if token:
+        # Retrieve top tracks with a limit of 5
+        top_tracks = get_user_top_tracks(token, limit=5)
+
+        if top_tracks:
+            return render(request, 'core/play_top_tracks.html', {
+                'top_tracks': top_tracks.get('items', [])
+            })
+        else:
+            # Redirect to Spotify authorization page if user isn't logged in
+            return redirect(spotify_auth_url())
 
 
 # views.py
