@@ -19,29 +19,21 @@
             background-color: #000;
             color: white;
             overflow: hidden;
-        }
-
-        /* Slide container with creative background */
-        .slide {
-            display: none;
-            height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
-        /* Active slide styling */
-        .active {
-            display: flex;
-            opacity: 1;
+        /* Gradient Animation */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Abstract animated shapes */
+        /* Background Shapes */
         .background-shape {
             position: absolute;
             width: 200px;
@@ -51,263 +43,230 @@
             filter: blur(50px);
             border-radius: 50%;
             animation: float 15s infinite alternate ease-in-out;
+            z-index: 1;
         }
 
-        /* Position specific shapes */
         .shape1 { top: 20%; left: 10%; }
         .shape2 { top: 60%; right: 15%; animation-delay: 5s; }
         .shape3 { bottom: 10%; left: 30%; animation-delay: 10s; }
         .shape4 { top: 40%; left: 70%; animation-delay: 7s; }
 
-        /* Animation for floating shapes */
+        /* Float Animation */
         @keyframes float {
             0% { transform: translateY(0) scale(1); }
             100% { transform: translateY(-30px) scale(1.1); }
         }
 
-        /* Header styling with retro 3D effect */
-        h2 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-            color: #FFF;
-            position: relative;
-            z-index: 1;
-        }
-
-        h2::before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            color: #FF007A;
-            z-index: -1;
-            font-size: 4rem;
-            font-weight: bold;
-            text-shadow: -5px 5px 0 #00D4FF;
-        }
-
-        /* Subtext styling */
-        p {
-            font-size: 1.5rem;
-            color: #FFF;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* List styling for tracks, genres, etc. */
-        ul {
-            list-style-type: none;
-            padding: 0;
-            font-size: 1.5rem;
+        /* Header styling */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 2rem;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            max-width: 600px;
             width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
-        /* Item styling with hover effect */
-        li {
-            margin-bottom: 12px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            color: #FFF;
-            font-weight: 500;
-            width: 100%;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* Hover effect on items */
-        li:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Spotify Logo styling */
-        .spotify-logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.6));
-            z-index: 2;
-        }
-
-        /* Navigation button styling */
-        .nav-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+        header h1 {
             font-size: 2rem;
+            font-weight: bold;
             color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #1db954;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            padding: 100px 20px;
+            text-align: center;
+            max-width: 700px;
             z-index: 2;
         }
 
-        .nav-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #FFF;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
         }
 
-        /* Left and right button positioning */
-        #prev {
-            left: 20px;
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 10px;
+            color: #ddd;
         }
 
-        #next {
-            right: 20px;
+        .hero .btn {
+            display: inline-block;
+            background-color: #1db954;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #1aab49;
+        }
+
+        /* Statistics Section */
+        .stats-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            margin-top: 30px;
+            padding: 60px 20px;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .stats-container h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFF;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .stats-container p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            color: #1db954;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            margin: 1rem;
+        }
+
+        .stat h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat p {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            z-index: 2;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Spotify logo -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" class="spotify-logo" alt="Spotify Logo">
-
-    <!-- Background Shapes for Abstract Effect -->
+    <!-- Background Shapes -->
     <div class="background-shape shape1"></div>
     <div class="background-shape shape2"></div>
     <div class="background-shape shape3"></div>
     <div class="background-shape shape4"></div>
 
-    <!-- Entry Slide -->
-    <div class="slide active" id="entry">
-        <h2>Welcome, {{ user.username }}</h2>
-        <p>Your personalized Spotify Wrapped 2024</p>
-    </div>
+    <!-- Header section -->
+    <header>
+        <h1>Spotify Wrapped</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Create Account</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="slide" id="slide6">
-        <h2>The Total Time You Spent Jamming This year</h2>
-        <p>{{ total_minutes|floatformat:2 }} minutes</p>
-    </div>
+    <!-- Hero section -->
+    <main class="hero">
+        <h2>Your Music Journey in 2024</h2>
+        <p>Discover the songs, artists, and moments that defined your year.</p>
+        <a href="{% url 'login' %}" class="btn">Discover Now</a>
+    </main>
 
-    <!-- Transition Slide 1 -->
-    <div class="slide" id="transition1">
-        <h2>These tracks had your heart in 2024</h2>
-    </div>
-
-    <!-- Slide 1: Top Tracks -->
-    <div class="slide" id="slide1">
-        <h2>Your Top Tracks</h2>
-        <ul>
-            {% if top_tracks %}
-                {% for track in top_tracks|slice:":8" %}
-                    <li class="track-info">
-                        <img src="{{ track.album.images.0.url|default:'' }}"
-                             onerror="this.src='/static/images/default-cover.jpg'"
-                             alt="{{ track.name|default:'Unknown Track' }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
-                        <span>{{ track.name|default:'Unknown Track' }} by {% for artist in track.artists %}{{ artist.name|default:'Unknown Artist' }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                    </li>
-                {% empty %}
-                    <li>No top tracks available</li>
-                {% endfor %}
-            {% else %}
-                <li>Spotify does not have enough data to show your top tracks.</li>
-            {% endif %}
-        </ul>
-    </div>
-
-
-    <!-- Transition Slide 2 -->
-    <div class="slide" id="transition2">
-        <h2>Genres that defined your vibe</h2>
-    </div>
-
-    <!-- Slide 2: Favorite Genres -->
-    <div class="slide" id="slide2">
-        <h2>Favorite Genres</h2>
-        <ul>
-            {% for genre in genres|slice:":8" %}
-                <li class="genre-info">{{ genre }}</li>
-            {% empty %}
-                <li>No genres available</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Transition Slide 3 -->
-    <div class="slide" id="transition3">
-        <h2>Reliving your recent hits</h2>
-    </div>
-
-    <!-- Slide 3: Recent Listening History -->
-    <div class="slide" id="slide3">
-        <h2>Recent Listening History</h2>
-        <ul>
-            {% for track in recently_played|slice:":8" %}
-                <li class="history-info">
-                    <img src="{{ track.track.album.images.0.url }}"
-                         onerror="this.src='/static/images/default-cover.jpg'"
-                         alt="{{ track.track.name }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
-                    <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                </li>
-            {% empty %}
-                <li>No recent listening history available</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Slide 6: Most Played Song -->
-    <div class="slide" id="slide6">
-        <h2>And Lastly, The Song You Could Not Stop Listenting To...</h2>
-        {% if most_played_track %}
-            <div class="track-info">
-                <img src="{{ most_played_track.album.images.0.url|default:'/static/images/default-cover.jpg' }}"
-                    alt="{{ most_played_track.name|default:'Unknown Song' }} album cover" style="width: 150px; height: 150px; border-radius: 8px;">
-                <h3>{{ most_played_track.name|default:"Unknown Song" }}</h3>
-                <p>by {% for artist in most_played_track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <p>Album: {{ most_played_track.album.name|default:"Unknown Album" }}</p>
+    <!-- Statistics section -->
+    <section class="stats-container">
+        <h2>Your 2024 in Music</h2>
+        <p>Track your favorite stats and trends across Spotify.</p>
+        <div class="stats">
+            <div class="stat">
+                <h3>2.1M+</h3>
+                <p>Artists</p>
             </div>
-        {% else %}
-            <p>No data available for your most played song.</p>
-        {% endif %}
-    </div>
+            <div class="stat">
+                <h3>97M+</h3>
+                <p>Playlists</p>
+            </div>
+            <div class="stat">
+                <h3>54K+</h3>
+                <p>Labels</p>
+            </div>
+        </div>
+    </section>
 
-
-    <!-- Navigation buttons -->
-    <button class="nav-button" id="prev">&#9664;</button>
-    <button class="nav-button" id="next">&#9654;</button>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.classList.remove('active');
-                    slide.style.display = i === index ? 'flex' : 'none';
-                });
-                slides[index].classList.add('active');
-                currentSlide = index;
-            }
-
-            document.getElementById('prev').addEventListener('click', () => {
-                showSlide((currentSlide - 1 + slides.length) % slides.length);
-            });
-
-            document.getElementById('next').addEventListener('click', () => {
-                showSlide((currentSlide + 1) % slides.length);
-            });
-
-            showSlide(currentSlide);
-        });
-    </script>
+    <!-- Footer section -->
+    <footer>
+        <p>© 2024 Spotify Wrapped</p>
+    </footer>
 
 </body>
 </html>

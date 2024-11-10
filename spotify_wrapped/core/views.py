@@ -255,5 +255,36 @@ def show_summary(request):
         return redirect('login')
 
 
+# views.py
+from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
+from core.forms import ContactForm
 
 
+def contact_developers(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # Send email to developers
+            email_message = EmailMessage(
+                f"Feedback from {name}",
+                message,
+                email,
+                ['dummyemail@gmail.com']
+            )
+            email_message.send()
+            return redirect('thank_you')  # Redirect to a thank you page after submission
+    else:
+        form = ContactForm()
+    return render(request, 'core/contact_developers.html', {'form': form})
+
+# core/views.py
+
+from django.shortcuts import render
+
+def thank_you(request):
+    return render(request, 'core/thank_you.html')
