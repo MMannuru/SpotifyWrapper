@@ -4,68 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Wrapped</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles */
-        body {
-            font-family: 'Inter', sans-serif;
+        /* Basic reset */
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(270deg, #ff416c, #ff4b2b, #1db954, #0072ff);
-            background-size: 800% 800%;
-            animation: gradientMove 12s ease infinite;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
             color: white;
-            min-height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
         }
 
-        /* Gradient Animation */
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Background Shapes with Unique Animations */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: 1;
         }
 
-        /* Header and Navigation */
+        /* Specific positions and animations for each shape */
+        .shape1 {
+            top: 20%; left: 10%;
+            animation: floatHorizontal1 1s infinite ease-in-out alternate,
+                       floatVertical1 1s infinite ease-in-out alternate;
+        }
+        .shape2 {
+            top: 60%; right: 15%;
+            animation: floatHorizontal2 1s infinite ease-in-out alternate,
+                       floatVertical2 1s infinite ease-in-out alternate;
+        }
+        .shape3 {
+            bottom: 10%; left: 30%;
+            animation: floatHorizontal3 1s infinite ease-in-out alternate,
+                       floatVertical3 2.2s infinite ease-in-out alternate;
+        }
+        .shape4 {
+            top: 40%; left: 70%;
+            animation: floatHorizontal4 1s infinite ease-in-out alternate,
+                       floatVertical4 1s infinite ease-in-out alternate;
+        }
+
+        /* Horizontal animations with varying distances */
+        @keyframes floatHorizontal1 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(120px); }
+        }
+        @keyframes floatHorizontal2 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(150px); }
+        }
+        @keyframes floatHorizontal3 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(180px); }
+        }
+        @keyframes floatHorizontal4 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(140px); }
+        }
+
+        /* Vertical animations with varying distances */
+        @keyframes floatVertical1 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-30px); }
+        }
+        @keyframes floatVertical2 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes floatVertical3 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-25px); }
+        }
+        @keyframes floatVertical4 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-35px); }
+        }
+
+        /* Header styling */
         header {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
             position: fixed;
             top: 0;
-            width: 100%;
             z-index: 1000;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         header h1 {
-            margin: 0;
             font-size: 2rem;
             font-weight: bold;
             color: white;
+            font-family: 'Montserrat', sans-serif;
         }
 
         nav ul {
             list-style: none;
             display: flex;
             gap: 1.5rem;
-            margin: 0;
-            padding: 0;
-            justify-content: flex-start; /* Align items to the left */
-        }
-
-        nav ul li {
-            display: inline;
         }
 
         nav ul li a {
-            text-decoration: none;
             color: white;
+            text-decoration: none;
             font-size: 1rem;
-            transition: color 0.3s ease;
             padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
         }
 
         nav ul li a:hover {
@@ -74,17 +138,19 @@
 
         /* Hero Section */
         .hero {
+            margin-top: 120px;
+            padding: 100px 20px;
             text-align: center;
-            margin-top: 60px;
-            padding: 90px 0;
+            max-width: 700px;
+            z-index: 2;
         }
 
         .hero h2 {
-            font-size: 3rem;
-            margin: 0;
+            font-size: 3.5rem;
+            font-weight: bold;
             letter-spacing: 1px;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            color: #FFF;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
         }
 
         .hero p {
@@ -97,7 +163,7 @@
             display: inline-block;
             background-color: #1db954;
             color: white;
-            padding: 1rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: 50px;
             text-transform: uppercase;
             font-weight: bold;
@@ -111,37 +177,47 @@
             background-color: #1aab49;
         }
 
-        /* Lowered Statistics Section */
+        /* Statistics Section */
         .stats-container {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.8);
             margin-top: 30px;
-            padding: 50px 0;
+            padding: 60px 20px;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
         }
 
         .stats-container h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            text-align: center;
+            color: #FFF;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
 
         .stats-container p {
             font-size: 1rem;
             color: #ccc;
-            text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .stats {
             display: flex;
             justify-content: space-evenly;
-            align-items: center;
-            padding: 1rem 0;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .stat {
             text-align: center;
             color: #1db954;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            margin: 1rem;
         }
 
         .stat h3 {
@@ -152,90 +228,60 @@
         .stat p {
             font-size: 1.2rem;
             color: white;
-            margin: 0;
         }
 
         /* Footer */
         footer {
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 1rem;
+            width: 100%;
             text-align: center;
+            position: relative;
+            bottom: 0;
+            z-index: 2;
         }
 
-        /* Media Queries for Responsiveness */
+        /* Media Queries */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-            }
-
             .hero h2 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
 
             .stats {
                 flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav ul {
-                justify-content: flex-start; /* Ensure alignment to the left on smaller screens */
-            }
-
-            nav ul li a {
-                padding: 0.5rem 1rem; /* Maintain proper padding */
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
     <!-- Header section -->
     <header>
         <h1>Spotify Wrapped</h1>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Features</a></li>
+                <li><a href="{% url 'play_top_tracks' %}">Listen to Your Top Tracks</a></li>
                 <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Create Account</a></li> <!-- Add link to register -->
+                <li><a href="{% url 'contact_developers' %}">Contact Us!</a></li>
+                <li><a href="{% url 'register' %}">Create Account</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Hero section -->
     <main class="hero">
-        <h2>Me in 2024 Reveals Your Listening</h2>
-        <p>Explore the data that defined your year in music.</p>
-        <!-- Update the "Discover Now" button to point to Spotify login -->
-        <a href="{% url 'login' %}" class="btn">Discover Now</a>
+        <h2>Your Music Journey in 2024</h2>
+        <p>Discover the songs, artists, and moments that defined your year.</p>
+        <a href="{% url 'show_summary' %}" class="btn">Discover Now</a>
     </main>
-
-    <!-- Lowered Statistics section with black background -->
-    <section class="stats-container">
-        <h2>All together now.</h2>
-        <p>Songstats aggregates all of your music data into one comprehensive analytics platform.</p>
-        <div class="stats">
-            <div class="stat">
-                <h3>2.1M+</h3>
-                <p>Artists</p>
-            </div>
-            <div class="stat">
-                <h3>97M+</h3>
-                <p>Playlists</p>
-            </div>
-            <div class="stat">
-                <h3>54K+</h3>
-                <p>Labels</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer section -->
-    <footer>
-        <p>© 2024 Spotify Wrapped</p>
-    </footer>
 
 </body>
 </html>

@@ -11,6 +11,10 @@ from groq import Groq
 import requests
 import urllib.parse
 from django.contrib.auth.decorators import login_required
+import uuid
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Invite
 
 
 # Index view
@@ -45,7 +49,7 @@ def describe_music_taste(request):
             api_key=settings.GROQ_API_KEY
         )
 
-        question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress."
+        question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress. Keep it short and sweet."
 
         try:
             chat_completion = client.chat.completions.create(
@@ -124,10 +128,10 @@ def spotify_callback(request):
     request.session['spotify_token'] = access_token
 
     # Redirect to the summary page or any other page where you will show the user's Spotify data
-    return redirect('show_summary')
+    return redirect('index')
 
 
-
+import requests
 
 def get_user_top_tracks(token):
     url = "https://api.spotify.com/v1/me/top/tracks"
@@ -135,51 +139,210 @@ def get_user_top_tracks(token):
         "Authorization": f"Bearer {token}"
     }
     response = requests.get(url, headers=headers)
-    
+
+    # Check if the request was successful
     if response.status_code == 200:
-        data = response.json()
-        # Check if 'items' list is empty
-        if not data.get('items'):
-            print("No top tracks found for this user.")
-            return {"items": []}  # Return an empty list if no top tracks are available
-        return data
+        return response.json()
     else:
-        # Log the error if Spotify returns an error code
-        print(f"Spotify API error: {response.status_code} - {response.text}")
-        return {"error": f"Spotify API returned status code {response.status_code}"}
+        print("Failed to retrieve top tracks:", response.status_code, response.text)
+        return None
+
+import requests
+import json
+
+def get_user_top_artists(token):
+    url = "https://api.spotify.com/v1/me/top/artists"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "limit": 10  # Limit to 10 artists for testing
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        top_artists = response.json()
+
+        # Debug: Print the entire response to verify data structure
+        print("Top artists response:", json.dumps(top_artists, indent=2))
+
+        # Check if genres exist in the response
+        for artist in top_artists.get("items", []):
+            if "genres" in artist:
+                print(f"Artist: {artist['name']}, Genres: {artist['genres']}")
+            else:
+                print(f"Artist: {artist['name']} has no genres listed.")
+
+        return top_artists
+    else:
+        print("Failed to retrieve top artists:", response.status_code, response.text)
+        return None
+
+def get_user_top_tracks(token, time_range="long_term", limit=8):
+    url = "https://api.spotify.com/v1/me/top/tracks"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "time_range": time_range,
+        "limit": limit
+    }
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve top tracks:", response.status_code, response.text)
+        return None
 
 
 
+def get_recently_played(token):
+    url = "https://api.spotify.com/v1/me/player/recently-played"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    response = requests.get(url, headers=headers)
 
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve recently played tracks:", response.status_code, response.text)
+        return None
+
+def get_recently_played(token, limit=50):
+    url = "https://api.spotify.com/v1/me/player/recently-played"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "limit": limit
+    }
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to retrieve recently played tracks:", response.status_code, response.text)
+        return None
+
+import json
+
+# Show summary view to display top tracks
 def show_summary(request):
-    # Get the access token from session
+    token = request.session.get('spotify_token')
+    if token:
+        # Retrieve data
+        top_tracks = get_user_top_tracks(token)
+        top_artists = get_user_top_artists(token)
+        recently_played = get_recently_played(token)
+
+        # Get the most played song (top track from long-term)
+        most_played_track_data = get_user_top_tracks(token, time_range="long_term")
+        most_played_track = most_played_track_data['items'][0] if most_played_track_data and 'items' in most_played_track_data else None
+
+        # Calculate total minutes listened
+        total_minutes = 0
+        if recently_played:
+            total_duration_ms = sum(item['track']['duration_ms'] for item in recently_played.get('items', []))
+            total_minutes = total_duration_ms / 60000  # Convert milliseconds to minutes
+
+        # Debugging output
+        print(f"Total Minutes Listened: {total_minutes:.2f}")
+
+        # Check if data is present
+        if top_tracks and top_artists and recently_played and most_played_track:
+            genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
+            unique_genres = set(genre for sublist in genres for genre in sublist)
+
+            return render(request, 'core/summary.html', {
+                'top_tracks': top_tracks.get('items', []),
+                'top_artists': top_artists.get('items', []),
+                'genres': unique_genres,
+                'recently_played': recently_played.get('items', []),
+                'most_played_track': most_played_track,
+                'total_minutes': total_minutes  # Pass total minutes to template
+            })
+        else:
+            return render(request, 'core/error.html', {
+                'error': "Failed to retrieve all Spotify data. Please try again later."
+            })
+    else:
+        return redirect('login')
+
+from django.shortcuts import render
+
+def play_top_tracks(request):
     token = request.session.get('spotify_token')
 
     if token:
-        # Fetch user's top tracks
+        # Retrieve top tracks with a limit of 5
         top_tracks = get_user_top_tracks(token)
-        
-        # Check if there was an error in the response
-        if "error" in top_tracks:
-            # Clear the session token and redirect to login to refresh it
-            del request.session['spotify_token']  # Remove invalid token
-            return redirect('login')
 
-        # Check if there are any top tracks
-        if not top_tracks.get('items'):
-            return render(request, 'core/summary.html', {
-                'message': 'No listening history found for this user.',
+        if top_tracks:
+            return render(request, 'core/play_top_tracks.html', {
+                'top_tracks': top_tracks.get('items', [])[:5]  # Limit to 5 tracks
             })
-
-        # Render the summary page and pass the top tracks data to the template
-        return render(request, 'core/summary.html', {
-            'top_tracks': top_tracks['items'],
-        })
+        else:
+            # If top tracks retrieval fails, redirect to the login page or an error page
+            return render(request, 'core/error.html', {
+                'error': "Failed to retrieve top tracks."
+            })
     else:
-        # If no token is found, redirect to login
-        return redirect('login')
+        # Redirect to Spotify's login if user isn't authenticated
+        return redirect(spotify_auth_url())
 
 
 
+# views.py
+from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
+from core.forms import ContactForm
 
 
+def contact_developers(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # Send email to developers
+            email_message = EmailMessage(
+                f"Feedback from {name}",
+                message,
+                email,
+                ['dummyemail@gmail.com']
+            )
+            email_message.send()
+            return redirect('thank_you')  # Redirect to a thank you page after submission
+    else:
+        form = ContactForm()
+    return render(request, 'core/contact_developers.html', {'form': form})
+
+# core/views.py
+
+from django.shortcuts import render
+
+def thank_you(request):
+    return render(request, 'core/thank_you.html')
+
+def generate_invite_code():
+    return str(uuid.uuid4())
+
+def invite_friend(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        invite_code = generate_invite_code()
+        invite = Invite.objects.create(sender=request.user, recipient_email = email, invite_code=invite_code)
+
+        send_mail(
+            'Your Invitation to Join!',
+            f"You've been invited! Use this link to sign up: {settings.SITE_URL}/register?invite_code={invite_code}",
+            settings.DEFAULT_FROM_EMAIL,
+            [email],
+        )
+        return redirect('invite_sent')
+    return render(request, 'core/invite_friend.html')

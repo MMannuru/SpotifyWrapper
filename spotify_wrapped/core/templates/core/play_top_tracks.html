@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Top Tracks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Heading styling */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            color: #FFF;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Instructions text */
+        p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-top: 10px;
+        }
+
+        /* Track list container */
+        .track-list {
+            max-width: 700px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        /* Individual track container */
+        .track {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 15px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .track:hover {
+            transform: scale(1.02);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Album cover image */
+        .track img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        /* Track info styling */
+        .track-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .track-info p {
+            margin: 0;
+        }
+
+        .track-info .track-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1db954;
+        }
+
+        .track-info .artist-name {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Play and pause buttons */
+        .track-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 8px 18px;
+            background-color: #1db954;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .button:hover {
+            background-color: #1aab49;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Your Top Tracks</h1>
+    <p>Click on a track to listen to a clip.</p>
+
+    <div class="track-list">
+        {% for track in top_tracks %}
+            <div class="track">
+                <!-- Album cover image -->
+                <img src="{{ track.album.images.0.url }}" alt="{{ track.name }} album cover" onerror="this.src='/static/images/default-cover.jpg'">
+
+                <!-- Track and artist info -->
+                <div class="track-info">
+                    <p class="track-name">{{ track.name }}</p>
+                    <p class="artist-name">{{ track.artists.0.name }}</p>
+                </div>
+
+                <!-- Play and pause buttons -->
+                <div class="track-buttons">
+                    <button class="button play-track-button" data-uri="{{ track.uri }}">Play</button>
+                    <button class="button pause-track-button">Pause</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Include Spotify Web Playback SDK -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const token = "{{ request.session.spotify_token }}";
+
+            // Initialize the Spotify player
+            const player = new Spotify.Player({
+                name: 'Spotify Wrapped Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+
+            // Connect the player
+            player.connect().then(success => {
+                if (success) {
+                    console.log('Player connected successfully');
+                }
+            });
+
+            // Function to play a specific track URI
+            function playTrack(uri) {
+                fetch('https://api.spotify.com/v1/me/player/play', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ uris: [uri] })
+                }).then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to play track:', response.statusText);
+                    }
+                });
+            }
+
+            // Function to pause playback
+            function pausePlayback() {
+                fetch('https://api.spotify.com/v1/me/player/pause', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to pause playback:', response.statusText);
+                    }
+                });
+            }
+
+            // Attach event listeners to play buttons
+            document.querySelectorAll('.play-track-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const uri = button.getAttribute('data-uri');
+                    playTrack(uri);
+                });
+            });
+
+            // Attach event listeners to pause buttons
+            document.querySelectorAll('.pause-track-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    pausePlayback();
+                });
+            });
+        };
+    </script>
+</body>
+</html>
