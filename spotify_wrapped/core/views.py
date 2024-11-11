@@ -11,6 +11,10 @@ from groq import Groq
 import requests
 import urllib.parse
 from django.contrib.auth.decorators import login_required
+import uuid
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Invite
 
 
 # Index view
@@ -312,3 +316,21 @@ from django.shortcuts import render
 
 def thank_you(request):
     return render(request, 'core/thank_you.html')
+
+def generate_invite_code():
+    return str(uuid.uuid4())
+
+def invite_friend(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        invite_code = generate_invite_code()
+        invite = Invite.objects.create(sender=request.user, recipient_email = email, invite_code=invite_code)
+
+        send_mail(
+            'Your Invitation to Join!',
+            f"You've been invited! Use this link to sign up: {settings.SITE_URL}/register?invite_code={invite_code}",
+            settings.DEFAULT_FROM_EMAIL,
+            [email],
+        )
+        return redirect('invite_sent')
+    return render(request, 'core/invite_friend.html')
