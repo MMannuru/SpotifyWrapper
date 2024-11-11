@@ -27,7 +27,7 @@
             position: relative;
         }
 
-        /* Background Shapes with Slow Movement */
+        /* Background Shapes with Unique Animations */
         .background-shape {
             position: absolute;
             width: 200px;
@@ -36,27 +36,65 @@
             opacity: 0.3;
             filter: blur(50px);
             border-radius: 50%;
-            animation: floatHorizontal 1.5s infinite linear alternate,
-                       floatVertical 1.5s infinite ease-in-out alternate;
             z-index: 1;
         }
 
-        /* Specific positions for each shape */
-        .shape1 { top: 20%; left: 10%; }
-        .shape2 { top: 60%; right: 15%; }
-        .shape3 { bottom: 10%; left: 30%; }
-        .shape4 { top: 40%; left: 70%; }
-
-        /* Horizontal floating animation */
-        @keyframes floatHorizontal {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100px); }
+        /* Specific positions and animations for each shape */
+        .shape1 {
+            top: 20%; left: 10%;
+            animation: floatHorizontal1 1s infinite ease-in-out alternate,
+                       floatVertical1 1s infinite ease-in-out alternate;
+        }
+        .shape2 {
+            top: 60%; right: 15%;
+            animation: floatHorizontal2 1s infinite ease-in-out alternate,
+                       floatVertical2 1s infinite ease-in-out alternate;
+        }
+        .shape3 {
+            bottom: 10%; left: 30%;
+            animation: floatHorizontal3 1s infinite ease-in-out alternate,
+                       floatVertical3 2.2s infinite ease-in-out alternate;
+        }
+        .shape4 {
+            top: 40%; left: 70%;
+            animation: floatHorizontal4 1s infinite ease-in-out alternate,
+                       floatVertical4 1s infinite ease-in-out alternate;
         }
 
-        /* Vertical floating animation */
-        @keyframes floatVertical {
+        /* Horizontal animations with varying distances */
+        @keyframes floatHorizontal1 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(120px); }
+        }
+        @keyframes floatHorizontal2 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(150px); }
+        }
+        @keyframes floatHorizontal3 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(180px); }
+        }
+        @keyframes floatHorizontal4 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(140px); }
+        }
+
+        /* Vertical animations with varying distances */
+        @keyframes floatVertical1 {
             0% { transform: translateY(0); }
             100% { transform: translateY(-30px); }
+        }
+        @keyframes floatVertical2 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes floatVertical3 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-25px); }
+        }
+        @keyframes floatVertical4 {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-35px); }
         }
 
         /* Header styling */
