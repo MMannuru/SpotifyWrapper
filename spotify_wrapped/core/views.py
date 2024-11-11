@@ -90,7 +90,8 @@ def login(request):
     return redirect(spotify_auth_url())
 
 
-# Handle the callback from Spotify and exchange the authorization code for an access token
+from django.http import JsonResponse
+
 def spotify_callback(request):
     code = request.GET.get('code')
 
@@ -105,27 +106,51 @@ def spotify_callback(request):
     }
 
     response = requests.post(token_url, data=payload)
+    
+    # Print the response for debugging if there’s an error
+    if response.status_code != 200:
+        print("Spotify API error:", response.status_code, response.text)
+        return JsonResponse({'error': 'Failed to obtain access token from Spotify'}, status=500)
+    
     token_info = response.json()
+    
+    # Ensure access token is in the response
+    access_token = token_info.get('access_token')
+    if not access_token:
+        print("Error: Access token not found in response.")
+        return JsonResponse({'error': 'Access token not found in Spotify response'}, status=500)
 
-    # Extract the access token and store it in the session
-    access_token = token_info['access_token']
+    # Store the access token in the session
     request.session['spotify_token'] = access_token
 
     # Redirect to the summary page or any other page where you will show the user's Spotify data
     return redirect('show_summary')
 
 
-# Function to fetch user's top tracks using the access token
+
+
 def get_user_top_tracks(token):
     url = "https://api.spotify.com/v1/me/top/tracks"
     headers = {
         "Authorization": f"Bearer {token}"
     }
     response = requests.get(url, headers=headers)
-    return response.json()
+    
+    if response.status_code == 200:
+        data = response.json()
+        # Check if 'items' list is empty
+        if not data.get('items'):
+            print("No top tracks found for this user.")
+            return {"items": []}  # Return an empty list if no top tracks are available
+        return data
+    else:
+        # Log the error if Spotify returns an error code
+        print(f"Spotify API error: {response.status_code} - {response.text}")
+        return {"error": f"Spotify API returned status code {response.status_code}"}
 
 
-# Show summary view to display top tracks
+
+
 def show_summary(request):
     # Get the access token from session
     token = request.session.get('spotify_token')
@@ -133,6 +158,18 @@ def show_summary(request):
     if token:
         # Fetch user's top tracks
         top_tracks = get_user_top_tracks(token)
+        
+        # Check if there was an error in the response
+        if "error" in top_tracks:
+            # Clear the session token and redirect to login to refresh it
+            del request.session['spotify_token']  # Remove invalid token
+            return redirect('login')
+
+        # Check if there are any top tracks
+        if not top_tracks.get('items'):
+            return render(request, 'core/summary.html', {
+                'message': 'No listening history found for this user.',
+            })
 
         # Render the summary page and pass the top tracks data to the template
         return render(request, 'core/summary.html', {
@@ -141,5 +178,8 @@ def show_summary(request):
     else:
         # If no token is found, redirect to login
         return redirect('login')
+
+
+
 
 
