@@ -125,16 +125,21 @@
         }
 
         nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease;
-        }
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem; /* Increase padding for a thicker look */
+    font-weight: bold; /* Make the font weight bold */
+    border: 2px solid transparent; /* Add border for emphasis */
+    border-radius: 5px; /* Optional: Rounded edges */
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
 
-        nav ul li a:hover {
-            color: #03521e;
-        }
+nav ul li a:hover {
+    color: #03521e;
+    border-color: #1db954; /* Highlight border on hover */
+}
+
 
         /* Hero Section */
         .hero {
@@ -149,24 +154,24 @@
 /* Gradient text for heading with color-changing animation */
 /* Gradient text for heading with subtle color-changing animation */
 /* Gradient text for heading with noticeable color-changing animation */
-.hero h2 {
-    font-size: 5rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #007acc, #f5f0f0, #03a44c);
-    background-size: 200% 200%; /* Increase background size for smoother transition */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradientShift 8s infinite linear; /* Linear and continuous color shift */
-    margin: 0 auto;
-    width: 80%;
-}
+    .hero h2 {
+        font-size: 5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #007acc, #f5f0f0, #03a44c);
+        background-size: 200% 200%; /* Increase background size for smoother transition */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 8s infinite linear; /* Linear and continuous color shift */
+        margin: 0 auto;
+        width: 80%;
+    }
 
-/* Gradient animation for color-changing effect */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
+    /* Gradient animation for color-changing effect */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+    }
 
 
 
@@ -289,7 +294,6 @@
                 <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'contact_developers' %}">Contact Us!</a></li>
-                <li><a href="{% url 'register' %}">Create Account</a></li>
             </ul>
         </nav>
     </header>

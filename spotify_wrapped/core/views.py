@@ -262,7 +262,6 @@ def show_summary(request):
     else:
         return redirect('login')
 
-
 from django.shortcuts import render
 
 def play_top_tracks(request):
