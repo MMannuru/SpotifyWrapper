@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Saved Spotify Wraps</title>
+</head>
+<body>
+    <h1>Your Saved Spotify Wraps</h1>
+
+    {% if wraps %}
+        <ul>
+            {% for wrap in wraps %}
+                <li>
+                    <strong>Wrap Date:</strong> {{ wrap.created_at }}<br>
+                    <strong>Total Minutes Listened:</strong> {{ wrap.total_minutes }} minutes<br>
+
+                    <strong>Top Tracks:</strong>
+                    <ul>
+                        {% for track in wrap.top_tracks_list %}
+                            <li>{{ track.name }} by
+                                {% for artist in track.artists %}
+                                    {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <strong>Top Artists:</strong>
+                    <ul>
+                        {% for artist in wrap.top_artists_list %}
+                            <li>{{ artist.name }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <a href="{% url 'delete_wrap' wrap.id %}">Delete this wrap</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no saved wraps.</p>
+    {% endif %}
+</body>
+</html>

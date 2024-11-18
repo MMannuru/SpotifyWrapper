@@ -268,12 +268,15 @@ def show_summary(request):
         # Check if data is present
         if top_tracks and top_artists and recently_played and most_played_track:
             genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
-            unique_genres = set(genre for sublist in genres for genre in sublist)
+            unique_genres = list(set(genre for sublist in genres for genre in sublist))
+
+            # Limit to 8 genres
+            limited_genres = unique_genres[:8]
 
             return render(request, 'core/summary.html', {
                 'top_tracks': top_tracks.get('items', []),
                 'top_artists': top_artists.get('items', []),
-                'genres': unique_genres,
+                'genres': limited_genres,
                 'recently_played': recently_played.get('items', []),
                 'most_played_track': most_played_track,
                 'total_minutes': total_minutes  # Pass total minutes to template
@@ -295,17 +298,18 @@ def play_top_tracks(request):
         top_tracks = get_user_top_tracks(token)
 
         if top_tracks:
+            # Include 'preview_url' in the context
             return render(request, 'core/play_top_tracks.html', {
-                'top_tracks': top_tracks.get('items', [])[:5]  # Limit to 5 tracks
+                'top_tracks': top_tracks.get('items', [])[:5]
             })
         else:
-            # If top tracks retrieval fails, redirect to the login page or an error page
             return render(request, 'core/error.html', {
                 'error': "Failed to retrieve top tracks."
             })
     else:
-        # Redirect to Spotify's login if user isn't authenticated
         return redirect(spotify_auth_url())
+
+
 
 
 
