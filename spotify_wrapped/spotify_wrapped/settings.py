@@ -26,7 +26,13 @@ SECRET_KEY = "django-insecure-5-j(f!@b48c^(r9$+sx1s8a(5ku$y7be^xgb-t2)po#s7z3b7q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import socket
+
+# Get the machine's current IP address
+current_ip = socket.gethostbyname(socket.gethostname())
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip]
+
 
 
 # Application definition
@@ -130,6 +136,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+
 
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")

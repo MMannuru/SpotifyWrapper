@@ -72,26 +72,39 @@ def describe_music_taste(request):
 # Your Spotify app credentials
 CLIENT_ID = '85fd30dd498c4fbeac1e658423614b52'
 CLIENT_SECRET = '0626ce38d1ad488fa8ae081f31d07b07'
-REDIRECT_URI = 'http://localhost:8000/callback/'  # Make sure this matches what you set in the Spotify dashboard
+#REDIRECT_URI = 'http://localhost:8000/callback/'  # Make sure this matches what you set in the Spotify dashboard
+
+#REDIRECT_URI = "http://128.61.9.117:8000/callback/"
+
 SCOPE = 'user-top-read user-read-recently-played'  # Permissions you're asking for
 
+from urllib.parse import urlencode
 
-# Function to create Spotify Auth URL
-def spotify_auth_url():
+def spotify_auth_url(request):
+    redirect_uri = get_redirect_uri(request)
+    print(f"Using redirect URI: {redirect_uri}")  # Log the redirect URI
     auth_base_url = "https://accounts.spotify.com/authorize"
     params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
-        "redirect_uri": REDIRECT_URI,
-        "scope": SCOPE
+        "redirect_uri": redirect_uri,
+        "scope": SCOPE,
     }
-    url = f"{auth_base_url}?{urllib.parse.urlencode(params)}"
-    return url
+    return f"{auth_base_url}?{urlencode(params)}"
+
 
 
 # Login view that redirects to Spotify's authorization page
 def login(request):
-    return redirect(spotify_auth_url())
+    return redirect(spotify_auth_url(request))
+
+def get_redirect_uri(request):
+    """
+    Dynamically generate the redirect URI based on the incoming request's host.
+    """
+    host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
+    return f"http://{host}/callback/"
+
 
 
 from django.http import JsonResponse
@@ -104,7 +117,8 @@ def spotify_callback(request):
     payload = {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': REDIRECT_URI,
+        'redirect_uri':get_redirect_uri(request)
+,
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
     }

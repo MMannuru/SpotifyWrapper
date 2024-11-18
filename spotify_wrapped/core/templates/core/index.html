@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Spotify Wrapped</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
@@ -127,7 +127,7 @@
         nav ul li a {
             color: white;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.2rem;
             padding: 0.5rem 1rem;
             transition: color 0.3s ease;
         }
@@ -242,14 +242,51 @@
             z-index: 2;
         }
 
-        /* Media Queries */
+        /* Media Queries for Mobile */
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 0.1rem;
+            }
+
+            nav ul li a {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+
             .hero h2 {
                 font-size: 2.5rem;
             }
 
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
             .stats {
                 flex-direction: column;
+                align-items: center;
+            }
+
+            .stat {
+                width: 90%;
+                max-width: 300px;
             }
         }
     </style>
