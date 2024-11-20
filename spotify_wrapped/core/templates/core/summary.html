@@ -174,104 +174,103 @@
         }
 
         /* Responsive Design */
-    @media (max-width: 768px) {
-        h2 {
-            font-size: 2rem;
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            ul {
+                font-size: 1rem;
+            }
+
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .nav-button {
+                font-size: 1rem;
+                padding: 8px;
+            }
         }
 
-        p {
-            font-size: 1rem;
+        @media (max-width: 480px) {
+            /* Hide the 6th track */
+            .sixth-track {
+                display: none;
+            }
+
+            /* Adjust header size for smaller screens */
+            h2 {
+                font-size: 1.8rem; /* Reduce the header size */
+                margin-bottom: 15px;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            /* Ensure ul container fits within the screen */
+            ul {
+                font-size: 0.9rem; /* Reduce font size */
+                width: 70%; /* Ensure it takes full screen width */
+                max-width: 70%; /* Add padding to avoid edge overflow */
+            }
+
+            /* Modify individual list items */
+            li {
+                flex-direction: column; /* Stack image and text vertically */
+                align-items: center; /* Center-align items */
+                text-align: center; /* Align text to center */
+                padding: 5px; /* Reduce padding */
+            }
+
+            li.track-info img {
+                width: 40px; /* Smaller image size for iPhone */
+                height: 40px;
+                margin-bottom: 5px; /* Add space below the image */
+            }
+
+            li.track-info span {
+                font-size: 0.85rem; /* Reduce font size for readability */
+                line-height: 1.2; /* Adjust line height for better spacing */
+            }
+
+            .nav-button {
+                font-size: 1.2rem; /* Touch-friendly size */
+                padding: 6px; /* Smaller padding */
+            }
+        }
+            /* Optional: Adjust styles for remaining tracks */
+        #slide3 ul {
+            font-size: 0.9rem; /* Adjust font size for smaller screens */
+            padding: 0;
+            margin: 0 auto;
+            width: 90%; /* Add padding to avoid edge overflow */
         }
 
-        ul {
-            font-size: 1rem;
-        }
-
-        li {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 10px;
-        }
-
-        .nav-button {
-            font-size: 1rem;
-            padding: 8px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        h2 {
-            font-size: 2rem;
-        }
-
-        p {
-            font-size: 0.9rem;
-        }
-
-        ul {
-            font-size: 0.9rem;
-        }
-
-        li {
-            padding: 8px;
-        }
-
-        .nav-button {
-            font-size: 1.2rem;
-            padding: 6px;
-        }
-                /* Default styles (normal website): Show all tracks */
-        .sixth-track {
-            display: block; /* Ensure the 6th track is shown by default */
-        }
-    }
-
-    /* Specific adjustments for Slide 1: Top Tracks on iPhone */
-    @media (max-width: 480px) {
-        .sixth-track {
-        display: none; /* Hide the 6th track */
-        }
-        /* Adjust header size for smaller screens */
-        #slide1 h2 {
-            font-size: 1.8rem; /* Reduce the header size */
-            margin-bottom: 15px;
-        }
-
-        /* Ensure ul container fits within the screen */
-        #slide1 ul {
-            font-size: 0.7rem; /* Reduce font size */
-            width: 90%; /* Ensure it takes full screen width */
-            max-width: 90%; /* Add padding to avoid edge overflow */
-        }
-
-        /* Modify individual list items */
-        #slide1 li.track-info {
+        #slide3 li.history-info {
             flex-direction: column; /* Stack image and text vertically */
-            align-items: center; /* Center-align items */
-            text-align: center; /* Align text to center */
+            align-items: center;
+            text-align: center;
             padding: 10px; /* Reduce padding */
         }
 
-        /* Adjust track image size */
-        #slide1 li.track-info img {
-            width: 40px; /* Smaller image size for iPhone */
+        #slide3 li.history-info img {
+            width: 40px; /* Adjust image size for small screens */
             height: 40px;
-            margin-bottom: 10px; /* Add space below the image */
+            margin-bottom: 5px;
         }
 
-        /* Adjust track details font size and spacing */
-        #slide1 li.track-info span {
+        #slide3 li.history-info span {
             font-size: 0.85rem; /* Reduce font size for readability */
-            line-height: 1.2; /* Adjust line height for better spacing */
+            line-height: 1.2;
         }
-
-        /* Ensure navigation buttons are touch-friendly */
-        .nav-button {
-            font-size: 1.2rem;
-            padding: 8px;
-        }
-    }
-
     </style>
 </head>
 <body>
@@ -350,11 +349,11 @@
     <div class="slide" id="slide3">
         <h2>Recent Listening History</h2>
         <ul>
-            {% for track in recently_played|slice:":8" %}
-                <li class="history-info">
+            {% for track in recently_played|slice:":6" %}
+                <li class="history-info {% if forloop.counter == 6 %}sixth-track{% endif %}">
                     <img src="{{ track.track.album.images.0.url }}"
-                         onerror="this.src='/static/images/default-cover.jpg'"
-                         alt="{{ track.track.name }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
+                        onerror="this.src='/static/images/default-cover.jpg'"
+                        alt="{{ track.track.name }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
                     <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                 </li>
             {% empty %}
