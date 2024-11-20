@@ -180,6 +180,50 @@
         .hidden {
             display: none;
         }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem; /* Adjusted font size for smaller screens */
+            }
+            .header p {
+                font-size: 1rem; /* Reduced font size for better readability */
+            }
+            .form-section {
+                padding: 10px; /* Smaller padding for compact design */
+            }
+            .result-card {
+                padding: 15px; /* Ensure proper spacing */
+            }
+            #music-form {
+                width: 100%; /* Full width for small screens */
+            }
+            #music_data, #music-form button {
+                width: 90%; /* Slightly narrower inputs and buttons */
+                font-size: 0.9rem; /* Adjusted font size for readability */
+            }
+            #music_data::placeholder {
+                font-size: 0.8rem; /* Slightly smaller placeholder text */
+                color: #aaa; /* Placeholder color */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem; /* Smaller font size for very small screens */
+            }
+            .header p {
+                font-size: 1.2rem; /* Reduced font size for small screens */
+            }
+            .button-link {
+                font-size: 1rem; /* Smaller button font size */
+            }
+            #music_data {
+                font-size: 0.9rem; /* Smaller font size for input text */
+            }
+            #music_data::placeholder {
+                font-size: 0.3rem; /* Smaller font size for placeholder */
+            }
+        }
     </style>
 </head>
 <body>

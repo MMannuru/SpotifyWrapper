@@ -61,6 +61,23 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.0rem; /* Reduce padding on smaller screens */
+            }
+
+            h2 {
+                font-size: 1.0rem; /* Slightly smaller heading for smaller devices */
+            }
+
+            button, input[type="text"], input[type="password"] {
+                font-size: 0.9rem; /* Adjust font size for inputs and buttons */
+                padding: 0.6rem;
+            }
+        }
+
     </style>
 </head>
 <body>
