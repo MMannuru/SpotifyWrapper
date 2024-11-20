@@ -172,6 +172,106 @@
         #next {
             right: 20px;
         }
+
+        /* Responsive Design */
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+
+        ul {
+            font-size: 1rem;
+        }
+
+        li {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        .nav-button {
+            font-size: 1rem;
+            padding: 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h2 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        ul {
+            font-size: 0.9rem;
+        }
+
+        li {
+            padding: 8px;
+        }
+
+        .nav-button {
+            font-size: 1.2rem;
+            padding: 6px;
+        }
+                /* Default styles (normal website): Show all tracks */
+        .sixth-track {
+            display: block; /* Ensure the 6th track is shown by default */
+        }
+    }
+
+    /* Specific adjustments for Slide 1: Top Tracks on iPhone */
+    @media (max-width: 480px) {
+        .sixth-track {
+        display: none; /* Hide the 6th track */
+        }
+        /* Adjust header size for smaller screens */
+        #slide1 h2 {
+            font-size: 1.8rem; /* Reduce the header size */
+            margin-bottom: 15px;
+        }
+
+        /* Ensure ul container fits within the screen */
+        #slide1 ul {
+            font-size: 0.7rem; /* Reduce font size */
+            width: 90%; /* Ensure it takes full screen width */
+            max-width: 90%; /* Add padding to avoid edge overflow */
+        }
+
+        /* Modify individual list items */
+        #slide1 li.track-info {
+            flex-direction: column; /* Stack image and text vertically */
+            align-items: center; /* Center-align items */
+            text-align: center; /* Align text to center */
+            padding: 10px; /* Reduce padding */
+        }
+
+        /* Adjust track image size */
+        #slide1 li.track-info img {
+            width: 40px; /* Smaller image size for iPhone */
+            height: 40px;
+            margin-bottom: 10px; /* Add space below the image */
+        }
+
+        /* Adjust track details font size and spacing */
+        #slide1 li.track-info span {
+            font-size: 0.85rem; /* Reduce font size for readability */
+            line-height: 1.2; /* Adjust line height for better spacing */
+        }
+
+        /* Ensure navigation buttons are touch-friendly */
+        .nav-button {
+            font-size: 1.2rem;
+            padding: 8px;
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -206,8 +306,8 @@
         <h2>Your Top Tracks</h2>
         <ul>
             {% if top_tracks %}
-                {% for track in top_tracks|slice:":8" %}
-                    <li class="track-info">
+                {% for track in top_tracks|slice:":6" %} <!-- Always render 6 tracks -->
+                    <li class="track-info {% if forloop.counter == 6 %}sixth-track{% endif %}">
                         <img src="{{ track.album.images.0.url|default:'' }}"
                              onerror="this.src='/static/images/default-cover.jpg'"
                              alt="{{ track.name|default:'Unknown Track' }} album cover" style="width: 50px; height: 50px; border-radius: 8px;">
@@ -221,6 +321,7 @@
             {% endif %}
         </ul>
     </div>
+    
 
 
     <!-- Transition Slide 2 -->
