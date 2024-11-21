@@ -1,0 +1,14 @@
+<h1>Your Spotify Wraps</h1>
+<ul>
+    {% for wrap in wraps %}
+    <li>
+        <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
+        <form method="POST" action="{% url 'delete_wrap' wrap.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {% empty %}
+    <li>No Spotify wraps found.</li>
+    {% endfor %}
+</ul>

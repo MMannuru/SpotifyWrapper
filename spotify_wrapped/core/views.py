@@ -15,6 +15,8 @@ import uuid
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Invite
+from .models import SpotifyWrap
+from django.contrib.auth import login
 
 
 # Index view
@@ -94,8 +96,7 @@ def spotify_auth_url(request):
 
 
 
-# Login view that redirects to Spotify's authorization page
-def login(request):
+def spotify_login(request):
     return redirect(spotify_auth_url(request))
 
 def get_redirect_uri(request):
@@ -109,6 +110,16 @@ def get_redirect_uri(request):
 
 from django.http import JsonResponse
 
+from django.contrib.auth.models import User
+
+
+from django.contrib.auth import login
+
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+
+from django.core.exceptions import ValidationError
+
 def spotify_callback(request):
     code = request.GET.get('code')
 
@@ -117,32 +128,49 @@ def spotify_callback(request):
     payload = {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri':get_redirect_uri(request)
-,
+        'redirect_uri': get_redirect_uri(request),
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
     }
 
     response = requests.post(token_url, data=payload)
-    
-    # Print the response for debugging if there’s an error
     if response.status_code != 200:
-        print("Spotify API error:", response.status_code, response.text)
-        return JsonResponse({'error': 'Failed to obtain access token from Spotify'}, status=500)
-    
+        return render(request, 'core/error.html', {'error': 'Failed to obtain access token from Spotify'})
+
     token_info = response.json()
-    
-    # Ensure access token is in the response
     access_token = token_info.get('access_token')
+
     if not access_token:
-        print("Error: Access token not found in response.")
-        return JsonResponse({'error': 'Access token not found in Spotify response'}, status=500)
+        return render(request, 'core/error.html', {'error': 'Access token not found in Spotify response'})
+
+    # Fetch Spotify user profile
+    user_profile_url = "https://api.spotify.com/v1/me"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    user_response = requests.get(user_profile_url, headers=headers)
+
+    if user_response.status_code != 200:
+        return render(request, 'core/error.html', {'error': 'Failed to fetch user profile from Spotify'})
+
+    user_data = user_response.json()
+    spotify_id = user_data.get('id')  # Unique Spotify ID
+    email = user_data.get('email', f"{spotify_id}@example.com")  # Fallback email
+    display_name = user_data.get('display_name', f"Spotify User {spotify_id[:8]}")  # Fallback display name
+
+    # Create or get the Django user
+    user, created = User.objects.get_or_create(
+        username=spotify_id,
+        defaults={'email': email, 'first_name': display_name}
+    )
+
+    # Log the user in
+    login(request, user)
 
     # Store the access token in the session
     request.session['spotify_token'] = access_token
+    request.session['display_name'] = display_name
 
-    # Redirect to the summary page or any other page where you will show the user's Spotify data
     return redirect('index')
+
 
 
 import requests
@@ -243,7 +271,10 @@ def get_recently_played(token, limit=50):
 
 import json
 
-# Show summary view to display top tracks
+# Updated show_summary view
+from .models import SpotifyWrap
+from django.contrib.auth.decorators import login_required
+
 def show_summary(request):
     token = request.session.get('spotify_token')
     if token:
@@ -273,20 +304,33 @@ def show_summary(request):
             # Limit to 8 genres
             limited_genres = unique_genres[:8]
 
-            return render(request, 'core/summary.html', {
+            # Create the wrap data dictionary
+            wrap_data = {
                 'top_tracks': top_tracks.get('items', []),
                 'top_artists': top_artists.get('items', []),
                 'genres': limited_genres,
                 'recently_played': recently_played.get('items', []),
                 'most_played_track': most_played_track,
-                'total_minutes': total_minutes  # Pass total minutes to template
-            })
+                'total_minutes': total_minutes
+            }
+
+            # Save wrap to the database
+            SpotifyWrap.objects.create(
+                user=request.user,
+                title="My Spotify Wrap",
+                data=wrap_data
+            )
+
+            # Render the summary template with the wrap data
+            return render(request, 'core/summary.html', wrap_data)
         else:
+            # Render an error page if some data is missing
             return render(request, 'core/error.html', {
                 'error': "Failed to retrieve all Spotify data. Please try again later."
             })
     else:
-        return redirect('login')
+        # Redirect to login if no token is available
+        return redirect('spotify_login')
 
 from django.shortcuts import render
 
@@ -318,7 +362,6 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from core.forms import ContactForm
 
-
 def contact_developers(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -341,7 +384,6 @@ def contact_developers(request):
     return render(request, 'core/contact_developers.html', {'form': form})
 
 # core/views.py
-
 from django.shortcuts import render
 
 def thank_you(request):
@@ -364,3 +406,36 @@ def invite_friend(request):
         )
         return redirect('invite_sent')
     return render(request, 'core/invite_friend.html')
+
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def list_wraps(request):
+    wraps = SpotifyWrap.objects.filter(user=request.user).order_by('-created_at')  # Fetch wraps for the current user
+    return render(request, 'core/list_wraps.html', {'wraps': wraps})
+
+from django.shortcuts import get_object_or_404
+
+@login_required
+def view_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)  # Ensure the wrap belongs to the user
+    return render(request, 'core/view_wrap.html', {'wrap': wrap})
+
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+@login_required
+def delete_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)  # Ensure the wrap belongs to the user
+    if request.method == 'POST':
+        wrap.delete()
+    return HttpResponseRedirect(reverse('list_wraps'))
+
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()  # Deletes the user and all associated data (including SpotifyWraps)
+        return redirect('index')  # Redirect to the homepage after deletion
+    return render(request, 'core/delete_account.html')

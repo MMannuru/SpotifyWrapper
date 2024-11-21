@@ -98,6 +98,7 @@
         }
 
         /* Header styling */
+        /* Header styling */
         header {
             background-color: rgba(0, 0, 0, 0.8);
             padding: 1rem 2rem;
@@ -109,6 +110,17 @@
             top: 0;
             z-index: 1000;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between the logo and the text */
+        }
+
+        .header-logo .spotify-logo {
+            width: 40px; /* Adjust the size of the logo */
+            height: 40px;
         }
 
         header h1 {
@@ -125,20 +137,21 @@
         }
 
         nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-        padding: 0.5rem 1.5rem; /* Increase padding for a thicker look */
-        font-weight: bold; /* Make the font weight bold */
-        border: 2px solid transparent; /* Add border for emphasis */
-        border-radius: 5px; /* Optional: Rounded edges */
-        transition: color 0.3s ease, border-color 0.3s ease;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            font-weight: bold;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
         nav ul li a:hover {
             color: #03521e;
-            border-color: #1db954; /* Highlight border on hover */
+            border-color: #1db954;
         }
+
 
 
         /* Hero Section */
@@ -324,16 +337,20 @@
 
     <!-- Header section -->
     <header>
-        <h1>Spotify Wrapped</h1>
+        <div class="header-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo" class="spotify-logo">
+            <h1>Spotify Wrapped</h1>
+        </div>
         <nav>
             <ul>
                 <li><a href="{% url 'play_top_tracks' %}">Listen to Your Top Tracks</a></li>
                 <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'spotify_login' %}">Login</a></li>
                 <li><a href="{% url 'contact_developers' %}">Contact Us!</a></li>
             </ul>
         </nav>
     </header>
+
 
     <!-- Hero section -->
     <main class="hero">
