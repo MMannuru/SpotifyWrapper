@@ -4,8 +4,6 @@ from django.urls import path
 from django.contrib.auth.views import LoginView  # Import LoginView
 from . import views  # This imports views from the same core directory
 
-
-
 urlpatterns = [
     path('', views.index, name='index'),  # Home page
     path('spotify-login/', views.spotify_login, name='spotify_login'),  # Spotify-specific login
