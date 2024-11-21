@@ -1,0 +1,44 @@
+<h1>{{ wrap.title }}</h1>
+<p>Created at: {{ wrap.created_at|date:"Y-m-d H:i" }}</p>
+
+<h2>Top Tracks</h2>
+<ul>
+    {% for track in wrap.data.top_tracks %}
+    <li>
+        {{ track.name }} by {{ track.artists|join:", " }}
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Top Artists</h2>
+<ul>
+    {% for artist in wrap.data.top_artists %}
+    <li>{{ artist.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Genres</h2>
+<ul>
+    {% for genre in wrap.data.genres %}
+    <li>{{ genre }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Recently Played</h2>
+<ul>
+    {% for track in wrap.data.recently_played %}
+    <li>
+        {{ track.name }} by {{ track.artists|join:", " }} (Played at: {{ track.played_at }})
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Most Played Track</h2>
+<p>
+    {{ wrap.data.most_played_track.name }} by {{ wrap.data.most_played_track.artists|join:", " }}
+</p>
+
+<h2>Total Minutes Listened</h2>
+<p>{{ wrap.data.total_minutes }}</p>
+
+<a href="{% url 'list_wraps' %}">Back to Wraps</a>
