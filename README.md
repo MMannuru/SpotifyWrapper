@@ -75,4 +75,27 @@ The goal of this project was to design and develop a Spotify listening statistic
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd spotify_wrapped 
+   cd spotify_wrapped
+   
+2. Install dependencies:
+   pip install -r requirements.txt
+
+3. Set up your Spotify API keys:
+Create an .env file in the project directory.
+Add your Spotify Client ID and Secret:
+Also add groq api key (very easy to get)
+   CLIENT_ID=<your-client-id>
+   CLIENT_SECRET=<your-client-secret>
+   GROQ_API=<key>
+
+4. Migrate the database:
+  python manage.py makemigrations
+   python manage.py migrate
+
+5. Start the server:
+  python manage.py runserver
+
+6. Access the application:
+  http://127.0.0.1:8000
+
+
