@@ -58,7 +58,7 @@ The goal of this project was to design and develop a Spotify listening statistic
 ## **Tech Stack**
 - **Frontend**: HTML, CSS, JavaScript (Bootstrap for responsiveness)
 - **Backend**: Django (Python)
-- **APIs**: Spotify Web API, LLM API
+- **APIs**: Spotify Web API, Groq API
 - **Database**: SQLite (default Django database, easily configurable for PostgreSQL/MySQL)
 - **Other Tools**: Django's Email Backend for debugging contact forms.
 
