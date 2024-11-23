@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-22 21:56-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: core/templates/core/error.html:122
+msgid "Oops! Something went wrong."
+msgstr "Oups ! Quelque chose s'est mal passé."
+
+#: core/templates/core/error.html:124
+msgid "Log in again"
+msgstr "Connectez-vous à nouveau"
+
+#: core/templates/core/index.html:389
+msgid "Spotify Wrapped"
+msgstr "Spotify enveloppé"
+
+#: core/templates/core/index.html:393
+msgid "Listen to Your Top Tracks"
+msgstr "Écoutez vos meilleurs morceaux"
+
+#: core/templates/core/index.html:394
+msgid "Describe My Taste"
+msgstr "Décrire mon goût"
+
+#: core/templates/core/index.html:395
+msgid "Login"
+msgstr "Se connecter"
+
+#: core/templates/core/index.html:396
+msgid "Contact Us!"
+msgstr "Contactez-nous!"
+
+#: core/templates/core/index.html:404
+msgid "Your Music Journey in 2024 🎶"
+msgstr "Votre parcours musical en 2024 🎶"
+
+#: core/templates/core/index.html:405
+msgid "Discover the songs, artists, and moments that defined your year."
+msgstr ""
+"Découvrez les chansons, les artistes et les moments qui ont défini votre "
+"année."
+
+#: core/templates/core/index.html:406
+msgid "Discover Now"
+msgstr "Découvrez maintenant"
+
+#: core/templates/core/index.html:417
+msgid "Change Language"
+msgstr "Changer de langue"
+
+#: core/templates/core/thank_you.html:77
+msgid "Thank You!"
+msgstr "Merci!"
+
+#: core/templates/core/thank_you.html:78
+msgid "We appreciate your feedback and will get back to you soon."
+msgstr "Nous apprécions vos commentaires et vous répondrons bientôt."
+
+#: core/templates/core/thank_you.html:79
+msgid "Back to Home"
+msgstr "Retour à la maison"
+
+#: spotify_wrapped/settings.py:122
+msgid "English"
+msgstr "Anglais"
+
+#: spotify_wrapped/settings.py:123
+msgid "Spanish"
+msgstr "Espagnol"
+
+#: spotify_wrapped/settings.py:124
+msgid "French"
+msgstr "Français"
