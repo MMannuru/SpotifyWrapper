@@ -4,10 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Background Shapes for Consistency */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Specific positions and animations for each shape */
+        .shape1 {
+            top: 10%; left: 10%;
+        }
+        .shape2 {
+            top: 70%; right: 15%;
+        }
+        .shape3 {
+            bottom: 10%; left: 30%;
+        }
+        .shape4 {
+            top: 40%; left: 70%;
+        }
+
+        /* Content container styling */
+        .content-container {
+            z-index: 2;
+            padding: 50px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .content-container h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #007acc, #f5f0f0, #03a44c);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s infinite linear;
+            margin-bottom: 20px;
+        }
+
+        /* Gradient animation */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .content-container p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .content-container a {
+            display: inline-block;
+            background-color: #02481a;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .content-container a:hover {
+            background-color: #1aab49;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Oops! Something went wrong.</h1>
-    <p>{{ error }}</p>
-    <a href="{% url 'login' %}">Log in again</a>
+
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
+    <!-- Error Message Container -->
+    <div class="content-container">
+        {% load i18n %}
+        <h1>{% trans "Oops! Something went wrong." %}</h1>
+        <p>{{ error }}</p>
+        <a href="{% url 'login' %}">{% trans "Log in again" %}</a>
+    </div>
+
 </body>
 </html>

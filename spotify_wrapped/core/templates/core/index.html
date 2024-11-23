@@ -325,7 +325,7 @@
                 max-width: 300px;
             }
         }
-        
+
         /* Language Form Styling */
         .language-form {
             margin-top: 50px;
@@ -379,7 +379,7 @@
     <div class="background-shape shape2"></div>
     <div class="background-shape shape3"></div>
     <div class="background-shape shape4"></div>
-    
+
     {% load i18n %}
 
     <!-- Header section -->
@@ -404,7 +404,7 @@
         <h2>{% trans "Your Music Journey in 2024 🎶" %}</h2>
         <p>{% trans "Discover the songs, artists, and moments that defined your year." %}</p>
         <a href="{% url 'show_summary' %}" class="btn"> {% trans "Discover Now" %}</a>
-    
+
         <form action="{% url 'set_language' %}" method="post" class="language-form">
         {% csrf_token %}
         <select name="language" class="language-select">
