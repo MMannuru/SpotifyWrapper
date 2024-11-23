@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from core import views  # Import views from core
+from django.urls import path, include
 
 
 
@@ -26,5 +27,6 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),  # Django's built-in auth URLs
     path('callback/', views.spotify_callback, name='callback'),  # Add this route for the callback
     path('summary/', views.show_summary, name='show_summary'),  # Add this for the summary page
+    path('i18n/', include('django.conf.urls.i18n')),  # Add this for language toggle
     path('', include('core.urls')),  # Correct path to core.urls
 ]

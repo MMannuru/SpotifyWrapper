@@ -325,6 +325,51 @@
                 max-width: 300px;
             }
         }
+        
+        /* Language Form Styling */
+        .language-form {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Select Box Styling */
+        .language-select {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Poppins', sans-serif;
+            background-color: #333;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .language-select:focus {
+            border-color: #1db954;
+        }
+
+        /* Button Styling */
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            background-color: #02481a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #1aab49;
+            transform: translateY(-2px);
+        }
+
     </style>
 </head>
 <body>
@@ -334,19 +379,21 @@
     <div class="background-shape shape2"></div>
     <div class="background-shape shape3"></div>
     <div class="background-shape shape4"></div>
+    
+    {% load i18n %}
 
     <!-- Header section -->
     <header>
         <div class="header-logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo" class="spotify-logo">
-            <h1>Spotify Wrapped</h1>
+            <h1>{% trans "Spotify Wrapped" %}</h1>
         </div>
         <nav>
             <ul>
-                <li><a href="{% url 'play_top_tracks' %}">Listen to Your Top Tracks</a></li>
-                <li><a href="{% url 'describe_music_taste' %}">Describe My Taste</a></li>
-                <li><a href="{% url 'spotify_login' %}">Login</a></li>
-                <li><a href="{% url 'contact_developers' %}">Contact Us!</a></li>
+                <li><a href="{% url 'play_top_tracks' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
+                <li><a href="{% url 'describe_music_taste' %}">{% trans "Describe My Taste" %}</a></li>
+                <li><a href="{% url 'spotify_login' %}">{% trans "Login" %}</a></li>
+                <li><a href="{% url 'contact_developers' %}">{% trans "Contact Us!" %}</a></li>
             </ul>
         </nav>
     </header>
@@ -354,9 +401,22 @@
 
     <!-- Hero section -->
     <main class="hero">
-        <h2>Your Music Journey in 2024 🎶</h2>
-        <p>Discover the songs, artists, and moments that defined your year.</p>
-        <a href="{% url 'show_summary' %}" class="btn">Discover Now</a>
+        <h2>{% trans "Your Music Journey in 2024 🎶" %}</h2>
+        <p>{% trans "Discover the songs, artists, and moments that defined your year." %}</p>
+        <a href="{% url 'show_summary' %}" class="btn"> {% trans "Discover Now" %}</a>
+    
+        <form action="{% url 'set_language' %}" method="post" class="language-form">
+        {% csrf_token %}
+        <select name="language" class="language-select">
+            {% for lang_code, lang_name in LANGUAGES %}
+                <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                    {{ lang_name }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn-primary">{% trans "Change Language" %}</button>
+    </form>
+
     </main>
 
 </body>
