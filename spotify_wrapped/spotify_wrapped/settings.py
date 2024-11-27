@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'core',  # Make sure core is included
+    "spotify_wrapped",
 ]
 
 MIDDLEWARE = [
