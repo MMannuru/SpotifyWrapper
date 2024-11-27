@@ -31,8 +31,20 @@ def index(request):
     """
     return render(request, 'core/index.html')
 
-# Register view
 def register(request):
+    """
+    Handles user registration.
+
+    If the request method is POST, it processes the registration form and
+    creates a new user if the form is valid. Otherwise, it renders the
+    registration form.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered registration template or a redirect to the login page after successful registration.
+    """
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -42,6 +54,7 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'core/register.html', {'form': form})
+
 
 from django.shortcuts import render
 from django.http import JsonResponse
