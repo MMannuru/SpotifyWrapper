@@ -207,13 +207,14 @@ def get_user_top_tracks(token):
 import requests
 import json
 
-def get_user_top_artists(token):
+def get_user_top_artists(token, time_range="long_term", limit=10):
     url = "https://api.spotify.com/v1/me/top/artists"
     headers = {
         "Authorization": f"Bearer {token}"
     }
     params = {
-        "limit": 10  # Limit to 10 artists for testing
+        "limit": limit,  # Limit the number of artists to fetch
+        "time_range": time_range  # Use the time_range parameter
     }
 
     response = requests.get(url, headers=headers, params=params)
@@ -275,62 +276,72 @@ import json
 from .models import SpotifyWrap
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def show_summary(request):
     token = request.session.get('spotify_token')
-    if token:
-        # Retrieve data
-        top_tracks = get_user_top_tracks(token)
-        top_artists = get_user_top_artists(token)
-        recently_played = get_recently_played(token)
+    if request.method == "POST":
+        term = request.POST.get('term', 'long_term')  # Default to "long_term" if no term is provided
 
-        # Get the most played song (top track from long-term)
-        most_played_track_data = get_user_top_tracks(token, time_range="long_term")
-        most_played_track = most_played_track_data['items'][0] if most_played_track_data and 'items' in most_played_track_data else None
+        if token:
+            # Retrieve data for the selected term
+            top_tracks = get_user_top_tracks(token, time_range=term)
+            top_artists = get_user_top_artists(token, time_range=term)
+            recently_played = get_recently_played(token)
 
-        # Calculate total minutes listened
-        total_minutes = 0
-        if recently_played:
-            total_duration_ms = sum(item['track']['duration_ms'] for item in recently_played.get('items', []))
-            total_minutes = total_duration_ms / 60000  # Convert milliseconds to minutes
-
-        # Debugging output
-        print(f"Total Minutes Listened: {total_minutes:.2f}")
-
-        # Check if data is present
-        if top_tracks and top_artists and recently_played and most_played_track:
-            genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
-            unique_genres = list(set(genre for sublist in genres for genre in sublist))
-
-            # Limit to 8 genres
-            limited_genres = unique_genres[:8]
-
-            # Create the wrap data dictionary
-            wrap_data = {
-                'top_tracks': top_tracks.get('items', []),
-                'top_artists': top_artists.get('items', []),
-                'genres': limited_genres,
-                'recently_played': recently_played.get('items', []),
-                'most_played_track': most_played_track,
-                'total_minutes': total_minutes
-            }
-
-            # Save wrap to the database
-            SpotifyWrap.objects.create(
-                user=request.user,
-                title="My Spotify Wrap",
-                data=wrap_data
+            # Get the most played song for the selected term
+            most_played_track = (
+                top_tracks['items'][0] if top_tracks and 'items' in top_tracks and top_tracks['items'] else None
             )
 
-            # Render the summary template with the wrap data
-            return render(request, 'core/summary.html', wrap_data)
+            # Calculate total minutes listened from recently played tracks
+            total_minutes = 0
+            if recently_played:
+                total_duration_ms = sum(item['track']['duration_ms'] for item in recently_played.get('items', []))
+                total_minutes = total_duration_ms / 60000  # Convert milliseconds to minutes
+
+            # Check if data is present
+            if top_tracks and top_artists and recently_played and most_played_track:
+                genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
+                unique_genres = list(set(genre for sublist in genres for genre in sublist))
+
+                # Limit to 8 genres
+                limited_genres = unique_genres[:8]
+
+                # Create the wrap data dictionary
+                wrap_data = {
+                    'top_tracks': top_tracks.get('items', []),
+                    'top_artists': top_artists.get('items', []),
+                    'genres': limited_genres,
+                    'recently_played': recently_played.get('items', []),
+                    'most_played_track': most_played_track,
+                    'total_minutes': total_minutes,
+                    'term': term.replace('_term', '').capitalize(),  # Pass the selected term for the template
+                }
+
+                # Save wrap to the database
+                SpotifyWrap.objects.create(
+                    user=request.user,
+                    title=f"My Spotify Wrap ({term.replace('_term', '').capitalize()})",
+                    term=term.replace('_term', ''),  # Save as 'short', 'medium', or 'long'
+                    data=wrap_data
+                )
+
+                # Render the summary template with the wrap data
+                return render(request, 'core/summary.html', wrap_data)
+
+            else:
+                # Render an error page if some data is missing
+                return render(request, 'core/error.html', {
+                    'error': "Failed to retrieve all Spotify data for the selected term. Please try again later."
+                })
         else:
-            # Render an error page if some data is missing
-            return render(request, 'core/error.html', {
-                'error': "Failed to retrieve all Spotify data. Please try again later."
-            })
-    else:
-        # Redirect to login if no token is available
-        return redirect('spotify_login')
+            # Redirect to login if no token is available
+            return redirect('spotify_login')
+
+    # If not a POST request, redirect to the homepage
+    return redirect('index')
+
+
 
 from django.shortcuts import render
 

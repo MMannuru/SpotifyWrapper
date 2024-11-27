@@ -152,6 +152,48 @@
             border-color: #1db954;
         }
 
+        .term-selection-form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .term-selection-form select {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Poppins', sans-serif;
+            background-color: #333;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .term-selection-form select:focus {
+            border-color: #1db954;
+        }
+
+        .term-selection-form button {
+            padding: 0.7rem 2rem;
+            background-color: #02481a;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .term-selection-form button:hover {
+            background-color: #1aab49;
+            transform: translateY(-2px);
+        }
+
 
 
         /* Hero Section */
@@ -400,12 +442,26 @@
 
 
     <!-- Hero section -->
-    <main class="hero">
-        <h2>{% trans "Your Music Journey in 2024 🎶" %}</h2>
-        <p>{% trans "Discover the songs, artists, and moments that defined your year." %}</p>
-        <a href="{% url 'show_summary' %}" class="btn"> {% trans "Discover Now" %}</a>
+    <!-- Hero section -->
+<main class="hero">
+    <h2>{% trans "Your Music Journey in 2024 🎶" %}</h2>
+    <p>{% trans "Discover the songs, artists, and moments that defined your year." %}</p>
 
-        <form action="{% url 'set_language' %}" method="post" class="language-form">
+    <!-- Term Selection Form -->
+    <form action="{% url 'show_summary' %}" method="post" class="term-selection-form">
+        {% csrf_token %}
+        <label for="term" style="color: white; font-size: 1.2rem; margin-bottom: 10px; display: block;">
+            {% trans "Select Your Time Range" %}:
+        </label>
+        <select id="term" name="term" required class="language-select">
+            <option value="short_term">{% trans "Short-Term (Last 4 Weeks)" %}</option>
+            <option value="medium_term">{% trans "Medium-Term (Last 6 Months)" %}</option>
+            <option value="long_term">{% trans "Long-Term (All Time)" %}</option>
+        </select>
+        <button type="submit" class="btn-primary" style="margin-top: 20px;">{% trans "Discover Now" %}</button>
+    </form>
+
+    <form action="{% url 'set_language' %}" method="post" class="language-form">
         {% csrf_token %}
         <select name="language" class="language-select">
             {% for lang_code, lang_name in LANGUAGES %}
@@ -416,8 +472,8 @@
         </select>
         <button type="submit" class="btn-primary">{% trans "Change Language" %}</button>
     </form>
+</main>
 
-    </main>
 
 </body>
 </html>

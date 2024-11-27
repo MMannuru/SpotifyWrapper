@@ -6,16 +6,14 @@ from django.contrib.auth.models import User
 
 #primary key is also defined as "ID" by
 class SpotifyWrap(models.Model):
-    """
-    Model to store Spotify wrap data associated with a user.
-    """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='spotify_wraps')
     title = models.CharField(max_length=255)  # Optional: A title for the wrap
+    term = models.CharField(max_length=50, choices=[('short', 'Short-Term'), ('medium', 'Medium-Term'), ('long', 'Long-Term')])  # Add this field
     data = models.JSONField()  # To store the wrap data (in JSON format)
     created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for when the wrap is created
 
     def __str__(self):
-        return f"{self.title} by {self.user.username}"
+        return f"{self.title} ({self.term}) by {self.user.username}"
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
