@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 19:04-0500\n"
+"POT-Creation-Date: 2024-11-26 20:58-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,19 +57,19 @@ msgstr "TuMensaje"
 msgid "Send Feedback"
 msgstr "Enviar comentarios"
 
-#: core/templates/core/delete_account.html:2
+#: core/templates/core/delete_account.html:87
 msgid "Delete Your Account"
 msgstr "Eliminar tu cuenta"
 
-#: core/templates/core/delete_account.html:3
+#: core/templates/core/delete_account.html:88
 msgid "Are you sure you want to delete your account? This action cannot be undone."
-msgstr "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer."
+msgstr"¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer."
 
-#: core/templates/core/delete_account.html:6
+#: core/templates/core/delete_account.html:91
 msgid "Delete My Account"
 msgstr "Eliminar mi cuenta"
 
-#: core/templates/core/delete_account.html:8
+#: core/templates/core/delete_account.html:93
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -93,7 +93,8 @@ msgstr "Escuche sus mejores canciones"
 msgid "Describe My Taste"
 msgstr "Describe mi gusto"
 
-#: core/templates/core/index.html:395
+#: core/templates/core/index.html:395 core/templates/core/login.html:123
+#: core/templates/core/login.html:128
 msgid "Login"
 msgstr "Acceso"
 
@@ -117,6 +118,22 @@ msgstr "Descubre ahora"
 msgid "Change Language"
 msgstr "Cambiar idioma"
 
+#: core/templates/core/login.html:126
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: core/templates/core/login.html:127
+msgid "Password"
+msgstr "Contraseña"
+
+#: core/templates/core/login.html:130
+msgid "Forgot Password?"
+msgstr "¿Has olvidado tu contraseña?"
+
+#: core/templates/core/login.html:131
+msgid "Create an Account"
+msgstr "Eliminar mi cuenta"
+
 #: core/templates/core/thank_you.html:77
 msgid "Thank You!"
 msgstr "¡Gracias!"
@@ -129,14 +146,14 @@ msgstr "Apreciamos sus comentarios y nos comunicaremos con usted pronto."
 msgid "Back to Home"
 msgstr "Volver a Inicio"
 
-#: spotify_wrapped/settings.py:122
+#: spotify_wrapped/settings.py:123
 msgid "English"
 msgstr "Inglés"
 
-#: spotify_wrapped/settings.py:123
+#: spotify_wrapped/settings.py:124
 msgid "Spanish"
 msgstr "Español"
 
-#: spotify_wrapped/settings.py:124
+#: spotify_wrapped/settings.py:125
 msgid "French"
 msgstr "Francés"
