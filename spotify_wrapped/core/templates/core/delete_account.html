@@ -1,7 +1,96 @@
-<h1>Delete Your Account</h1>
-<p>Are you sure you want to delete your account? This action cannot be undone.</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Delete My Account</button>
-</form>
-<a href="{% url 'index' %}">Cancel</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Your Account"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        /* Container for delete account */
+        .delete-account-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .delete-account-container h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .delete-account-container p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        .delete-account-container form {
+            margin-bottom: 20px;
+        }
+
+        .delete-account-container button {
+            background-color: #d9534f;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-account-container button:hover {
+            background-color: #c9302c;
+        }
+
+        .delete-account-container a {
+            color: #1db954;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .delete-account-container a:hover {
+            color: #1aab49;
+        }
+    </style>
+</head>
+<body>
+{% load i18n %}
+    <div class="delete-account-container">
+        {% load i18n %}
+        <h1>{% trans "Delete Your Account" %}</h1>
+        <p>{% trans "Are you sure you want to delete your account? This action cannot be undone." %}</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">{% trans "Delete My Account" %}</button>
+        </form>
+        <a href="{% url 'index' %}">{% trans "Cancel" %}</a>
+    </div>
+</body>
+</html>
