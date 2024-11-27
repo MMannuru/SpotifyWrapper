@@ -107,9 +107,9 @@
     </style>
 </head>
 <body>
-
-    <h1>Your Top Tracks</h1>
-    <p>Click on the play button to listen to a preview clip.</p>
+    {% load i18n %}
+    <h1>{% trans "Your Top Tracks" %}</h1>
+    <p>{% trans "Click on the play button to listen to a preview clip." %}</p>
 
     <div class="track-list">
         {% for track in top_tracks %}
@@ -131,7 +131,7 @@
                             Your browser does not support the audio element.
                         </audio>
                     {% else %}
-                        <p>No preview available</p>
+                        <p>{% trans "No preview available" %}</p>
                     {% endif %}
                 </div>
             </div>

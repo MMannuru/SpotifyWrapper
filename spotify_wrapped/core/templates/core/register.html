@@ -101,16 +101,16 @@
     </style>
 </head>
 <body>
-
+    {% load i18n %}
     <div class="register-container">
-        <h2>Create an Account</h2>
+        <h2>{% trans "Create an Account" %}</h2>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <p id="password-error" class="error-message">Password does not meet the requirements!</p>
-            <button type="submit" id="submit-btn">Register</button>
+            <p id="password-error" class="error-message">{% trans "Password does not meet the requirements!" %}</p>
+            <button type="submit" id="submit-btn">{% trans "Register" %}</button>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        <p>{% trans "Already have an account?" %} <a href="{% url 'login' %}">{% trans "Login here" %}</a></p>
     </div>
 
     <script>
