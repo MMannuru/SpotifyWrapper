@@ -238,21 +238,6 @@ def get_user_top_tracks(token, time_range="long_term", limit=8):
         print("Failed to retrieve top tracks:", response.status_code, response.text)
         return None
 
-
-
-def get_recently_played(token):
-    url = "https://api.spotify.com/v1/me/player/recently-played"
-    headers = {
-        "Authorization": f"Bearer {token}"
-    }
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print("Failed to retrieve recently played tracks:", response.status_code, response.text)
-        return None
-
 def get_recently_played(token, limit=50):
     url = "https://api.spotify.com/v1/me/player/recently-played"
     headers = {
