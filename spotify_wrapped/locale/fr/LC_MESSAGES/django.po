@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 16:50-0500\n"
+"POT-Creation-Date: 2024-11-27 18:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,40 +19,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: core/templates/core/contact_developers.html:116
+#: core/templates/core/contact_developers_light.html:116
 msgid "Contact the Developers"
 msgstr "Contacter les développeurs"
 
 #: core/templates/core/contact_developers.html:117
+#: core/templates/core/contact_developers_light.html:117
 msgid "We'd love to hear from you! Send us feedback or ask us anything."
 msgstr ""
 "Nous aimerions avoir de vos nouvelles ! Envoyez-nous vos commentaires ou "
 "demandez-nous quoi que ce soit."
 
 #: core/templates/core/contact_developers.html:121
+#: core/templates/core/contact_developers_light.html:121
 msgid "Name:"
 msgstr "Nom:"
 
 #: core/templates/core/contact_developers.html:122
+#: core/templates/core/contact_developers_light.html:122
 msgid "YourName"
 msgstr "VotreNom"
 
 #: core/templates/core/contact_developers.html:124
+#: core/templates/core/contact_developers_light.html:124
 msgid "Email:"
 msgstr "E-mail:"
 
 #: core/templates/core/contact_developers.html:125
+#: core/templates/core/contact_developers_light.html:125
 msgid "YourEmail"
 msgstr "VotreEmail"
 
 #: core/templates/core/contact_developers.html:127
+#: core/templates/core/contact_developers_light.html:127
 msgid "Message:"
 msgstr "Message:"
 
 #: core/templates/core/contact_developers.html:128
+#: core/templates/core/contact_developers_light.html:128
 msgid "YourMessage"
 msgstr "VotreMessage"
 
 #: core/templates/core/contact_developers.html:130
+#: core/templates/core/contact_developers_light.html:130
 msgid "Send Feedback"
 msgstr "Envoyer des commentaires"
 
@@ -116,7 +125,7 @@ msgstr "Oups ! Quelque chose s'est mal passé."
 msgid "Log in again"
 msgstr "Connectez-vous à nouveau"
 
-#: core/templates/core/index.html:431
+#: core/templates/core/index.html:431 core/templates/core/list_wraps.html:193
 msgid "Spotify Wrapped"
 msgstr "Spotify enveloppé"
 
@@ -128,8 +137,8 @@ msgstr "Écoutez vos meilleurs morceaux"
 msgid "Describe My Taste"
 msgstr "Décrire mon goût"
 
-#: core/templates/core/index.html:437 core/templates/core/login.html:123
-#: core/templates/core/login.html:128
+#: core/templates/core/index.html:437 core/templates/core/list_wraps.html:199
+#: core/templates/core/login.html:123 core/templates/core/login.html:128
 msgid "Login"
 msgstr "Se connecter"
 
@@ -170,6 +179,30 @@ msgstr "Découvrez maintenant"
 #: core/templates/core/index.html:473
 msgid "Change Language"
 msgstr "Changer de langue"
+
+#: core/templates/core/list_wraps.html:197 core/templates/core/view_wrap.html:4
+msgid "Top Tracks"
+msgstr "Meilleurs morceaux"
+
+#: core/templates/core/list_wraps.html:198
+msgid "My Taste"
+msgstr "Mon goût"
+
+#: core/templates/core/list_wraps.html:200
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#: core/templates/core/list_wraps.html:207
+msgid "Your Spotify Wraps"
+msgstr "Vos enveloppes Spotify"
+
+#: core/templates/core/list_wraps.html:214
+msgid "Delete"
+msgstr "Supprimer"
+
+#: core/templates/core/list_wraps.html:218
+msgid "No Spotify wraps found."
+msgstr "Aucun wrapper Spotify trouvé."
 
 #: core/templates/core/login.html:126
 msgid "Username"
@@ -226,6 +259,34 @@ msgstr "Nous apprécions vos commentaires et vous répondrons bientôt."
 #: core/templates/core/thank_you.html:79
 msgid "Back to Home"
 msgstr "Retour à la maison"
+
+#: core/templates/core/view_wrap.html:2
+msgid "Created at:"
+msgstr "Créé à :"
+
+#: core/templates/core/view_wrap.html:13
+msgid "Top Artists"
+msgstr "Meilleurs artistes"
+
+#: core/templates/core/view_wrap.html:20
+msgid "Genres"
+msgstr "Genre"
+
+#: core/templates/core/view_wrap.html:27
+msgid "Recently Played"
+msgstr "Joué récemment"
+
+#: core/templates/core/view_wrap.html:36
+msgid "Most Played Track"
+msgstr "Piste la plus jouée"
+
+#: core/templates/core/view_wrap.html:41
+msgid "Total Minutes Listened"
+msgstr "Total des minutes écoutées"
+
+#: core/templates/core/view_wrap.html:44
+msgid "Back to Wraps"
+msgstr "Retour à Wraps"
 
 #: spotify_wrapped/settings.py:123
 msgid "English"

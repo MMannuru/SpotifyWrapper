@@ -179,6 +179,7 @@
     </style>
 </head>
 <body>
+    {% load i18n %}
     <!-- Background Shapes -->
     <div class="background-shape shape1"></div>
     <div class="background-shape shape2"></div>
@@ -189,32 +190,32 @@
     <header>
         <div class="header-logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo">
-            <h1>Spotify Wrapped</h1>
+            <h1>{% trans "Spotify Wrapped" %}</h1>
         </div>
         <nav>
             <ul>
-                <li><a href="{% url 'play_top_tracks' %}">Top Tracks</a></li>
-                <li><a href="{% url 'describe_music_taste' %}">My Taste</a></li>
-                <li><a href="{% url 'spotify_login' %}">Login</a></li>
-                <li><a href="{% url 'contact_developers' %}">Contact Us</a></li>
+                <li><a href="{% url 'play_top_tracks' %}">{% trans "Top Tracks" %}</a></li>
+                <li><a href="{% url 'describe_music_taste' %}">{% trans "My Taste" %}</a></li>
+                <li><a href="{% url 'spotify_login' %}">{% trans "Login" %}</a></li>
+                <li><a href="{% url 'contact_developers' %}">{% trans "Contact Us" %}</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Main Section -->
     <div class="wraps-container">
-        <h2>Your Spotify Wraps</h2>
+        <h2>{% trans "Your Spotify Wraps" %}</h2>
         <ul class="wraps-list">
             {% for wrap in wraps %}
             <li>
                 <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
                 <form method="POST" action="{% url 'delete_wrap' wrap.id %}" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit">Delete</button>
+                    <button type="submit">{% trans "Delete" %}</button>
                 </form>
             </li>
             {% empty %}
-            <li class="empty">No Spotify wraps found.</li>
+            <li class="empty">{% trans "No Spotify wraps found." %}</li>
             {% endfor %}
         </ul>
     </div>
