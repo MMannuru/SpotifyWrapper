@@ -63,7 +63,22 @@ from django.views.decorators.csrf import csrf_exempt
 from groq import Groq
 
 @csrf_exempt
+@csrf_exempt
 def describe_music_taste(request):
+    """
+    Generates a dynamic description of the user's music taste.
+
+    If a POST request is made:
+        - Retrieves user input for music data or fetches the top artist from Spotify data.
+        - Uses the Groq API to generate a description based on the user's music data.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: A JSON response containing the generated description or an error message.
+        HttpResponse: The rendered template if the request method is not POST.
+    """
     if request.method == "POST":
         user_music_data = request.POST.get("music_data")
         user = request.user
