@@ -46,11 +46,26 @@ from groq import Groq
 def describe_music_taste(request):
     if request.method == "POST":
         user_music_data = request.POST.get("music_data")
+        user = request.user
+
+        # If user_music_data is empty, fetch dynamic Spotify data
+        if not user_music_data:
+            try:
+                # Fetch the latest SpotifyWrap and use the top artist
+                spotify_wrap = SpotifyWrap.objects.filter(user=user).latest('created_at')
+                top_artists = spotify_wrap.data.get('top_artists', [])
+                if top_artists:
+                    user_music_data = top_artists[0]  # Use the top artist
+                else:
+                    return JsonResponse({"error": "No top artists data found. Please input your music taste manually."}, status=400)
+            except SpotifyWrap.DoesNotExist:
+                return JsonResponse({"error": "No Spotify data found. Please input your music taste manually."}, status=400)
 
         client = Groq(
             api_key=settings.GROQ_API_KEY
         )
 
+        # Use the top artist in the prompt
         question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress. Keep it short and sweet."
 
         try:
@@ -339,10 +354,6 @@ def play_top_tracks(request):
         return redirect(spotify_auth_url())
 
 
-
-
-
-# views.py
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from core.forms import ContactForm

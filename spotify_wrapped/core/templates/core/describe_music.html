@@ -77,27 +77,6 @@
         }
 
         .button-link {
-            display: inline-block; /* Makes it behave like a button */
-            padding: 10px 20px; /* Adds padding */
-            background-color: #1db954; /* Spotify green */
-            color: #fff; /* White text */
-            text-decoration: none; /* Removes underline */
-            border-radius: 25px; /* Rounded corners */
-            font-weight: bold; /* Makes the text bold */
-            transition: background-color 0.3s ease; /* Smooth hover transition */
-        }
-
-        .button-link:hover {
-            background-color: #1aab49; /* Darker green on hover */
-        }
-
-        ul {
-            list-style-type: none; /* Remove bullet points from all list items */
-            padding-left: 0; /* Remove any default padding */
-        }
-
-        .button-link {
-            /* Your existing button styles */
             display: inline-block;
             padding: 10px 20px;
             background-color: #1db954;
@@ -112,17 +91,38 @@
             background-color: #1aab49;
         }
 
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
         /* Form Section */
         .form-section {
             display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            gap: 20px;
             padding: 40px;
             z-index: 2;
         }
+
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
         #music-form {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 15px;
+            transition: all 0.3s ease; /* Smooth transitions */
         }
+
         #music_data {
             width: 300px;
             padding: 0.7em;
@@ -131,6 +131,7 @@
             border-radius: 50px;
             text-align: center;
             color: #000;
+            transition: all 0.3s ease; /* Smooth transitions */
         }
         #music-form button {
             padding: 0.7em 1.5em;
@@ -163,8 +164,8 @@
             border-radius: 10px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
             text-align: center;
-            max-height: 300px; /* Set max-height */
-            overflow-y: auto; /* Enable scrolling */
+            max-height: 300px;
+            overflow-y: auto;
         }
         .result-card h2 {
             font-size: 1.5em;
@@ -180,48 +181,31 @@
         .hidden {
             display: none;
         }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem; /* Adjusted font size for smaller screens */
+                font-size: 2rem;
             }
             .header p {
-                font-size: 1rem; /* Reduced font size for better readability */
+                font-size: 1rem;
             }
             .form-section {
-                padding: 10px; /* Smaller padding for compact design */
+                padding: 10px;
             }
             .result-card {
-                padding: 15px; /* Ensure proper spacing */
+                padding: 15px;
             }
             #music-form {
-                width: 100%; /* Full width for small screens */
+                width: 100%;
             }
             #music_data, #music-form button {
-                width: 90%; /* Slightly narrower inputs and buttons */
-                font-size: 0.9rem; /* Adjusted font size for readability */
+                width: 90%;
+                font-size: 0.9rem;
             }
             #music_data::placeholder {
-                font-size: 0.8rem; /* Slightly smaller placeholder text */
-                color: #aaa; /* Placeholder color */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2rem; /* Smaller font size for very small screens */
-            }
-            .header p {
-                font-size: 1.2rem; /* Reduced font size for small screens */
-            }
-            .button-link {
-                font-size: 1rem; /* Smaller button font size */
-            }
-            #music_data {
-                font-size: 0.9rem; /* Smaller font size for input text */
-            }
-            #music_data::placeholder {
-                font-size: 0.3rem; /* Smaller font size for placeholder */
+                font-size: 0.8rem;
+                color: #aaa;
             }
         }
     </style>
@@ -243,9 +227,17 @@
 
     <!-- Form Section -->
     <section class="form-section">
+        <div class="form-toggle">
+            <label>
+                <input type="radio" name="input_option" value="manual" checked onchange="toggleInput()"> Enter your music taste
+            </label>
+            <label>
+                <input type="radio" name="input_option" value="dynamic" onchange="toggleInput()"> Use my Spotify data
+            </label>
+        </div>
         <form id="music-form" method="POST">
             {% csrf_token %}
-            <input type="text" id="music_data" name="music_data" placeholder="Enter your favorite artists or genres" required>
+            <input type="text" id="music_data" name="music_data" placeholder="Enter your favorite artists or genres">
             <button type="button" onclick="getMusicDescription()">Describe Me</button>
         </form>
     </section>
@@ -259,8 +251,24 @@
     </section>
 
     <script>
+        function toggleInput() {
+            const inputOption = document.querySelector('input[name="input_option"]:checked').value;
+            const musicDataInput = document.getElementById("music_data");
+            const musicForm = document.getElementById("music-form");
+
+            if (inputOption === "dynamic") {
+                musicDataInput.style.display = "none";
+                musicForm.style.justifyContent = "center"; // Center the button
+            } else {
+                musicDataInput.style.display = "block";
+                musicForm.style.justifyContent = "start"; // Restore normal alignment
+            }
+        }
+
         function getMusicDescription() {
+            const inputOption = document.querySelector('input[name="input_option"]:checked').value;
             const musicData = document.getElementById("music_data").value;
+            const bodyData = inputOption === "dynamic" ? "" : `music_data=${encodeURIComponent(musicData)}`;
 
             fetch("{% url 'describe_music_taste' %}", {
                 method: "POST",
@@ -268,7 +276,7 @@
                     "Content-Type": "application/x-www-form-urlencoded",
                     "X-CSRFToken": "{{ csrf_token }}",
                 },
-                body: `music_data=${encodeURIComponent(musicData)}`
+                body: bodyData
             })
             .then(response => response.json())
             .then(data => {
