@@ -133,8 +133,20 @@ SCOPE = 'user-top-read user-read-recently-played'  # Permissions you're asking f
 from urllib.parse import urlencode
 
 def spotify_auth_url(request):
+    """
+    Constructs the Spotify authorization URL with required parameters.
+
+    This function generates the URL for Spotify's authorization endpoint,
+    including the client ID, response type, redirect URI, and requested scopes.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        str: The full Spotify authorization URL with query parameters.
+    """
     redirect_uri = get_redirect_uri(request)
-    print(f"Using redirect URI: {redirect_uri}")  # Log the redirect URI
+    print(f"Using redirect URI: {redirect_uri}")  # Log the redirect URI for debugging
     auth_base_url = "https://accounts.spotify.com/authorize"
     params = {
         "client_id": CLIENT_ID,
@@ -146,15 +158,39 @@ def spotify_auth_url(request):
 
 
 
+
 def spotify_login(request):
+    """
+    Redirects the user to Spotify's login page.
+
+    This function uses the `spotify_auth_url` function to generate the Spotify
+    authorization URL and redirects the user to it.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponseRedirect: A redirect to Spotify's authorization page.
+    """
     return redirect(spotify_auth_url(request))
+
 
 def get_redirect_uri(request):
     """
-    Dynamically generate the redirect URI based on the incoming request's host.
+    Dynamically generates the redirect URI for the Spotify authorization flow.
+
+    This function constructs the redirect URI based on the current request's host,
+    ensuring compatibility with the application's deployment environment.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        str: The dynamically generated redirect URI.
     """
     host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
     return f"http://{host}/callback/"
+
 
 
 
@@ -171,6 +207,22 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 def spotify_callback(request):
+    """
+    Handles the Spotify authorization callback to exchange the authorization code for an access token.
+
+    This function:
+    1. Retrieves the authorization code from the callback request.
+    2. Exchanges the authorization code for an access token using Spotify's API.
+    3. Fetches the user's Spotify profile information.
+    4. Creates or retrieves a Django user based on the Spotify ID.
+    5. Logs the user into the application and stores the access token in the session.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirects to the homepage if successful or renders an error page if any step fails.
+    """
     code = request.GET.get('code')
 
     # Exchange the authorization code for an access token
@@ -226,6 +278,19 @@ def spotify_callback(request):
 import requests
 
 def get_user_top_tracks(token):
+    """
+    Retrieves the user's top tracks from Spotify.
+
+    This function sends a GET request to Spotify's API to fetch the user's most played tracks.
+    The authorization token is required to authenticate the request.
+
+    Args:
+        token (str): The Spotify access token for the user.
+
+    Returns:
+        dict or None: A dictionary containing the user's top tracks if the request is successful,
+                      otherwise None if the request fails.
+    """
     url = "https://api.spotify.com/v1/me/top/tracks"
     headers = {
         "Authorization": f"Bearer {token}"
@@ -243,6 +308,18 @@ import requests
 import json
 
 def get_user_top_artists(token, time_range="long_term", limit=10):
+    """
+    Retrieves the user's top artists from Spotify within a specified time range.
+
+    Args:
+        token (str): The Spotify access token for the user.
+        time_range (str): The time range for top artists (e.g., "short_term", "medium_term", "long_term").
+        limit (int): The maximum number of top artists to fetch (default is 10).
+
+    Returns:
+        dict or None: A dictionary containing the user's top artists if the request is successful,
+                      otherwise None if the request fails.
+    """
     url = "https://api.spotify.com/v1/me/top/artists"
     headers = {
         "Authorization": f"Bearer {token}"
@@ -273,6 +350,18 @@ def get_user_top_artists(token, time_range="long_term", limit=10):
         return None
 
 def get_user_top_tracks(token, time_range="long_term", limit=8):
+    """
+    Retrieves the user's top tracks from Spotify within a specified time range.
+
+    Args:
+        token (str): The Spotify access token for the user.
+        time_range (str): The time range for top tracks (e.g., "short_term", "medium_term", "long_term").
+        limit (int): The maximum number of top tracks to fetch (default is 8).
+
+    Returns:
+        dict or None: A dictionary containing the user's top tracks if the request is successful,
+                      otherwise None if the request fails.
+    """
     url = "https://api.spotify.com/v1/me/top/tracks"
     headers = {
         "Authorization": f"Bearer {token}"
@@ -290,6 +379,17 @@ def get_user_top_tracks(token, time_range="long_term", limit=8):
         return None
 
 def get_recently_played(token, limit=50):
+    """
+    Retrieves the user's recently played tracks from Spotify.
+
+    Args:
+        token (str): The Spotify access token for the user.
+        limit (int): The maximum number of recently played tracks to fetch (default is 50).
+
+    Returns:
+        dict or None: A dictionary containing the user's recently played tracks if the request is successful,
+                      otherwise None if the request fails.
+    """
     url = "https://api.spotify.com/v1/me/player/recently-played"
     headers = {
         "Authorization": f"Bearer {token}"
@@ -313,6 +413,21 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def show_summary(request):
+    """
+    Handles the Spotify wrap summary generation for a selected time range (short, medium, or long term).
+
+    This function retrieves the user's Spotify top tracks, top artists, and recently played tracks based on
+    the selected term (time range). It calculates additional insights like total minutes listened and most
+    played genres. The data is saved in the database and rendered on the summary page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the summary page with the wrap data if successful.
+        HttpResponseRedirect: Redirects to the login page if no token is available.
+        HttpResponseRedirect: Redirects to the homepage if the request is not a POST request.
+    """
     token = request.session.get('spotify_token')
     if request.method == "POST":
         term = request.POST.get('term', 'long_term')  # Default to "long_term" if no term is provided
@@ -381,6 +496,19 @@ def show_summary(request):
 from django.shortcuts import render
 
 def play_top_tracks(request):
+    """
+    Fetches and plays the user's top 5 tracks from Spotify.
+
+    This function retrieves the user's top tracks from Spotify and passes them to the
+    template for playback. If the data cannot be retrieved, an error page is displayed.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the play_top_tracks.html template with the top tracks.
+        HttpResponseRedirect: Redirects to the Spotify authorization URL if no token is available.
+    """
     token = request.session.get('spotify_token')
 
     if token:
@@ -405,6 +533,20 @@ from django.core.mail import EmailMessage
 from core.forms import ContactForm
 
 def contact_developers(request):
+    """
+    Handles user feedback submission and sends an email to the development team.
+
+    This function displays a contact form where users can provide their name, email,
+    and message. If the form is valid, the message is sent to the developers, and the
+    user is redirected to a thank-you page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the contact_developers.html template with the form.
+        HttpResponseRedirect: Redirects to a thank-you page after the form is submitted successfully.
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -429,12 +571,46 @@ def contact_developers(request):
 from django.shortcuts import render
 
 def thank_you(request):
+    """
+    Renders a thank-you page after the user has completed a specific action,
+    such as sending feedback or an invitation.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the thank_you.html template.
+    """
     return render(request, 'core/thank_you.html')
 
 def generate_invite_code():
+    """
+    Generates a unique invite code using UUID.
+
+    This function creates a universally unique identifier (UUID) that can be used
+    as an invitation code to uniquely identify each invitation.
+
+    Returns:
+        str: A string representation of the generated UUID.
+    """
     return str(uuid.uuid4())
 
 def invite_friend(request):
+    """
+    Allows a user to invite a friend via email to join the platform.
+
+    This function handles the POST request to create an invitation. It generates a unique
+    invite code, saves the invitation to the database, and sends an email to the recipient
+    with a registration link containing the invite code.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the invite_friend.html template for GET requests.
+        HttpResponseRedirect: Redirects to the 'invite_sent' page after successfully
+                              sending an invitation email.
+    """
     if request.method == "POST":
         email = request.POST.get("email")
         invite_code = generate_invite_code()
@@ -454,6 +630,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def list_wraps(request):
+    """
+    Fetches and displays a list of all SpotifyWrap entries for the current user.
+
+    This function retrieves all SpotifyWrap objects associated with the logged-in user,
+    ordered by creation date in descending order, and renders them on the `list_wraps.html` template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the `list_wraps.html` template with the list of wraps.
+    """
     wraps = SpotifyWrap.objects.filter(user=request.user).order_by('-created_at')  # Fetch wraps for the current user
     return render(request, 'core/list_wraps.html', {'wraps': wraps})
 
@@ -461,6 +649,20 @@ from django.shortcuts import get_object_or_404
 
 @login_required
 def view_wrap(request, wrap_id):
+    """
+    Fetches and displays details of a specific SpotifyWrap entry for the current user.
+
+    This function retrieves a specific SpotifyWrap object by its ID, ensuring that the
+    wrap belongs to the logged-in user. The details are rendered on the `view_wrap.html` template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        wrap_id (int): The ID of the SpotifyWrap object to be retrieved.
+
+    Returns:
+        HttpResponse: Renders the `view_wrap.html` template with the wrap details.
+        Http404: If the SpotifyWrap object is not found or does not belong to the user.
+    """
     wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)  # Ensure the wrap belongs to the user
     return render(request, 'core/view_wrap.html', {'wrap': wrap})
 
@@ -470,12 +672,40 @@ from django.urls import reverse
 
 @login_required
 def delete_wrap(request, wrap_id):
+    """
+    Deletes a specific SpotifyWrap entry for the current user.
+
+    This function ensures that the SpotifyWrap object to be deleted belongs to the logged-in user.
+    If the request method is POST, the wrap is deleted, and the user is redirected to the list of wraps.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        wrap_id (int): The ID of the SpotifyWrap object to be deleted.
+
+    Returns:
+        HttpResponseRedirect: Redirects to the `list_wraps` page after successful deletion.
+        Http404: If the SpotifyWrap object is not found or does not belong to the user.
+    """
     wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)  # Ensure the wrap belongs to the user
     if request.method == 'POST':
         wrap.delete()
     return HttpResponseRedirect(reverse('list_wraps'))
 
 def delete_account(request):
+    """
+    Deletes the current user's account and all associated data.
+
+    This function handles the deletion of the logged-in user's account, including
+    all associated SpotifyWrap entries. After deletion, the user is redirected to
+    the homepage.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the `delete_account.html` template for confirmation.
+        HttpResponseRedirect: Redirects to the homepage (`index`) after account deletion.
+    """
     if request.method == 'POST':
         user = request.user
         user.delete()  # Deletes the user and all associated data (including SpotifyWraps)
