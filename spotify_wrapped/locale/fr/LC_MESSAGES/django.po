@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 21:56-0500\n"
+"POT-Creation-Date: 2024-11-26 18:57-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: core/templates/core/contact_developers.html:116
+msgid "Contact the Developers"
+msgstr "Contacter les développeurs"
+
+#: core/templates/core/contact_developers.html:117
+msgid "We'd love to hear from you! Send us feedback or ask us anything."
+msgstr ""
+"Nous aimerions avoir de vos nouvelles ! Envoyez-nous vos commentaires ou "
+"demandez-nous quoi que ce soit."
+
+#: core/templates/core/contact_developers.html:121
+msgid "Name:"
+msgstr "Nom:"
+
+#: core/templates/core/contact_developers.html:122
+msgid "YourName"
+msgstr "VotreNom"
+
+#: core/templates/core/contact_developers.html:124
+msgid "Email:"
+msgstr "E-mail:"
+
+#: core/templates/core/contact_developers.html:125
+msgid "YourEmail"
+msgstr "VotreEmail"
+
+#: core/templates/core/contact_developers.html:127
+msgid "Message:"
+msgstr "Message:"
+
+#: core/templates/core/contact_developers.html:128
+msgid "YourMessage"
+msgstr "VotreMessage"
+
+#: core/templates/core/contact_developers.html:130
+msgid "Send Feedback"
+msgstr "Envoyer des commentaires"
 
 #: core/templates/core/error.html:122
 msgid "Oops! Something went wrong."
