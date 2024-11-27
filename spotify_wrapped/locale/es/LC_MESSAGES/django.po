@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 18:57-0500\n"
+"POT-Creation-Date: 2024-11-26 19:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,6 +56,22 @@ msgstr "TuMensaje"
 #: core/templates/core/contact_developers.html:130
 msgid "Send Feedback"
 msgstr "Enviar comentarios"
+
+#: core/templates/core/delete_account.html:2
+msgid "Delete Your Account"
+msgstr "Eliminar tu cuenta"
+
+#: core/templates/core/delete_account.html:3
+msgid "Are you sure you want to delete your account? This action cannot be undone."
+msgstr "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer."
+
+#: core/templates/core/delete_account.html:6
+msgid "Delete My Account"
+msgstr "Eliminar mi cuenta"
+
+#: core/templates/core/delete_account.html:8
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: core/templates/core/error.html:122
 msgid "Oops! Something went wrong."
