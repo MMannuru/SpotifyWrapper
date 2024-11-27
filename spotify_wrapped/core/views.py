@@ -19,10 +19,17 @@ from .models import SpotifyWrap
 from django.contrib.auth import login
 
 
-# Index view
 def index(request):
-    return render(request, 'core/index.html')
+    """
+    Renders the homepage of the application.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered homepage template.
+    """
+    return render(request, 'core/index.html')
 
 # Register view
 def register(request):
