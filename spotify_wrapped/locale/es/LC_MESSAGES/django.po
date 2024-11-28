@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 01:48-0500\n"
+"POT-Creation-Date: 2024-11-28 03:58-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,7 +125,7 @@ msgstr "¡Ups! Algo salió mal."
 msgid "Log in again"
 msgstr "Inicia sesión nuevamente"
 
-#: core/templates/core/index.html:435 core/templates/core/list_wraps.html:193
+#: core/templates/core/index.html:435 core/templates/core/list_wraps.html:212
 msgid "Spotify Wrapped"
 msgstr "Spotify envuelto"
 
@@ -145,7 +145,7 @@ msgstr "Ver envolturas"
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: core/templates/core/index.html:447 core/templates/core/list_wraps.html:199
+#: core/templates/core/index.html:447 core/templates/core/list_wraps.html:218
 #: core/templates/core/login.html:124 core/templates/core/login.html:129
 msgid "Login"
 msgstr "Acceso"
@@ -190,28 +190,44 @@ msgstr "Seleccione su idioma"
 msgid "Change Language"
 msgstr "Cambiar idioma"
 
-#: core/templates/core/list_wraps.html:197
+#: core/templates/core/list_wraps.html:216
 #: core/templates/core/view_wrap.html:114
 msgid "Top Tracks"
 msgstr "Pistas principales"
 
-#: core/templates/core/list_wraps.html:198
+#: core/templates/core/list_wraps.html:217
 msgid "My Taste"
 msgstr "Mi Gusto"
 
-#: core/templates/core/list_wraps.html:200
+#: core/templates/core/list_wraps.html:219
 msgid "Contact Us"
 msgstr "Contáctenos"
 
-#: core/templates/core/list_wraps.html:207
+#: core/templates/core/list_wraps.html:226
 msgid "Your Spotify Wraps"
 msgstr "Tus envolturas de Spotify"
 
-#: core/templates/core/list_wraps.html:214
+#: core/templates/core/list_wraps.html:234
+msgid "Share:"
+msgstr "Compartir:"
+
+#: core/templates/core/list_wraps.html:235
+msgid "Link copied to clipboard for Instagram! Press OK to post."
+msgstr "¡Enlace copiado al portapapeles para Instagram! Presione Aceptar para publicar."
+
+#: core/templates/core/list_wraps.html:236
+msgid "Link copied to clipboard for LinkedIn! Press OK to post."
+msgstr "¡Enlace copiado al portapapeles de LinkedIn! Presione Aceptar para publicar."
+
+#: core/templates/core/list_wraps.html:237
+msgid "Link copied to clipboard for Twitter (X)! Press OK to post."
+msgstr "¡Enlace copiado al portapapeles de Twitter (X)! Presione Aceptar para publicar."
+
+#: core/templates/core/list_wraps.html:244
 msgid "Delete"
 msgstr "Borrar"
 
-#: core/templates/core/list_wraps.html:218
+#: core/templates/core/list_wraps.html:248
 msgid "No Spotify wraps found."
 msgstr "No se encontraron envolturas de Spotify."
 
@@ -232,7 +248,7 @@ msgid "Create an Account"
 msgstr "Crear una cuenta"
 
 #: core/templates/core/play_top_tracks.html:111
-#: core/templates/core/summary.html:305
+#: core/templates/core/summary.html:306
 msgid "Your Top Tracks"
 msgstr "Tus mejores canciones"
 
@@ -261,63 +277,64 @@ msgstr "¿Ya tienes una cuenta?"
 msgid "Login here"
 msgstr "Inicia sesión aquí"
 
-#: core/templates/core/summary.html:289
+#: core/templates/core/summary.html:290
 msgid "Welcome!"
 msgstr "¡Bienvenido!"
 
-#: core/templates/core/summary.html:290
+#: core/templates/core/summary.html:291
 msgid "Your personalized Spotify Wrapped 2024"
 msgstr "Tu Spotify Wrapped 2024 personalizado"
 
-#: core/templates/core/summary.html:294
+#: core/templates/core/summary.html:295
 msgid "The Total Time You Spent Jamming This year"
 msgstr "El tiempo total que pasaste tocando este año"
 
-#: core/templates/core/summary.html:295
+#: core/templates/core/summary.html:296
 msgid "minutes"
 msgstr "minutos"
 
-#: core/templates/core/summary.html:300
+#: core/templates/core/summary.html:301
 msgid "These tracks had your heart in 2024"
 msgstr "Estas pistas tenían tu corazón en 2024"
 
-#: core/templates/core/summary.html:316
+#: core/templates/core/summary.html:317
 msgid "No top tracks available"
 msgstr "No hay pistas principales disponibles"
 
-#: core/templates/core/summary.html:319
+#: core/templates/core/summary.html:320
 msgid "Spotify does not have enough data to show your top tracks."
-msgstr "Spotify no tiene suficientes datos para mostrar tus pistas principales."
+msgstr ""
+"Spotify no tiene suficientes datos para mostrar tus pistas principales."
 
-#: core/templates/core/summary.html:328
+#: core/templates/core/summary.html:329
 msgid "Genres that defined your vibe"
 msgstr "Géneros que definieron tu vibra"
 
-#: core/templates/core/summary.html:333
+#: core/templates/core/summary.html:334
 msgid "Favorite Genres"
 msgstr "Géneros favoritos"
 
-#: core/templates/core/summary.html:338
+#: core/templates/core/summary.html:339
 msgid "No genres available"
 msgstr "No hay géneros disponibles"
 
-#: core/templates/core/summary.html:345
+#: core/templates/core/summary.html:346
 msgid "Reliving your recent hits"
 msgstr "Reviviendo tus éxitos recientes"
 
-#: core/templates/core/summary.html:350
+#: core/templates/core/summary.html:351
 msgid "Recent Listening History"
 msgstr "Historial de escucha reciente"
 
-#: core/templates/core/summary.html:360
+#: core/templates/core/summary.html:361
 msgid "No recent listening history available"
 msgstr "No hay historial de escucha reciente disponible"
 
-#: core/templates/core/summary.html:367
+#: core/templates/core/summary.html:368
 msgid "And Lastly, The Song You Could Not Stop Listenting To..."
 msgstr "Y por último, la canción que no podías dejar de escuchar..."
 
-#: core/templates/core/summary.html:377
+#: core/templates/core/summary.html:378
 msgid "No data available for your most played song."
 msgstr "No hay datos disponibles para tu canción más reproducida."
 

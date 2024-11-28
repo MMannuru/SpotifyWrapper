@@ -146,29 +146,28 @@
 
         ul.wraps-list li a {
             color: #1db954;
-            font-weight: bold;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
 
         ul.wraps-list li a:hover {
-            color: #00D4FF;
+            color: #ffffff;
         }
 
         ul.wraps-list li button {
             background-color: transparent;
-            border: 2px solid #FF007A;
-            color: #FF007A;
+            border: 2px solid #ff0000;
+            color: #ff0000;
             border-radius: 5px;
             padding: 5px 15px;
-            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: normal;
         }
 
         ul.wraps-list li button:hover {
-            background-color: #FF007A;
+            background-color: #ff0000;
             color: white;
         }
 
@@ -176,6 +175,26 @@
             color: #ccc;
             font-size: 1.2rem;
         }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 15px;
+            font-weight: normal;
+        }
+
+        .share-buttons a {
+            color: #1db954;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .share-buttons a:hover {
+            color: #ffffff;
+        }
+
     </style>
 </head>
 <body>
@@ -209,7 +228,18 @@
             {% for wrap in wraps %}
             <li>
                 <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
-                <form method="POST" action="{% url 'delete_wrap' wrap.id %}" style="display: inline;">
+
+                <!-- Share Links -->
+                <div class="share-buttons">
+                    <span>{% trans "Share:" %}</span>
+                    <a href="#" onclick="copyAndOpen('{{ request.build_absolute_uri }}', 'https://www.instagram.com', '{% trans "Link copied to clipboard for Instagram! Press OK to post." %}')">Instagram</a> |
+                    <a href="#" onclick="copyAndOpen('{{ request.build_absolute_uri }}', 'https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}', '{% trans "Link copied to clipboard for LinkedIn! Press OK to post." %}')">LinkedIn</a> |
+                    <a href="#" onclick="copyAndOpen('{{ request.build_absolute_uri }}', 'https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ wrap.title }}', '{% trans "Link copied to clipboard for Twitter (X)! Press OK to post." %}')">Twitter (X)</a>
+                </div>
+
+
+                <!-- Delete Form -->
+                <form method="POST" action="{% url 'delete_wrap' wrap.id %}" style="display: inline; margin-left: 20px;">
                     {% csrf_token %}
                     <button type="submit">{% trans "Delete" %}</button>
                 </form>
@@ -219,5 +249,23 @@
             {% endfor %}
         </ul>
     </div>
+
+    <script>
+        function copyAndOpen(text, url, message) {
+            // Copy the link to the clipboard
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Alert the user
+            alert(message);
+            
+            // Open the social media link in a new window
+            window.open(url, '_blank');
+        }
+    </script>
 </body>
 </html>
