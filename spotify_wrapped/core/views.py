@@ -91,9 +91,20 @@ def spotify_auth_url(request):
         "response_type": "code",
         "redirect_uri": redirect_uri,
         "scope": SCOPE,
+        "show_dialog": "true",  # Force Spotify to show the login dialog
     }
     return f"{auth_base_url}?{urlencode(params)}"
 
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+
+def logout_view(request):
+    # Log the user out
+    logout(request)
+    request.session.flush()
+    # Redirect to the Spotify login page
+    return redirect('https://accounts.spotify.com/en/login')
 
 
 def spotify_login(request):
@@ -135,13 +146,10 @@ def spotify_callback(request):
 
     response = requests.post(token_url, data=payload)
     if response.status_code != 200:
-        return render(request, 'core/error.html', {'error': 'Failed to obtain access token from Spotify'})
+        return render(request, 'core/error.html', {'error': 'Failed to obtain access token from Spotify.'})
 
     token_info = response.json()
     access_token = token_info.get('access_token')
-
-    if not access_token:
-        return render(request, 'core/error.html', {'error': 'Access token not found in Spotify response'})
 
     # Fetch Spotify user profile
     user_profile_url = "https://api.spotify.com/v1/me"
@@ -149,27 +157,27 @@ def spotify_callback(request):
     user_response = requests.get(user_profile_url, headers=headers)
 
     if user_response.status_code != 200:
-        return render(request, 'core/error.html', {'error': 'Failed to fetch user profile from Spotify'})
+        return render(request, 'core/error.html', {'error': 'Failed to fetch user profile from Spotify.'})
 
     user_data = user_response.json()
-    spotify_id = user_data.get('id')  # Unique Spotify ID
-    email = user_data.get('email', f"{spotify_id}@example.com")  # Fallback email
-    display_name = user_data.get('display_name', f"Spotify User {spotify_id[:8]}")  # Fallback display name
+    spotify_id = user_data.get('id')
+    email = user_data.get('email', f"{spotify_id}@example.com")
+    display_name = user_data.get('display_name', f"Spotify User {spotify_id[:8]}")
 
-    # Create or get the Django user
+    # Log in the user to your Django app
     user, created = User.objects.get_or_create(
         username=spotify_id,
         defaults={'email': email, 'first_name': display_name}
     )
-
-    # Log the user in
     login(request, user)
 
-    # Store the access token in the session
+    # Store tokens and user info in session
     request.session['spotify_token'] = access_token
     request.session['display_name'] = display_name
 
-    return redirect('index')
+    # Redirect to the home page
+    return redirect('index')  # Ensure 'index' matches your home page URL
+
 
 
 

@@ -392,11 +392,19 @@
             <ul>
                 <li><a href="{% url 'play_top_tracks' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
                 <li><a href="{% url 'describe_music_taste' %}">{% trans "Describe My Taste" %}</a></li>
-                <li><a href="{% url 'spotify_login' %}">{% trans "Login" %}</a></li>
+                {% if user.is_authenticated and request.session.spotify_token %}
+                <li><a href="{% url 'list_wraps' %}">View Wraps</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
+                {% else %}
+                    <li><a href="{% url 'spotify_login' %}">{% trans "Login" %}</a></li>
+                {% endif %}
                 <li><a href="{% url 'contact_developers' %}">{% trans "Contact Us!" %}</a></li>
             </ul>
         </nav>
     </header>
+
 
 
     <!-- Hero section -->
