@@ -274,6 +274,7 @@
     </style>
 </head>
 <body>
+    {% load i18n %}
 
     <!-- Spotify logo -->
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" class="spotify-logo" alt="Spotify Logo">
@@ -286,23 +287,23 @@
 
     <!-- Entry Slide -->
     <div class="slide active" id="entry">
-        <h2>Welcome!</h2>
-        <p>Your personalized Spotify Wrapped 2024</p>
+        <h2>{% trans "Welcome!" %}</h2>
+        <p>{% trans "Your personalized Spotify Wrapped 2024" %}</p>
     </div>
 
     <div class="slide" id="slide6">
-        <h2>The Total Time You Spent Jamming This year</h2>
-        <p>{{ total_minutes|floatformat:2 }} minutes</p>
+        <h2>{% trans "The Total Time You Spent Jamming This year" %}</h2>
+        <p>{{ total_minutes|floatformat:2 }} {% trans "minutes" %}</p>
     </div>
 
     <!-- Transition Slide 1 -->
     <div class="slide" id="transition1">
-        <h2>These tracks had your heart in 2024</h2>
+        <h2>{% trans "These tracks had your heart in 2024" %}</h2>
     </div>
 
     <!-- Slide 1: Top Tracks -->
     <div class="slide" id="slide1">
-        <h2>Your Top Tracks</h2>
+        <h2>{% trans "Your Top Tracks" %}</h2>
         <ul>
             {% if top_tracks %}
                 {% for track in top_tracks|slice:":6" %} <!-- Always render 6 tracks -->
@@ -313,10 +314,10 @@
                         <span>{{ track.name|default:'Unknown Track' }} by {% for artist in track.artists %}{{ artist.name|default:'Unknown Artist' }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                     </li>
                 {% empty %}
-                    <li>No top tracks available</li>
+                    <li>{% trans "No top tracks available" %}</li>
                 {% endfor %}
             {% else %}
-                <li>Spotify does not have enough data to show your top tracks.</li>
+                <li>{% trans "Spotify does not have enough data to show your top tracks." %}</li>
             {% endif %}
         </ul>
     </div>
@@ -325,29 +326,29 @@
 
     <!-- Transition Slide 2 -->
     <div class="slide" id="transition2">
-        <h2>Genres that defined your vibe</h2>
+        <h2>{% trans "Genres that defined your vibe" %}</h2>
     </div>
 
     <!-- Slide 2: Favorite Genres -->
     <div class="slide" id="slide2">
-        <h2>Favorite Genres</h2>
+        <h2>{% trans "Favorite Genres" %}</h2>
         <ul>
             {% for genre in genres|slice:":8" %}
                 <li class="genre-info">{{ genre }}</li>
             {% empty %}
-                <li>No genres available</li>
+                <li>{% trans "No genres available" %}</li>
             {% endfor %}
         </ul>
     </div>
 
     <!-- Transition Slide 3 -->
     <div class="slide" id="transition3">
-        <h2>Reliving your recent hits</h2>
+        <h2>{% trans "Reliving your recent hits" %}</h2>
     </div>
 
     <!-- Slide 3: Recent Listening History -->
     <div class="slide" id="slide3">
-        <h2>Recent Listening History</h2>
+        <h2>{% trans "Recent Listening History" %}</h2>
         <ul>
             {% for track in recently_played|slice:":6" %}
                 <li class="history-info {% if forloop.counter == 6 %}sixth-track{% endif %}">
@@ -357,14 +358,14 @@
                     <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                 </li>
             {% empty %}
-                <li>No recent listening history available</li>
+                <li>{% trans "No recent listening history available" %}</li>
             {% endfor %}
         </ul>
     </div>
 
     <!-- Slide 6: Most Played Song -->
     <div class="slide" id="slide6">
-        <h2>And Lastly, The Song You Could Not Stop Listenting To...</h2>
+        <h2>{% trans "And Lastly, The Song You Could Not Stop Listenting To..." %}</h2>
         {% if most_played_track %}
             <div class="track-info">
                 <img src="{{ most_played_track.album.images.0.url|default:'/static/images/default-cover.jpg' }}"
@@ -374,7 +375,7 @@
                 <p>Album: {{ most_played_track.album.name|default:"Unknown Album" }}</p>
             </div>
         {% else %}
-            <p>No data available for your most played song.</p>
+            <p>{% trans "No data available for your most played song." %}</p>
         {% endif %}
     </div>
 
