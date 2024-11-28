@@ -1,44 +1,163 @@
-<h1>{{ wrap.title }}</h1>
-<p>Created at: {{ wrap.created_at|date:"Y-m-d H:i" }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Wrap Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset and Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<h2>Top Tracks</h2>
-<ul>
-    {% for track in wrap.data.top_tracks %}
-    <li>
-        {{ track.name }} by {{ track.artists|join:", " }}
-    </li>
-    {% endfor %}
-</ul>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            padding-top: 100px;
+        }
 
-<h2>Top Artists</h2>
-<ul>
-    {% for artist in wrap.data.top_artists %}
-    <li>{{ artist.name }}</li>
-    {% endfor %}
-</ul>
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            text-align: left;
+            margin-bottom: 40px;
+        }
 
-<h2>Genres</h2>
-<ul>
-    {% for genre in wrap.data.genres %}
-    <li>{{ genre }}</li>
-    {% endfor %}
-</ul>
+        h1, h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            color: #1db954;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
 
-<h2>Recently Played</h2>
+        p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1db954;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #1aab49;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            p, ul li {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% load i18n %}
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>{{ wrap.title }}</h1>
+        <p>{% trans "Created at:" %} {{ wrap.created_at|date:"Y-m-d H:i" }}</p>
+
+        <h2>{% trans "Top Tracks" %}</h2>
+        <ul>
+            {% for track in wrap.data.top_tracks %}
+            <li>
+                {{ track.name }} by {{ track.artists|join:", " }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2>{% trans "Top Artists" %}</h2>
+        <ul>
+            {% for artist in wrap.data.top_artists %}
+            <li>{{ artist.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>{% trans "Genres" %}</h2>
+        <ul>
+            {% for genre in wrap.data.genres %}
+            <li>{{ genre }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>{% trans "Recently Played" %}</h2>
 <ul>
     {% for track in wrap.data.recently_played %}
     <li>
-        {{ track.name }} by {{ track.artists|join:", " }} (Played at: {{ track.played_at }})
+        {% if track.name and track.artists %}
+            {{ track.name }} by {{ track.artists|join:", " }} 
+            <br><small>{% trans "Played at:" %} {{ track.played_at }}</small>
+        {% else %}
+            <small>{% trans "Track information not available" %}</small>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
 
-<h2>Most Played Track</h2>
-<p>
-    {{ wrap.data.most_played_track.name }} by {{ wrap.data.most_played_track.artists|join:", " }}
-</p>
 
-<h2>Total Minutes Listened</h2>
-<p>{{ wrap.data.total_minutes }}</p>
+        <h2>{% trans "Most Played Track" %}</h2>
+        <p>
+            {{ wrap.data.most_played_track.name }} by {{ wrap.data.most_played_track.artists|join:", " }}
+        </p>
 
-<a href="{% url 'list_wraps' %}">Back to Wraps</a>
+        <h2>{% trans "Total Minutes Listened" %}</h2>
+        <p>{{ wrap.data.total_minutes }}</p>
+
+        <a href="{% url 'list_wraps' %}" class="button-link">{% trans "Back to Wraps" %}</a>
+    </div>
+</body>
+</html>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 21:56-0500\n"
+"POT-Creation-Date: 2024-11-27 18:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: core/templates/core/contact_developers.html:116
+#: core/templates/core/contact_developers_light.html:116
+msgid "Contact the Developers"
+msgstr "Contacter les développeurs"
+
+#: core/templates/core/contact_developers.html:117
+#: core/templates/core/contact_developers_light.html:117
+msgid "We'd love to hear from you! Send us feedback or ask us anything."
+msgstr ""
+"Nous aimerions avoir de vos nouvelles ! Envoyez-nous vos commentaires ou "
+"demandez-nous quoi que ce soit."
+
+#: core/templates/core/contact_developers.html:121
+#: core/templates/core/contact_developers_light.html:121
+msgid "Name:"
+msgstr "Nom:"
+
+#: core/templates/core/contact_developers.html:122
+#: core/templates/core/contact_developers_light.html:122
+msgid "YourName"
+msgstr "VotreNom"
+
+#: core/templates/core/contact_developers.html:124
+#: core/templates/core/contact_developers_light.html:124
+msgid "Email:"
+msgstr "E-mail:"
+
+#: core/templates/core/contact_developers.html:125
+#: core/templates/core/contact_developers_light.html:125
+msgid "YourEmail"
+msgstr "VotreEmail"
+
+#: core/templates/core/contact_developers.html:127
+#: core/templates/core/contact_developers_light.html:127
+msgid "Message:"
+msgstr "Message:"
+
+#: core/templates/core/contact_developers.html:128
+#: core/templates/core/contact_developers_light.html:128
+msgid "YourMessage"
+msgstr "VotreMessage"
+
+#: core/templates/core/contact_developers.html:130
+#: core/templates/core/contact_developers_light.html:130
+msgid "Send Feedback"
+msgstr "Envoyer des commentaires"
+
+#: core/templates/core/delete_account.html:87
+msgid "Delete Your Account"
+msgstr "Supprimez votre compte"
+
+#: core/templates/core/delete_account.html:88
+msgid ""
+"Are you sure you want to delete your account? This action cannot be undone."
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas "
+"être annulée."
+
+#: core/templates/core/delete_account.html:91
+msgid "Delete My Account"
+msgstr "Supprimer mon compte"
+
+#: core/templates/core/delete_account.html:93
+msgid "Cancel"
+msgstr "Annuler"
+
+#: core/templates/core/describe_music.html:223
+msgid "Uncover Your Music Personality"
+msgstr "Découvrez votre personnalité musicale"
+
+#: core/templates/core/describe_music.html:224
+msgid "Get a dynamic description based on your unique music taste."
+msgstr ""
+"Obtenez une description dynamique basée sur vos goûts musicaux uniques."
+
+#: core/templates/core/describe_music.html:225
+msgid "Return to Home!"
+msgstr "Retournez à la maison!"
+
+#: core/templates/core/describe_music.html:232
+msgid "Enter your music taste"
+msgstr "Entrez vos goûts musicaux"
+
+#: core/templates/core/describe_music.html:235
+msgid "Use my Spotify data"
+msgstr "Utiliser mes données Spotify"
+
+#: core/templates/core/describe_music.html:240
+msgid "Enter_your_favorite_artists_or_genres"
+msgstr "Entrez_vos_artistes_ou_genres_préférés"
+
+#: core/templates/core/describe_music.html:241
+msgid "Describe Me"
+msgstr "Décrivez-moi"
+
+#: core/templates/core/describe_music.html:248
+msgid "Your Music Description"
+msgstr "Description de votre musique"
+
 #: core/templates/core/error.html:122
 msgid "Oops! Something went wrong."
 msgstr "Oups ! Quelque chose s'est mal passé."
@@ -26,43 +125,128 @@ msgstr "Oups ! Quelque chose s'est mal passé."
 msgid "Log in again"
 msgstr "Connectez-vous à nouveau"
 
-#: core/templates/core/index.html:389
+#: core/templates/core/index.html:431 core/templates/core/list_wraps.html:193
 msgid "Spotify Wrapped"
 msgstr "Spotify enveloppé"
 
-#: core/templates/core/index.html:393
+#: core/templates/core/index.html:435
 msgid "Listen to Your Top Tracks"
 msgstr "Écoutez vos meilleurs morceaux"
 
-#: core/templates/core/index.html:394
+#: core/templates/core/index.html:436
 msgid "Describe My Taste"
 msgstr "Décrire mon goût"
 
-#: core/templates/core/index.html:395
+#: core/templates/core/index.html:437 core/templates/core/list_wraps.html:199
+#: core/templates/core/login.html:123 core/templates/core/login.html:128
 msgid "Login"
 msgstr "Se connecter"
 
-#: core/templates/core/index.html:396
+#: core/templates/core/index.html:438
 msgid "Contact Us!"
 msgstr "Contactez-nous!"
 
-#: core/templates/core/index.html:404
+#: core/templates/core/index.html:447
 msgid "Your Music Journey in 2024 🎶"
 msgstr "Votre parcours musical en 2024 🎶"
 
-#: core/templates/core/index.html:405
+#: core/templates/core/index.html:448
 msgid "Discover the songs, artists, and moments that defined your year."
 msgstr ""
 "Découvrez les chansons, les artistes et les moments qui ont défini votre "
 "année."
 
-#: core/templates/core/index.html:406
+#: core/templates/core/index.html:454
+msgid "Select Your Time Range"
+msgstr "Sélectionnez votre plage horaire"
+
+#: core/templates/core/index.html:457
+msgid "Short-Term (Last 4 Weeks)"
+msgstr "Court terme (4 dernières semaines)"
+
+#: core/templates/core/index.html:458
+msgid "Medium-Term (Last 6 Months)"
+msgstr "Moyen terme (6 derniers mois)"
+
+#: core/templates/core/index.html:459
+msgid "Long-Term (All Time)"
+msgstr "Long terme (tous les temps)"
+
+#: core/templates/core/index.html:461
 msgid "Discover Now"
 msgstr "Découvrez maintenant"
 
-#: core/templates/core/index.html:417
+#: core/templates/core/index.html:473
 msgid "Change Language"
 msgstr "Changer de langue"
+
+#: core/templates/core/list_wraps.html:197 core/templates/core/view_wrap.html:4
+msgid "Top Tracks"
+msgstr "Meilleurs morceaux"
+
+#: core/templates/core/list_wraps.html:198
+msgid "My Taste"
+msgstr "Mon goût"
+
+#: core/templates/core/list_wraps.html:200
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#: core/templates/core/list_wraps.html:207
+msgid "Your Spotify Wraps"
+msgstr "Vos enveloppes Spotify"
+
+#: core/templates/core/list_wraps.html:214
+msgid "Delete"
+msgstr "Supprimer"
+
+#: core/templates/core/list_wraps.html:218
+msgid "No Spotify wraps found."
+msgstr "Aucun wrapper Spotify trouvé."
+
+#: core/templates/core/login.html:126
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: core/templates/core/login.html:127
+msgid "Password"
+msgstr "Mot de passe"
+
+#: core/templates/core/login.html:130
+msgid "Forgot Password?"
+msgstr "Mot de passe oublié ?"
+
+#: core/templates/core/login.html:131 core/templates/core/register.html:106
+msgid "Create an Account"
+msgstr "Créer un compte"
+
+#: core/templates/core/play_top_tracks.html:111
+msgid "Your Top Tracks"
+msgstr "Vos meilleurs morceaux"
+
+#: core/templates/core/play_top_tracks.html:112
+msgid "Click on the play button to listen to a preview clip."
+msgstr "Cliquez sur le bouton de lecture pour écouter un extrait d'un extrait."
+
+#: core/templates/core/play_top_tracks.html:134
+msgid "No preview available"
+msgstr "Aucun aperçu disponible"
+
+#: core/templates/core/register.html:110
+msgid "Password does not meet the requirements!"
+msgstr "Le mot de passe ne répond pas aux exigences!"
+
+#: core/templates/core/register.html:111
+msgid "Register"
+msgstr "Registre"
+
+#: core/templates/core/register.html:113
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
+
+#: core/templates/core/register.html:113
+msgid "Login here"
+msgstr "Connectez-vous ici"
 
 #: core/templates/core/thank_you.html:77
 msgid "Thank You!"
@@ -76,14 +260,42 @@ msgstr "Nous apprécions vos commentaires et vous répondrons bientôt."
 msgid "Back to Home"
 msgstr "Retour à la maison"
 
-#: spotify_wrapped/settings.py:122
+#: core/templates/core/view_wrap.html:2
+msgid "Created at:"
+msgstr "Créé à :"
+
+#: core/templates/core/view_wrap.html:13
+msgid "Top Artists"
+msgstr "Meilleurs artistes"
+
+#: core/templates/core/view_wrap.html:20
+msgid "Genres"
+msgstr "Genre"
+
+#: core/templates/core/view_wrap.html:27
+msgid "Recently Played"
+msgstr "Joué récemment"
+
+#: core/templates/core/view_wrap.html:36
+msgid "Most Played Track"
+msgstr "Piste la plus jouée"
+
+#: core/templates/core/view_wrap.html:41
+msgid "Total Minutes Listened"
+msgstr "Total des minutes écoutées"
+
+#: core/templates/core/view_wrap.html:44
+msgid "Back to Wraps"
+msgstr "Retour à Wraps"
+
+#: spotify_wrapped/settings.py:123
 msgid "English"
 msgstr "Anglais"
 
-#: spotify_wrapped/settings.py:123
+#: spotify_wrapped/settings.py:124
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: spotify_wrapped/settings.py:124
+#: spotify_wrapped/settings.py:125
 msgid "French"
 msgstr "Français"

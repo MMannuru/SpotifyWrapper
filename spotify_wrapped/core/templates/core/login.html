@@ -6,45 +6,75 @@
     <title>Login</title>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1db954, #121212); /* Stylish gradient */
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .shape1 {
+            top: 10%; left: 5%;
+        }
+        .shape2 {
+            top: 70%; right: 10%;
+        }
+        .shape3 {
+            bottom: 10%; left: 40%;
         }
 
         .login-container {
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
-            width: 300px;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2;
             text-align: center;
+            width: 350px;
         }
 
         h2 {
             margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 0.75rem;
+            padding: 1rem;
             margin-bottom: 1rem;
-            border-radius: 5px;
+            border-radius: 8px;
             border: none;
             outline: none;
+            font-size: 1rem;
         }
 
         button {
             background-color: #1db954;
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
+            padding: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
@@ -56,6 +86,7 @@
             text-decoration: none;
             margin-top: 1rem;
             display: block;
+            font-size: 0.9rem;
         }
 
         a:hover {
@@ -65,16 +96,17 @@
         /* Responsive Design */
         @media (max-width: 480px) {
             .login-container {
-                padding: 1.0rem; /* Reduce padding on smaller screens */
+                padding: 1.5rem;
+                width: 90%;
             }
 
             h2 {
-                font-size: 1.0rem; /* Slightly smaller heading for smaller devices */
+                font-size: 1.5rem;
             }
 
             button, input[type="text"], input[type="password"] {
-                font-size: 0.9rem; /* Adjust font size for inputs and buttons */
-                padding: 0.6rem;
+                font-size: 0.9rem;
+                padding: 0.75rem;
             }
         }
         
@@ -82,17 +114,22 @@
     </style>
 </head>
 <body>
+    {% load i18n %}
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
 
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>{% trans "Login" %}</h2>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <input type="text" name="username" placeholder="{% trans 'Username' %}" required>
+            <input type="password" name="password" placeholder="{% trans 'Password' %}" required>
+            <button type="submit">{% trans "Login" %}</button>
         </form>
-        <a href="{% url 'password_reset' %}">Forgot Password?</a>
-        <a href="{% url 'register' %}">Create an Account</a>
+        <a href="{% url 'password_reset' %}">{% trans "Forgot Password?" %}</a>
+        <a href="{% url 'register' %}">{% trans "Create an Account" %}</a>
     </div>
     {% if messages %}
     <ul>

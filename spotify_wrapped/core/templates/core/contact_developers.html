@@ -111,23 +111,23 @@
     </style>
 </head>
 <body>
-
+{% load i18n %}
     <div class="contact-container">
-        <h1>Contact the Developers</h1>
-        <p>We'd love to hear from you! Send us feedback or ask us anything.</p>
+        <h1>{% trans "Contact the Developers" %}</h1>
+        <p>{% trans "We'd love to hear from you! Send us feedback or ask us anything." %}</p>
 
         <form method="post" class="contact-form">
             {% csrf_token %}
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
+            <label for="name">{% trans "Name:" %}</label>
+            <input type="text" id="name" name="name" placeholder={% trans "YourName" %} required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Your email" required>
+            <label for="email">{% trans "Email:" %}</label>
+            <input type="email" id="email" name="email" placeholder={% trans "YourEmail" %} required>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+            <label for="message">{% trans "Message:" %}</label>
+            <textarea id="message" name="message" rows="5" placeholder={% trans "YourMessage" %} required></textarea>
 
-            <button type="submit">Send Feedback</button>
+            <button type="submit">{% trans "Send Feedback" %}</button>
         </form>
     </div>
 
