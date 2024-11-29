@@ -17,83 +17,160 @@
             font-family: 'Poppins', sans-serif;
             background-color: #000;
             color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Slide container with creative background */
+        .slide {
+            display: none;
+            height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             text-align: center;
-            min-height: 100vh;
-            position: relative;
-            padding-top: 100px;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            z-index: 2;
-            text-align: left;
-            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
         }
 
-        h1, h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: bold;
-            color: #1db954;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        /* Active slide styling */
+        .active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Abstract animated shapes */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            animation: float 15s infinite alternate ease-in-out;
+        }
+
+        /* Position specific shapes */
+        .shape1 { top: 20%; left: 10%; }
+        .shape2 { top: 60%; right: 15%; animation-delay: 5s; }
+        .shape3 { bottom: 10%; left: 30%; animation-delay: 10s; }
+        .shape4 { top: 40%; left: 70%; animation-delay: 7s; }
+
+        /* Animation for floating shapes */
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        /* Header styling */
+        h2 {
+            font-size: 4rem;
             margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            color: #FFF;
+            position: relative;
+            z-index: 1;
         }
 
         p {
-            font-size: 1.2rem;
-            color: #ddd;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #FFF;
+            position: relative;
+            z-index: 1;
         }
 
+        /* List styling for tracks, genres, etc. */
         ul {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 20px;
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
         }
 
-        ul li {
-            background-color: rgba(255, 255, 255, 0.05);
+        /* Item styling with hover effect */
+        li {
+            margin-bottom: 12px;
             padding: 15px;
-            margin-bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            color: #FFF;
+            font-weight: 500;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li img {
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .button-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #1db954;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+        /* Navigation button styling */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 2;
         }
 
-        .button-link:hover {
-            background-color: #1aab49;
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Left and right button positioning */
+        #prev {
+            left: 20px;
+        }
+
+        #next {
+            right: 20px;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1, h2 {
-                font-size: 1.5rem;
+            h2 {
+                font-size: 2rem;
             }
 
-            p, ul li {
+            p {
                 font-size: 1rem;
             }
 
-            .container {
+            ul {
+                font-size: 1rem;
+            }
+
+            li {
+                flex-direction: column;
+                align-items: flex-start;
                 padding: 10px;
+            }
+
+            .nav-button {
+                font-size: 1rem;
+                padding: 8px;
             }
         }
     </style>
@@ -106,58 +183,130 @@
     <div class="background-shape shape3"></div>
     <div class="background-shape shape4"></div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h1>{{ wrap.title }}</h1>
+    <!-- Entry Slide -->
+    <div class="slide active" id="entry">
+        <h2>{{ wrap.title }}</h2>
         <p>{% trans "Created at:" %} {{ wrap.created_at|date:"Y-m-d H:i" }}</p>
-
-        <h2>{% trans "Top Tracks" %}</h2>
-        <ul>
-            {% for track in wrap.data.top_tracks %}
-            <li>
-                {{ track.name }} by {{ track.artists|join:", " }}
-            </li>
-            {% endfor %}
-        </ul>
-
-        <h2>{% trans "Top Artists" %}</h2>
-        <ul>
-            {% for artist in wrap.data.top_artists %}
-            <li>{{ artist.name }}</li>
-            {% endfor %}
-        </ul>
-
-        <h2>{% trans "Genres" %}</h2>
-        <ul>
-            {% for genre in wrap.data.genres %}
-            <li>{{ genre }}</li>
-            {% endfor %}
-        </ul>
-
-        <h2>{% trans "Recently Played" %}</h2>
-<ul>
-    {% for track in wrap.data.recently_played %}
-    <li>
-        {% if track.name and track.artists %}
-            {{ track.name }} by {{ track.artists|join:", " }} 
-            <br><small>{% trans "Played at:" %} {{ track.played_at }}</small>
-        {% else %}
-            <small>{% trans "Track information not available" %}</small>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-
-
-        <h2>{% trans "Most Played Track" %}</h2>
-        <p>
-            {{ wrap.data.most_played_track.name }} by {{ wrap.data.most_played_track.artists|join:", " }}
-        </p>
-
-        <h2>{% trans "Total Minutes Listened" %}</h2>
-        <p>{{ wrap.data.total_minutes }}</p>
-
-        <a href="{% url 'list_wraps' %}" class="button-link">{% trans "Back to Wraps" %}</a>
     </div>
+    
+    
+    <div class="slide" id="transition5">
+        <h2>{% trans "The Total Time You Spent Jamming This Year" %}</h2>
+        <p>{{ wrap.data.total_minutes|default:"0" }} {% trans "minutes" %}</p>
+    </div>
+    
+    
+    <!-- Transition Slide 1 -->
+    <div class="slide" id="transition1">
+        <h2>{% trans "These tracks had your heart in 2024" %}</h2>
+    </div>
+
+    <!-- Slide 1: Top Tracks -->
+    <div class="slide" id="slide1">
+        <h2>{% trans "Your Top Tracks" %}</h2>
+        <ul>
+            {% if wrap.data.top_tracks %}
+                {% for track in wrap.data.top_tracks|slice:":6" %}
+                    <li>
+                        <img src="{{ track.album.images.0.url|default:'/static/images/default-cover.jpg' }}" alt="{{ track.name|default:'Unknown Track' }} album cover">
+                        <span>{{ track.name|default:'Unknown Track' }} by {% for artist in track.artists %}{{ artist.name|default:'Unknown Artist' }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    </li>
+                {% empty %}
+                    <li>{% trans "No top tracks available" %}</li>
+                {% endfor %}
+            {% else %}
+                <li>{% trans "Spotify does not have enough data to show your top tracks." %}</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Transition Slide 2 -->
+    <div class="slide" id="transition2">
+        <h2>{% trans "Genres that defined your vibe" %}</h2>
+    </div>
+
+    <!-- Slide 2: Favorite Genres -->
+    <div class="slide" id="slide2">
+        <h2>{% trans "Favorite Genres" %}</h2>
+        <ul>
+            {% for genre in wrap.data.genres|slice:":8" %}
+                <li>{{ genre }}</li>
+            {% empty %}
+                <li>{% trans "No genres available" %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Transition Slide 3 -->
+    <div class="slide" id="transition3">
+        <h2>{% trans "Reliving your recent hits" %}</h2>
+    </div>
+
+    <!-- Slide 3: Recent Listening History -->
+    <div class="slide" id="slide3">
+        <h2>{% trans "Recent Listening History" %}</h2>
+        <ul>
+            {% for track in wrap.data.recently_played|slice:":6" %}
+                <li>
+                    <img src="{{ track.track.album.images.0.url|default:'/static/images/default-cover.jpg' }}" alt="{{ track.track.name }} album cover">
+                    <span>{{ track.track.name }} by {% for artist in track.track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                </li>
+            {% empty %}
+                <li>{% trans "No recent listening history available" %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Transition Slide 4 -->
+    <div class="slide" id="transition4">
+        <h2>{% trans "And lastly, the song you couldn't stop listening to..." %}</h2>
+    </div>
+
+    <!-- Slide 4: Most Played Track -->
+    <div class="slide" id="slide4">
+        <h2>{% trans "Most Played Track" %}</h2>
+        {% if wrap.data.most_played_track %}
+            <div class="track-info">
+                <img src="{{ wrap.data.most_played_track.album.images.0.url|default:'/static/images/default-cover.jpg' }}" alt="{{ wrap.data.most_played_track.name|default:'Unknown Song' }} album cover" style="width: 150px; height: 150px; border-radius: 8px;">
+                <h3>{{ wrap.data.most_played_track.name|default:"Unknown Song" }}</h3>
+                <p>by {% for artist in wrap.data.most_played_track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <p>Album: {{ wrap.data.most_played_track.album.name|default:"Unknown Album" }}</p>
+            </div>
+        {% else %}
+            <p>{% trans "No data available for your most played song." %}</p>
+        {% endif %}
+    </div>
+    
+
+    <!-- Navigation buttons -->
+    <button class="nav-button" id="prev">&#9664;</button>
+    <button class="nav-button" id="next">&#9654;</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    slide.style.display = i === index ? 'flex' : 'none';
+                });
+                slides[index].classList.add('active');
+                currentSlide = index;
+            }
+
+            document.getElementById('prev').addEventListener('click', () => {
+                showSlide((currentSlide - 1 + slides.length) % slides.length);
+            });
+
+            document.getElementById('next').addEventListener('click', () => {
+                showSlide((currentSlide + 1) % slides.length);
+            });
+
+            showSlide(currentSlide);
+        });
+    </script>
+
 </body>
 </html>
