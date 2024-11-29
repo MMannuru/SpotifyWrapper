@@ -201,7 +201,6 @@ def get_redirect_uri(request):
         str: The dynamically generated redirect URI.
     """
     host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
-    print("the request is " + str(request))
     return f"http://{host}/callback/"
 
 

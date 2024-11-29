@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Spotify Wrapped</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         /* Basic reset */
         * {
@@ -418,6 +420,7 @@
 
     </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <body>
 
     <!-- Background Shapes -->
@@ -436,20 +439,34 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{% url 'play_top_tracks' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'play_top_tracks' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
+                {% endif %}
                 <li><a href="{% url 'describe_music_taste' %}">{% trans "Describe My Taste" %}</a></li>
                 {% if user.is_authenticated and request.session.spotify_token %}
-                <li><a href="{% url 'list_wraps' %}">{% trans "View Wraps" %}</a></li>
+                    <li><a href="{% url 'list_wraps' %}">{% trans "View Wraps" %}</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
                 {% else %}
                     <li><a href="{% url 'spotify_login' %}">{% trans "Login" %}</a></li>
                 {% endif %}
-                <li><a href="{% url 'contact_developers' %}">{% trans "Contact Us!" %}</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% trans "Settings" %}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <li><a class="dropdown-item" href="{% url 'contact_developers' %}">{% trans "Contact Us!" %}</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'delete_account' %}">{% trans "Delete Account" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </li>                
             </ul>
         </nav>
     </header>
+
+
 
 
 
