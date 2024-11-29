@@ -164,6 +164,8 @@ from django.shortcuts import redirect
 def logout_view(request):
     # Log the user out
     logout(request)
+    request.session.pop('spotify_token', None)  # Remove Spotify token if stored
+    request.session.pop('other_custom_session_data', None)  # Remove any other session data
     request.session.flush()
     # Redirect to the Spotify login page
     return redirect('https://accounts.spotify.com/en/login')
@@ -534,7 +536,7 @@ def play_top_tracks(request):
                 'error': "Failed to retrieve top tracks."
             })
     else:
-        return redirect(spotify_auth_url())
+        return redirect(spotify_auth_url(request))
 
 
 from django.shortcuts import render, redirect
