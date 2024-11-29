@@ -153,7 +153,7 @@ def spotify_auth_url(request):
         "response_type": "code",
         "redirect_uri": redirect_uri,
         "scope": SCOPE,
-        "show_dialog": "true",  # Force Spotify to show the login dialog
+        #"show_dialog": "true",  # Force Spotify to show the login dialog
     }
     return f"{auth_base_url}?{urlencode(params)}"
 
@@ -183,6 +183,7 @@ def spotify_login(request):
     Returns:
         HttpResponseRedirect: A redirect to Spotify's authorization page.
     """
+    request.session.flush()
     return redirect(spotify_auth_url(request))
 
 
@@ -200,6 +201,7 @@ def get_redirect_uri(request):
         str: The dynamically generated redirect URI.
     """
     host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
+    print("the request is " + str(request))
     return f"http://{host}/callback/"
 
 
