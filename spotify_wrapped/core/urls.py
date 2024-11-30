@@ -22,6 +22,7 @@ urlpatterns = [
     path('thank-you/', views.thank_you, name='thank_you'),
     path('thank-youLIGHT/', views.thank_youLIGHT, name='thank_youLIGHT'),
     path('play-top-tracks/', views.play_top_tracks, name='play_top_tracks'),
+    path('play-top-tracksLIGHT/', views.play_top_tracksLIGHT, name='play_top_tracksLIGHT'),
     path('wraps/', views.list_wraps, name='list_wraps'),  # List all wraps
     path('wraps/<int:wrap_id>/', views.view_wrap, name='view_wrap'),  # View specific wrap
     path('wraps/<int:wrap_id>/delete/', views.delete_wrap, name='delete_wrap'),

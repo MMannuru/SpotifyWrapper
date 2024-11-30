@@ -440,7 +440,7 @@
         <nav>
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'play_top_tracks' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
+                    <li><a href="{% url 'play_top_tracksLIGHT' %}">{% trans "Listen to Your Top Tracks" %}</a></li>
                 {% endif %}
                 <li><a href="{% url 'describe_musicLIGHT' %}">{% trans "Describe My Taste" %}</a></li>
                 {% if user.is_authenticated and request.session.spotify_token %}

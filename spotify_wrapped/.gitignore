@@ -7,7 +7,7 @@ venv/
 *__pycache__/
 
 # Django specific files
-db.sqlite3
+# db.sqlite3
 /media/
 
 # PyCharm

@@ -613,6 +613,39 @@ def play_top_tracks(request):
         return redirect(spotify_auth_url(request))
 
 
+def play_top_tracksLIGHT(request):
+    """
+    Fetches and plays the user's top 5 tracks from Spotify.
+
+    This function retrieves the user's top tracks from Spotify and passes them to the
+    template for playback. If the data cannot be retrieved, an error page is displayed.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the play_top_tracks.html template with the top tracks.
+        HttpResponseRedirect: Redirects to the Spotify authorization URL if no token is available.
+    """
+    token = request.session.get('spotify_token')
+
+    if token:
+        # Retrieve top tracks with a limit of 5
+        top_tracks = get_user_top_tracks(token)
+
+        if top_tracks:
+            # Include 'preview_url' in the context
+            return render(request, 'core/play_top_tracksLIGHT.html', {
+                'top_tracks': top_tracks.get('items', [])[:5]
+            })
+        else:
+            return render(request, 'core/error.html', {
+                'error': "Failed to retrieve top tracks."
+            })
+    else:
+        return redirect(spotify_auth_url(request))
+
+
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from core.forms import ContactForm

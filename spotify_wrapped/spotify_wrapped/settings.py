@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-5-j(f!@b48c^(r9$+sx1s8a(5ku$y7be^xgb-t2)po#s7z3b7q"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # false for production environments
 
 import socket
 
