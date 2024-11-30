@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe My Music Taste</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Animation */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Background Shapes */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(60px);
+            border-radius: 50%;
+            animation: float 15s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+        .shape1 { top: 15%; left: 10%; }
+        .shape2 { top: 60%; right: 15%; animation-delay: 5s; }
+        .shape3 { bottom: 10%; left: 20%; animation-delay: 10s; }
+        .shape4 { top: 45%; left: 70%; animation-delay: 7s; }
+
+        /* Float Animation */
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        /* Header Styling */
+        .header {
+            padding: 100px 20px 50px;
+            z-index: 2;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-family: 'Montserrat', sans-serif;
+            color: black;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5em;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: black;
+            margin-bottom: 1.5em;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1db954;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #1aab49;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 40px;
+            z-index: 2;
+        }
+
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: black;
+            font-size: 1rem;
+        }
+
+        #music-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease; /* Smooth transitions */
+        }
+
+        #music_data {
+            width: 400px;
+            padding: 0.7em;
+            font-size: 1em;
+            border: none;
+            border-radius: 50px;
+            text-align: center;
+            color: #000;
+            transition: all 0.3s ease; /* Smooth transitions */
+        }
+        #music-form button {
+            padding: 0.7em 1.5em;
+            font-size: 1em;
+            background-color: #1db954;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            color: black;
+        }
+        #music-form button:hover {
+            background-color: #1aab49;
+        }
+
+        /* Result Section */
+        .result-section {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2;
+        }
+        .result-card {
+            width: 80%;
+            max-width: 600px;
+            min-height: 200px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .result-card h2 {
+            font-size: 1.5em;
+            color: #1db954;
+            margin-bottom: 0.5em;
+        }
+        .result-card p {
+            font-size: 1.1em;
+            color: #ffffff;
+        }
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .form-section {
+                padding: 10px;
+            }
+            .result-card {
+                padding: 15px;
+            }
+            #music-form {
+                width: 100%;
+            }
+            #music_data, #music-form button {
+                width: 90%;
+                font-size: 0.9rem;
+            }
+            #music_data::placeholder {
+                font-size: 0.8rem;
+                color: #aaa;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% load i18n %}
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1>{% trans "Uncover Your Music Personality" %}</h1>
+        <p>{% trans "Get a dynamic description based on your unique music taste." %}</p>
+        <div><a href="{% url 'indexLIGHT' %}" class="button-link">{% trans "Return to Home!" %}</a></div>
+    </header>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="form-toggle">
+            <label>
+                <input type="radio" name="input_option" value="manual" checked onchange="toggleInput()"> {% trans "Enter your music taste" %}
+            </label>
+            <label>
+                <input type="radio" name="input_option" value="dynamic" onchange="toggleInput()"> {% trans "Use my Spotify data" %}
+            </label>
+        </div>
+        <form id="music-form" method="POST">
+            {% csrf_token %}
+            <input type="text" id="music_data" name="music_data" placeholder={% trans "Enter_your_favorite_artists_or_genres" %}>
+            <button type="button" onclick="getMusicDescription()">{% trans "Describe Me" %}</button>
+        </form>
+    </section>
+
+    <!-- Result Section -->
+    <section id="description-result" class="result-section hidden">
+        <div class="result-card">
+            <h2>{% trans "Your Music Description" %}</h2>
+            <p id="description-text"></p>
+        </div>
+    </section>
+
+    <script>
+        function toggleInput() {
+            const inputOption = document.querySelector('input[name="input_option"]:checked').value;
+            const musicDataInput = document.getElementById("music_data");
+            const musicForm = document.getElementById("music-form");
+
+            if (inputOption === "dynamic") {
+                musicDataInput.style.display = "none";
+                musicForm.style.justifyContent = "center"; // Center the button
+            } else {
+                musicDataInput.style.display = "block";
+                musicForm.style.justifyContent = "start"; // Restore normal alignment
+            }
+        }
+
+        function getMusicDescription() {
+            const inputOption = document.querySelector('input[name="input_option"]:checked').value;
+            const musicData = document.getElementById("music_data").value;
+            const bodyData = inputOption === "dynamic" ? "" : `music_data=${encodeURIComponent(musicData)}`;
+
+            fetch("{% url 'describe_music_taste' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                body: bodyData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("description-text").innerText = "Error: " + data.error;
+                } else {
+                    document.getElementById("description-text").innerHTML = data.description.replace(/\n/g, "<br>");
+                }
+                document.getElementById("description-result").classList.remove("hidden");
+            });
+        }
+    </script>
+</body>
+</html>

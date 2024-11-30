@@ -31,6 +31,18 @@ def index(request):
     """
     return render(request, 'core/index.html')
 
+def indexLIGHT(request):
+    """
+    Renders the homepage of the application.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered homepage template.
+    """
+    return render(request, 'core/indexLIGHT.html')
+
 def register(request):
     """
     Handles user registration.
@@ -120,6 +132,63 @@ def describe_music_taste(request):
         return JsonResponse({"description": answer_text})
 
     return render(request, "core/describe_music.html")
+
+def describe_musicLIGHT(request):
+    """
+    Generates a dynamic description of the user's music taste.
+
+    If a POST request is made:
+        - Retrieves user input for music data or fetches the top artist from Spotify data.
+        - Uses the Groq API to generate a description based on the user's music data.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: A JSON response containing the generated description or an error message.
+        HttpResponse: The rendered template if the request method is not POST.
+    """
+    if request.method == "POST":
+        user_music_data = request.POST.get("music_data")
+        user = request.user
+
+        # If user_music_data is empty, fetch dynamic Spotify data
+        if not user_music_data:
+            try:
+                # Fetch the latest SpotifyWrap and use the top artist
+                spotify_wrap = SpotifyWrap.objects.filter(user=user).latest('created_at')
+                top_artists = spotify_wrap.data.get('top_artists', [])
+                if top_artists:
+                    user_music_data = top_artists[0]  # Use the top artist
+                else:
+                    return JsonResponse({"error": "No top artists data found. Please input your music taste manually."}, status=400)
+            except SpotifyWrap.DoesNotExist:
+                return JsonResponse({"error": "No Spotify data found. Please input your music taste manually."}, status=400)
+
+        client = Groq(
+            api_key=settings.GROQ_API_KEY
+        )
+
+        # Use the top artist in the prompt
+        question = f"Describe how someone who listens to {user_music_data} tends to act, think, and dress. Keep it short and sweet."
+
+        try:
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": question,
+                    }
+                ],
+                model="llama3-8b-8192",
+            )
+            answer_text = chat_completion.choices[0].message.content
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+        return JsonResponse({"description": answer_text})
+
+    return render(request, "core/describe_musicLIGHT.html")
 
 # Your Spotify app credentials
 CLIENT_ID = '85fd30dd498c4fbeac1e658423614b52'
@@ -578,6 +647,41 @@ def contact_developers(request):
         form = ContactForm()
     return render(request, 'core/contact_developers.html', {'form': form})
 
+def contact_developersLIGHT(request):
+    """
+    Handles user feedback submission and sends an email to the development team.
+
+    This function displays a contact form where users can provide their name, email,
+    and message. If the form is valid, the message is sent to the developers, and the
+    user is redirected to a thank-you page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the contact_developers.html template with the form.
+        HttpResponseRedirect: Redirects to a thank-you page after the form is submitted successfully.
+    """
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # Send email to developers
+            email_message = EmailMessage(
+                f"Feedback from {name}",
+                message,
+                email,
+                ['dummyemail@gmail.com']
+            )
+            email_message.send()
+            return redirect('thank_youLIGHT')  # Redirect to a thank you page after submission
+    else:
+        form = ContactForm()
+    return render(request, 'core/contact_developersLIGHT.html', {'form': form})
+
 # core/views.py
 from django.shortcuts import render
 
@@ -593,6 +697,45 @@ def thank_you(request):
         HttpResponse: Renders the thank_you.html template.
     """
     return render(request, 'core/thank_you.html')
+
+def thank_youLIGHT(request):
+    """
+    Renders a thank-you page after the user has completed a specific action,
+    such as sending feedback or an invitation.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the thank_you.html template.
+    """
+    return render(request, 'core/thank_youLIGHT.html')
+
+def settings(request):
+    """
+    Renders a thank-you page after the user has completed a specific action,
+    such as sending feedback or an invitation.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the thank_you.html template.
+    """
+    return render(request, 'core/settings.html')
+
+def settingsLIGHT(request):
+    """
+    Renders a thank-you page after the user has completed a specific action,
+    such as sending feedback or an invitation.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the thank_you.html template.
+    """
+    return render(request, 'core/settingsLIGHT.html')
 
 def generate_invite_code():
     """
