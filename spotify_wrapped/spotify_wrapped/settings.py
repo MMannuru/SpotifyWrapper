@@ -33,6 +33,7 @@ import socket
 current_ip = socket.gethostbyname(socket.gethostname())
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
+CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com"]
 
 
 
