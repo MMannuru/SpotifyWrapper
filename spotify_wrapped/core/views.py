@@ -273,8 +273,9 @@ def get_redirect_uri(request):
     Returns:
         str: The dynamically generated redirect URI.
     """
-    host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
-    return f"http://{host}/callback/"
+    #host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
+    #return f"http://{host}/callback/"
+    return f"https://spotifywrapper.onrender.com/callback/"
 
 
 
