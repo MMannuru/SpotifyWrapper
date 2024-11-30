@@ -229,7 +229,7 @@
                 data-top-tracks="{% for track in wrap.data.top_tracks %}{{ track.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                 data-top-artists="{% for artist in wrap.data.top_artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                 data-genres="{% for genre in wrap.data.genres %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                data-recently-played="{% for track in wrap.data.recently_played %}{{ track.name }} by {% for artist in track.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %} (Played at: {{ track.played_at }}){% if not forloop.last %}, {% endif %}{% endfor %}"
+                data-recently-played="{% for track in wrap.data.recently_played|slice:":6" %}{{ track.track.name }} (Played at: {{ track.played_at }}){% if not forloop.last %}, {% endif %}{% endfor %}"
                 data-most-played-track="{{ wrap.data.most_played_track.name }}"
                 data-total-minutes="{{ wrap.data.total_minutes }}">
                 <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
