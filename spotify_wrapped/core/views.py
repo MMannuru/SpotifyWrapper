@@ -317,6 +317,7 @@ def spotify_callback(request):
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
     }
+    print(payload.redirect_uri)
 
     response = requests.post(token_url, data=payload)
     if response.status_code != 200:
