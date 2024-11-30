@@ -32,7 +32,7 @@ import socket
 # Get the machine's current IP address
 current_ip = socket.gethostbyname(socket.gethostname())
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
 
 
 
