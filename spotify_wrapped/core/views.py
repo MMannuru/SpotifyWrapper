@@ -192,10 +192,12 @@ def describe_musicLIGHT(request):
 
 # Your Spotify app credentials
 CLIENT_ID = '85fd30dd498c4fbeac1e658423614b52'
+
 CLIENT_SECRET = '0626ce38d1ad488fa8ae081f31d07b07'
 #REDIRECT_URI = 'http://localhost:8000/callback/'  # Make sure this matches what you set in the Spotify dashboard
 
 #REDIRECT_URI = "http://128.61.9.117:8000/callback/"
+
 
 SCOPE = 'user-top-read user-read-recently-played'  # Permissions you're asking for
 
@@ -220,7 +222,7 @@ def spotify_auth_url(request):
     params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
-        "redirect_uri": redirect_uri,
+        "redirect_uri": REDIRECT_URI,
         "scope": SCOPE,
         #"show_dialog": "true",  # Force Spotify to show the login dialog
     }
@@ -317,7 +319,7 @@ def spotify_callback(request):
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
     }
-    print(payload.redirect_uri)
+    #print(payload.redirect_uri)
 
     response = requests.post(token_url, data=payload)
     if response.status_code != 200:

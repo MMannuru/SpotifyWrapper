@@ -155,14 +155,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
-print(REDIRECT_URI)
+# REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
+# REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+#print(REDIRECT_URI)
 
 
-# if os.getenv("DJANGO_ENV") == "production":
-#     REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
-# else:
-#     REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+if os.getenv("DJANGO_ENV") == "production":
+    REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
+else:
+    REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
     
     
 
