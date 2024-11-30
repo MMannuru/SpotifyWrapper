@@ -222,7 +222,7 @@ def spotify_auth_url(request):
     params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": redirect_uri,
         "scope": SCOPE,
         #"show_dialog": "true",  # Force Spotify to show the login dialog
     }
