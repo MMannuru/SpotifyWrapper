@@ -42,7 +42,7 @@ def get_local_ip():
 # Get the current IP and set ALLOWED_HOSTS
 current_ip = get_local_ip()
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
-CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com", '10.0.0.45']
+CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com"]
 #ALLOWED_HOSTS = ['*']
 
 

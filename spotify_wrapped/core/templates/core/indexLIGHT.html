@@ -476,6 +476,16 @@
 <main class="hero">
     <h2>{% trans "Your Music Journey in 2024 🎶" %}</h2>
     <p>{% trans "Discover the songs, artists, and moments that defined your year." %}</p>
+    <form action="{% url 'show_summary' %}" method="post" class="term-selection-form">
+        {% csrf_token %}
+        <label for="term">{% trans "Select Your Time Range" %}:</label>
+        <select id="term" name="term" required>
+            <option value="short_term">{% trans "Short-Term (Last 4 Weeks)" %}</option>
+            <option value="medium_term">{% trans "Medium-Term (Last 6 Months)" %}</option>
+            <option value="long_term">{% trans "Long-Term (All Time)" %}</option>
+        </select>
+        <button type="submit" class="btn-primary">{% trans "Discover Now" %}</button>
+    </form>
 
 </main>
 
