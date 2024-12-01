@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 02:12-0500\n"
+"POT-Creation-Date: 2024-11-29 23:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,49 +19,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: core/templates/core/contact_developers.html:116
-#: core/templates/core/contact_developers_light.html:116
+#: core/templates/core/contact_developersLIGHT.html:116
 msgid "Contact the Developers"
 msgstr "Contacter les développeurs"
 
 #: core/templates/core/contact_developers.html:117
-#: core/templates/core/contact_developers_light.html:117
+#: core/templates/core/contact_developersLIGHT.html:117
 msgid "We'd love to hear from you! Send us feedback or ask us anything."
 msgstr ""
 "Nous aimerions avoir de vos nouvelles ! Envoyez-nous vos commentaires ou "
 "demandez-nous quoi que ce soit."
 
 #: core/templates/core/contact_developers.html:121
-#: core/templates/core/contact_developers_light.html:121
+#: core/templates/core/contact_developersLIGHT.html:121
 msgid "Name:"
 msgstr "Nom:"
 
 #: core/templates/core/contact_developers.html:122
-#: core/templates/core/contact_developers_light.html:122
+#: core/templates/core/contact_developersLIGHT.html:122
 msgid "YourName"
 msgstr "VotreNom"
 
 #: core/templates/core/contact_developers.html:124
-#: core/templates/core/contact_developers_light.html:124
+#: core/templates/core/contact_developersLIGHT.html:124
 msgid "Email:"
 msgstr "E-mail:"
 
 #: core/templates/core/contact_developers.html:125
-#: core/templates/core/contact_developers_light.html:125
+#: core/templates/core/contact_developersLIGHT.html:125
 msgid "YourEmail"
 msgstr "VotreEmail"
 
 #: core/templates/core/contact_developers.html:127
-#: core/templates/core/contact_developers_light.html:127
+#: core/templates/core/contact_developersLIGHT.html:127
 msgid "Message:"
 msgstr "Message:"
 
 #: core/templates/core/contact_developers.html:128
-#: core/templates/core/contact_developers_light.html:128
+#: core/templates/core/contact_developersLIGHT.html:128
 msgid "YourMessage"
 msgstr "VotreMessage"
 
 #: core/templates/core/contact_developers.html:130
-#: core/templates/core/contact_developers_light.html:130
+#: core/templates/core/contact_developersLIGHT.html:130
 msgid "Send Feedback"
 msgstr "Envoyer des commentaires"
 
@@ -85,35 +85,43 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: core/templates/core/describe_music.html:223
+#: core/templates/core/describe_musicLIGHT.html:222
 msgid "Uncover Your Music Personality"
 msgstr "Découvrez votre personnalité musicale"
 
 #: core/templates/core/describe_music.html:224
+#: core/templates/core/describe_musicLIGHT.html:223
 msgid "Get a dynamic description based on your unique music taste."
 msgstr ""
 "Obtenez une description dynamique basée sur vos goûts musicaux uniques."
 
 #: core/templates/core/describe_music.html:225
+#: core/templates/core/describe_musicLIGHT.html:224
 msgid "Return to Home!"
 msgstr "Retournez à la maison!"
 
 #: core/templates/core/describe_music.html:232
+#: core/templates/core/describe_musicLIGHT.html:231
 msgid "Enter your music taste"
 msgstr "Entrez vos goûts musicaux"
 
 #: core/templates/core/describe_music.html:235
+#: core/templates/core/describe_musicLIGHT.html:234
 msgid "Use my Spotify data"
 msgstr "Utiliser mes données Spotify"
 
 #: core/templates/core/describe_music.html:240
+#: core/templates/core/describe_musicLIGHT.html:239
 msgid "Enter_your_favorite_artists_or_genres"
 msgstr "Entrez_vos_artistes_ou_genres_préférés"
 
 #: core/templates/core/describe_music.html:241
+#: core/templates/core/describe_musicLIGHT.html:240
 msgid "Describe Me"
 msgstr "Décrivez-moi"
 
 #: core/templates/core/describe_music.html:248
+#: core/templates/core/describe_musicLIGHT.html:247
 msgid "Your Music Description"
 msgstr "Description de votre musique"
 
@@ -125,72 +133,59 @@ msgstr "Oups ! Quelque chose s'est mal passé."
 msgid "Log in again"
 msgstr "Connectez-vous à nouveau"
 
-#: core/templates/core/index.html:435 core/templates/core/list_wraps.html:210
+#: core/templates/core/index.html:438 core/templates/core/indexLIGHT.html:438
+#: core/templates/core/list_wraps.html:210
 msgid "Spotify Wrapped"
 msgstr "Spotify enveloppé"
 
-#: core/templates/core/index.html:439
+#: core/templates/core/index.html:443 core/templates/core/indexLIGHT.html:443
 msgid "Listen to Your Top Tracks"
 msgstr "Écoutez vos meilleurs morceaux"
 
-#: core/templates/core/index.html:440
+#: core/templates/core/index.html:445 core/templates/core/indexLIGHT.html:445
 msgid "Describe My Taste"
 msgstr "Décrire mon goût"
 
-#: core/templates/core/index.html:442
+#: core/templates/core/index.html:447 core/templates/core/indexLIGHT.html:447
 msgid "View Wraps"
 msgstr "Voir les enveloppements"
 
-#: core/templates/core/index.html:445
+#: core/templates/core/index.html:450 core/templates/core/indexLIGHT.html:450
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: core/templates/core/index.html:447 core/templates/core/list_wraps.html:216
+#: core/templates/core/index.html:452 core/templates/core/indexLIGHT.html:452
 #: core/templates/core/login.html:124 core/templates/core/login.html:129
 msgid "Login"
 msgstr "Se connecter"
 
-#: core/templates/core/index.html:449
+#: core/templates/core/index.html:456 core/templates/core/indexLIGHT.html:456
+msgid "Settings"
+msgstr "Paramètres"
+
+#: core/templates/core/index.html:459 core/templates/core/indexLIGHT.html:459
 msgid "Contact Us!"
 msgstr "Contactez-nous!"
 
-#: core/templates/core/index.html:459
+#: core/templates/core/index.html:460 core/templates/core/indexLIGHT.html:460
+#: core/templates/core/settings.html:117
+#: core/templates/core/settingsLIGHT.html:117
+msgid "Display Settings"
+msgstr "Paramètres d'affichage"
+
+#: core/templates/core/index.html:462 core/templates/core/indexLIGHT.html:462
+msgid "Delete Account"
+msgstr "Supprimer le compte"
+
+#: core/templates/core/index.html:477 core/templates/core/indexLIGHT.html:477
 msgid "Your Music Journey in 2024 🎶"
 msgstr "Votre parcours musical en 2024 🎶"
 
-#: core/templates/core/index.html:460
+#: core/templates/core/index.html:478 core/templates/core/indexLIGHT.html:478
 msgid "Discover the songs, artists, and moments that defined your year."
 msgstr ""
 "Découvrez les chansons, les artistes et les moments qui ont défini votre "
 "année."
-
-#: core/templates/core/index.html:466
-msgid "Select Your Time Range"
-msgstr "Sélectionnez votre plage horaire"
-
-#: core/templates/core/index.html:470
-msgid "Short-Term (Last 4 Weeks)"
-msgstr "Court terme (4 dernières semaines)"
-
-#: core/templates/core/index.html:471
-msgid "Medium-Term (Last 6 Months)"
-msgstr "Moyen terme (6 derniers mois)"
-
-#: core/templates/core/index.html:472
-msgid "Long-Term (All Time)"
-msgstr "Long terme (tous les temps)"
-
-#: core/templates/core/index.html:474
-msgid "Discover Now"
-msgstr "Découvrez maintenant"
-
-#: core/templates/core/index.html:481
-msgid "Select Your Language"
-msgstr "Sélectionnez votre langue"
-
-#: core/templates/core/index.html:489
-msgid "Change Language"
-msgstr "Changer de langue"
 
 #: core/templates/core/list_wraps.html:214
 msgid "Top Tracks"
@@ -269,6 +264,56 @@ msgstr "Vous avez déjà un compte?"
 msgid "Login here"
 msgstr "Connectez-vous ici"
 
+#: core/templates/core/settings.html:122
+#: core/templates/core/settingsLIGHT.html:122
+msgid "Select Your Language"
+msgstr "Sélectionnez votre langue"
+
+#: core/templates/core/settings.html:130
+#: core/templates/core/settingsLIGHT.html:130
+msgid "Change Language"
+msgstr "Changer de langue"
+
+#: core/templates/core/settings.html:136
+#: core/templates/core/settingsLIGHT.html:136
+msgid "Select Your Time Range"
+msgstr "Sélectionnez votre plage horaire"
+
+#: core/templates/core/settings.html:138
+#: core/templates/core/settingsLIGHT.html:138
+msgid "Short-Term (Last 4 Weeks)"
+msgstr "Court terme (4 dernières semaines)"
+
+#: core/templates/core/settings.html:139
+#: core/templates/core/settingsLIGHT.html:139
+msgid "Medium-Term (Last 6 Months)"
+msgstr "Moyen terme (6 derniers mois)"
+
+#: core/templates/core/settings.html:140
+#: core/templates/core/settingsLIGHT.html:140
+msgid "Long-Term (All Time)"
+msgstr "Long terme (tous les temps)"
+
+#: core/templates/core/settings.html:142
+#: core/templates/core/settingsLIGHT.html:142
+msgid "Discover Now"
+msgstr "Découvrez maintenant"
+
+#: core/templates/core/settings.html:147
+msgid "Light Mode"
+msgstr "Mode lumière"
+
+#: core/templates/core/settings.html:148
+#: core/templates/core/settingsLIGHT.html:148
+#: core/templates/core/thank_you.html:79
+#: core/templates/core/thank_youLIGHT.html:79
+msgid "Back to Home"
+msgstr "Retour à la maison"
+
+#: core/templates/core/settingsLIGHT.html:147
+msgid "Dark Mode"
+msgstr "Mode sombre"
+
 #: core/templates/core/summary.html:290
 msgid "Welcome!"
 msgstr "Bienvenu!"
@@ -332,16 +377,14 @@ msgid "No data available for your most played song."
 msgstr "Aucune donnée disponible pour votre chanson la plus écoutée."
 
 #: core/templates/core/thank_you.html:77
+#: core/templates/core/thank_youLIGHT.html:77
 msgid "Thank You!"
 msgstr "Merci!"
 
 #: core/templates/core/thank_you.html:78
+#: core/templates/core/thank_youLIGHT.html:78
 msgid "We appreciate your feedback and will get back to you soon."
 msgstr "Nous apprécions vos commentaires et vous répondrons bientôt."
-
-#: core/templates/core/thank_you.html:79
-msgid "Back to Home"
-msgstr "Retour à la maison"
 
 #: core/templates/core/view_wrap.html:189
 msgid "Created at:"
@@ -359,15 +402,15 @@ msgstr "Et enfin, la chanson que vous ne pouviez pas arrêter d'écouter..."
 msgid "Most Played Track"
 msgstr "Piste la plus jouée"
 
-#: spotify_wrapped/settings.py:123
+#: spotify_wrapped/settings.py:124
 msgid "English"
 msgstr "Anglais"
 
-#: spotify_wrapped/settings.py:124
+#: spotify_wrapped/settings.py:125
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: spotify_wrapped/settings.py:125
+#: spotify_wrapped/settings.py:126
 msgid "French"
 msgstr "Français"
 

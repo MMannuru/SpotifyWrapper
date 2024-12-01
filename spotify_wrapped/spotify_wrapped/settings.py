@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-5-j(f!@b48c^(r9$+sx1s8a(5ku$y7be^xgb-t2)po#s7z3b7q"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # false for production environments
 
 import socket
 
@@ -41,7 +41,8 @@ def get_local_ip():
 
 # Get the current IP and set ALLOWED_HOSTS
 current_ip = get_local_ip()
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, '10.0.0.45']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
+CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com", '10.0.0.45']
 #ALLOWED_HOSTS = ['*']
 
 
@@ -168,7 +169,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+# REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
+# REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+#print(REDIRECT_URI)
+
+
+if os.getenv("DJANGO_ENV") == "production":
+    REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
+else:
+    REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+    
+    
 
 
 load_dotenv()
