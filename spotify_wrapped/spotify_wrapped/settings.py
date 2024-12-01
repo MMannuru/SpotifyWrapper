@@ -29,10 +29,24 @@ DEBUG = True
 
 import socket
 
-# Get the machine's current IP address
-current_ip = socket.gethostbyname(socket.gethostname())
+# Get the actual local IP address of the machine
+def get_local_ip():
+    try:
+        # Use a dummy connection to get the correct IP
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(("8.8.8.8", 80))
+            return s.getsockname()[0]
+    except Exception:
+        return '127.0.0.1'  # Fallback to localhost if IP detection fails
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip]
+# Get the current IP and set ALLOWED_HOSTS
+current_ip = get_local_ip()
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, '10.0.0.45']
+#ALLOWED_HOSTS = ['*']
+
+
+print(f"Detected local IP: {current_ip}")  # Optional: For debugging purposes
+
 
 
 
