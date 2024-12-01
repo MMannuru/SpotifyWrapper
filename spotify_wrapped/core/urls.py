@@ -13,6 +13,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),  # Custom registration (if needed)
     path('callback/', views.spotify_callback, name='callback'),  # Spotify OAuth callback
     path('summary/', views.show_summary, name='show_summary'),  # Show user's top tracks
+     path('summaryLIGHT/', views.show_summaryLIGHT, name='show_summaryLIGHT'),
     path('describe-music/', views.describe_music_taste, name='describe_music_taste'),
     path('describe-musicLIGHT/', views.describe_musicLIGHT, name='describe_musicLIGHT'),
     path('contact/', views.contact_developers, name='contact_developers'),

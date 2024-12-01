@@ -576,6 +576,86 @@ def show_summary(request):
     # If not a POST request, redirect to the homepage
     return redirect('index')
 
+@login_required
+def show_summaryLIGHT(request):
+    """
+    Handles the Spotify wrap summary generation for a selected time range (short, medium, or long term).
+
+    This function retrieves the user's Spotify top tracks, top artists, and recently played tracks based on
+    the selected term (time range). It calculates additional insights like total minutes listened and most
+    played genres. The data is saved in the database and rendered on the summary page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the summary page with the wrap data if successful.
+        HttpResponseRedirect: Redirects to the login page if no token is available.
+        HttpResponseRedirect: Redirects to the homepage if the request is not a POST request.
+    """
+    token = request.session.get('spotify_token')
+    if request.method == "POST":
+        term = request.POST.get('term', 'long_term')  # Default to "long_term" if no term is provided
+
+        if token:
+            # Retrieve data for the selected term
+            top_tracks = get_user_top_tracks(token, time_range=term)
+            top_artists = get_user_top_artists(token, time_range=term)
+            recently_played = get_recently_played(token)
+
+            # Get the most played song for the selected term
+            most_played_track = (
+                top_tracks['items'][0] if top_tracks and 'items' in top_tracks and top_tracks['items'] else None
+            )
+
+            # Calculate total minutes listened from recently played tracks
+            total_minutes = 0
+            if recently_played:
+                total_duration_ms = sum(item['track']['duration_ms'] for item in recently_played.get('items', []))
+                total_minutes = total_duration_ms / 60000  # Convert milliseconds to minutes
+
+            # Check if data is present
+            if top_tracks and top_artists and recently_played and most_played_track:
+                genres = [artist.get('genres', []) for artist in top_artists.get('items', [])]
+                unique_genres = list(set(genre for sublist in genres for genre in sublist))
+
+                # Limit to 8 genres
+                limited_genres = unique_genres[:8]
+
+                # Create the wrap data dictionary
+                wrap_data = {
+                    'top_tracks': top_tracks.get('items', []),
+                    'top_artists': top_artists.get('items', []),
+                    'genres': limited_genres,
+                    'recently_played': recently_played.get('items', []),
+                    'most_played_track': most_played_track,
+                    'total_minutes': total_minutes,
+                    'term': term.replace('_term', '').capitalize(),  # Pass the selected term for the template
+                }
+
+                # Save wrap to the database
+                SpotifyWrap.objects.create(
+                    user=request.user,
+                    title=f"My Spotify Wrap ({term.replace('_term', '').capitalize()})",
+                    term=term.replace('_term', ''),  # Save as 'short', 'medium', or 'long'
+                    data=wrap_data
+                )
+
+                # Render the summary template with the wrap data
+                return render(request, 'core/summaryLIGHT.html', wrap_data)
+
+            else:
+                # Render an error page if some data is missing
+                return render(request, 'core/error.html', {
+                    'error': "Failed to retrieve all Spotify data for the selected term. Please try again later."
+                })
+        else:
+            # Redirect to login if no token is available
+            return redirect('spotify_login')
+
+    # If not a POST request, redirect to the homepage
+    return redirect('index')
+
 
 
 from django.shortcuts import render
@@ -611,6 +691,7 @@ def play_top_tracks(request):
             })
     else:
         return redirect(spotify_auth_url(request))
+    
 
 
 def play_top_tracksLIGHT(request):
