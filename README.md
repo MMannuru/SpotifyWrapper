@@ -103,5 +103,8 @@ Also add groq api key (very easy to get)
 
 ### **Jira Page** 
 https://chilukam04.atlassian.net/jira/software/projects/C2P2/summary
+---
+## **Github Repo**
+https://github.com/MMannuru/SpotifyWrapper.git
 
 
