@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Spotify Wraps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+       *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            color: black;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Background Shapes */
+        .background-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #FF007A, #00D4FF, #B3FF00);
+            opacity: 0.3;
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .shape1 { top: 20%; left: 10%; animation: floatHorizontal1 5s infinite ease-in-out alternate, floatVertical1 5s infinite ease-in-out alternate; }
+        .shape2 { top: 60%; right: 15%; animation: floatHorizontal2 5s infinite ease-in-out alternate, floatVertical2 5s infinite ease-in-out alternate; }
+        .shape3 { bottom: 10%; left: 30%; animation: floatHorizontal3 5s infinite ease-in-out alternate, floatVertical3 5s infinite ease-in-out alternate; }
+        .shape4 { top: 40%; left: 70%; animation: floatHorizontal4 5s infinite ease-in-out alternate, floatVertical4 5s infinite ease-in-out alternate; }
+
+        @keyframes floatHorizontal1 { 0% { transform: translateX(0); } 100% { transform: translateX(120px); } }
+        @keyframes floatHorizontal2 { 0% { transform: translateX(0); } 100% { transform: translateX(150px); } }
+        @keyframes floatHorizontal3 { 0% { transform: translateX(0); } 100% { transform: translateX(180px); } }
+        @keyframes floatHorizontal4 { 0% { transform: translateX(0); } 100% { transform: translateX(140px); } }
+        @keyframes floatVertical1 { 0% { transform: translateY(0); } 100% { transform: translateY(-30px); } }
+        @keyframes floatVertical2 { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
+        @keyframes floatVertical3 { 0% { transform: translateY(0); } 100% { transform: translateY(-25px); } }
+        @keyframes floatVertical4 { 0% { transform: translateY(0); } 100% { transform: translateY(-35px); } }
+
+        /* Header Styling */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #1db954;
+            border-color: #1db954;
+        }
+
+        /* Main Content */
+        .wraps-container {
+            margin-top: 120px;
+            padding: 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .wraps-container h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00D4FF, #FF007A, #1db954);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s infinite linear;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        ul.wraps-list {
+            list-style: none;
+            margin: 20px auto;
+            padding: 0;
+            max-width: 800px;
+        }
+
+        ul.wraps-list li {
+            margin: 10px 0;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul.wraps-list li a {
+            color: #1db954;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        ul.wraps-list li a:hover {
+            color: #ffffff;
+        }
+
+        ul.wraps-list li button {
+            background-color: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            border-radius: 5px;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: normal;
+        }
+
+        ul.wraps-list li button:hover {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .wraps-container .empty {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 15px;
+            font-weight: normal;
+        }
+
+        .share-buttons a {
+            color: #1db954;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .share-buttons a:hover {
+            color: #ffffff;
+        }    
+    </style>
+</head>
+<body>
+    {% load i18n %}
+    <!-- Background Shapes -->
+    <div class="background-shape shape1"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+    <div class="background-shape shape4"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo">
+            <h1>{% trans "Spotify Wrapped" %}</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'play_top_tracksLIGHT' %}">{% trans "Top Tracks" %}</a></li>
+                <li><a href="{% url 'describe_musicLIGHT' %}">{% trans "My Taste" %}</a></li>
+                <li><a href="{% url 'indexLIGHT' %}">Home</a></li>
+                <li><a href="{% url 'contact_developersLIGHT' %}">{% trans "Contact Us" %}</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <div class="wraps-container">
+        <h2>{% trans "Your Spotify Wraps" %}</h2>
+        <ul class="wraps-list">
+            {% for wrap in wraps %}
+            <li data-title="{{ wrap.title }}"
+                data-created-at="{{ wrap.created_at|date:"Y-m-d H:i" }}"
+                data-top-tracks="{% for track in wrap.data.top_tracks %}{{ track.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                data-top-artists="{% for artist in wrap.data.top_artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                data-genres="{% for genre in wrap.data.genres %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                data-recently-played="{% for track in wrap.data.recently_played|slice:":6" %}{{ track.track.name }} (Played at: {{ track.played_at }}){% if not forloop.last %}, {% endif %}{% endfor %}"
+                data-most-played-track="{{ wrap.data.most_played_track.name }}"
+                data-total-minutes="{{ wrap.data.total_minutes }}">
+                <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
+
+                <!-- Share Links -->
+                <div class="share-buttons">
+                    <span>{% trans "Share:" %}</span>
+                    <a href="#" onclick="copyAndOpen(this, 'instagram')">Instagram</a> |
+                    <a href="#" onclick="copyAndOpen(this, 'linkedin')">LinkedIn</a> |
+                    <a href="#" onclick="copyAndOpen(this, 'twitter')">Twitter (X)</a>
+                </div>
+
+                <!-- Delete Form -->
+                <form method="POST" action="{% url 'delete_wrap' wrap.id %}" style="display: inline; margin-left: 20px;">
+                    {% csrf_token %}
+                    <button type="submit">{% trans "Delete" %}</button>
+                </form>
+            </li>
+            {% empty %}
+            <li class="empty">{% trans "No Spotify wraps found." %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function copyAndOpen(element, socialMedia) {
+            const wrapElement = element.closest('li');
+            const title = wrapElement.getAttribute('data-title');
+            const createdAt = wrapElement.getAttribute('data-created-at');
+            const topTracks = wrapElement.getAttribute('data-top-tracks');
+            const topArtists = wrapElement.getAttribute('data-top-artists');
+            const genres = wrapElement.getAttribute('data-genres');
+            const recentlyPlayed = wrapElement.getAttribute('data-recently-played');
+            const mostPlayedTrack = wrapElement.getAttribute('data-most-played-track');
+            const totalMinutes = wrapElement.getAttribute('data-total-minutes');
+
+            const textToCopy = `
+                Spotify Wrap: ${title}
+
+                Created At: ${createdAt}
+
+                Total Listening Time: ${totalMinutes}
+
+                Top Tracks: ${topTracks}
+
+                Top Artists: ${topArtists}
+
+                Genres: ${genres}
+
+                Recently Played: ${recentlyPlayed}
+
+                Most Played Track: ${mostPlayedTrack}
+            `;
+
+            // Copy the text to the clipboard
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy.trim();
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Show confirmation in a custom UI box and open social media on confirmation
+            showConfirmationDialog("{% trans 'Wrap copied to clipboard! Press OK to post.' %}", socialMedia, textToCopy);
+        }
+
+        function showConfirmationDialog(message, socialMedia, textToCopy) {
+            // Create a custom confirmation UI
+            const dialog = document.createElement('div');
+            dialog.style.position = 'fixed';
+            dialog.style.top = '50%';
+            dialog.style.left = '50%';
+            dialog.style.transform = 'translate(-50%, -50%)';
+            dialog.style.backgroundColor = '#333';
+            dialog.style.color = '#fff';
+            dialog.style.padding = '20px';
+            dialog.style.borderRadius = '10px';
+            dialog.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
+            dialog.style.zIndex = '1000';
+            dialog.style.textAlign = 'center';
+
+            const messageElement = document.createElement('p');
+            messageElement.innerText = message;
+            dialog.appendChild(messageElement);
+
+            const button = document.createElement('button');
+            button.innerText = 'OK';
+            button.style.marginTop = '10px';
+            button.style.padding = '10px 20px';
+            button.style.backgroundColor = '#1db954';
+            button.style.color = '#fff';
+            button.style.border = 'none';
+            button.style.borderRadius = '5px';
+            button.style.cursor = 'pointer';
+            button.onclick = function () {
+                document.body.removeChild(dialog);
+                
+                // Open the social media link in a new window
+                let url = '';
+                if (socialMedia === 'instagram') {
+                    url = 'https://www.instagram.com';
+                } else if (socialMedia === 'linkedin') {
+                    url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href);
+                } else if (socialMedia === 'twitter') {
+                    url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(textToCopy);
+                }
+                window.open(url, '_blank');
+            };
+            dialog.appendChild(button);
+
+            document.body.appendChild(dialog);
+        }
+    </script>
+</body>
+</html>

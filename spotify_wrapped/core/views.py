@@ -921,6 +921,26 @@ def list_wraps(request):
 from django.shortcuts import get_object_or_404
 
 @login_required
+def list_wrapsLIGHT(request):
+    """
+    Fetches and displays a list of all SpotifyWrap entries for the current user.
+
+    This function retrieves all SpotifyWrap objects associated with the logged-in user,
+    ordered by creation date in descending order, and renders them on the `list_wraps.html` template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the `list_wraps.html` template with the list of wraps.
+    """
+    wraps = SpotifyWrap.objects.filter(user=request.user).order_by('-created_at')  # Fetch wraps for the current user
+    return render(request, 'core/list_wrapsLIGHT.html', {'wraps': wraps})
+
+from django.shortcuts import get_object_or_404
+
+
+@login_required
 def view_wrap(request, wrap_id):
     """
     Fetches and displays details of a specific SpotifyWrap entry for the current user.

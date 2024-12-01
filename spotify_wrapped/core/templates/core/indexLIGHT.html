@@ -444,7 +444,7 @@
                 {% endif %}
                 <li><a href="{% url 'describe_musicLIGHT' %}">{% trans "Describe My Taste" %}</a></li>
                 {% if user.is_authenticated and request.session.spotify_token %}
-                    <li><a href="{% url 'list_wraps' %}">{% trans "View Wraps" %}</a></li>
+                    <li><a href="{% url 'list_wrapsLIGHT' %}">{% trans "View Wraps" %}</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
