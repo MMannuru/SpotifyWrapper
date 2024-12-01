@@ -100,11 +100,13 @@ Also add groq api key (very easy to get)
 6. Access the application:
   http://127.0.0.1:8000
 ---
-
+### **Team Website**
+https://sites.google.com/view/team45project1/home
+---
 ### **Jira Page** 
 https://chilukam04.atlassian.net/jira/software/projects/C2P2/summary
 ---
 ## **Github Repo**
 https://github.com/MMannuru/SpotifyWrapper.git
-
+---
 
