@@ -66,9 +66,6 @@ The goal of this project was to design and develop a Spotify listening statistic
 ### **Hosted Site Link**
 https://spotifywrapper.onrender.com/
 ---
-
-### **Steps to Run Locally**
-
 ## **Setup and Installation**
 ### **Prerequisites**
 - Python 3.10 or higher
@@ -76,7 +73,7 @@ https://spotifywrapper.onrender.com/
 - Django installed (`pip install django`)
 - Access to the LLM API (if implementing the description feature)
 ---
-
+### **Steps to Run Locally**
 1. Clone the repository:
    ```bash
    git clone <repository-url>
