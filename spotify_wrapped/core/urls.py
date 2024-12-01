@@ -27,6 +27,7 @@ urlpatterns = [
     path('wraps/', views.list_wraps, name='list_wraps'),  # List all wraps
     path('wrapsLIGHT/', views.list_wrapsLIGHT, name='list_wrapsLIGHT'),
     path('wraps/<int:wrap_id>/', views.view_wrap, name='view_wrap'),  # View specific wrap
+    path('wrapsLIGHT/<int:wrap_id>/', views.view_wrapLIGHT, name='view_wrapLIGHT'),
     path('wraps/<int:wrap_id>/delete/', views.delete_wrap, name='delete_wrap'),
     path('delete-account/', views.delete_account, name='delete_account'),
 ]

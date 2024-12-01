@@ -964,6 +964,30 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 @login_required
+def view_wrapLIGHT(request, wrap_id):
+    """
+    Fetches and displays details of a specific SpotifyWrap entry for the current user.
+
+    This function retrieves a specific SpotifyWrap object by its ID, ensuring that the
+    wrap belongs to the logged-in user. The details are rendered on the `view_wrap.html` template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        wrap_id (int): The ID of the SpotifyWrap object to be retrieved.
+
+    Returns:
+        HttpResponse: Renders the `view_wrapLIGHT.html` template with the wrap details.
+        Http404: If the SpotifyWrap object is not found or does not belong to the user.
+    """
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)  # Ensure the wrap belongs to the user
+    return render(request, 'core/view_wrapLIGHT.html', {'wrap': wrap})
+
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+
+@login_required
 def delete_wrap(request, wrap_id):
     """
     Deletes a specific SpotifyWrap entry for the current user.
