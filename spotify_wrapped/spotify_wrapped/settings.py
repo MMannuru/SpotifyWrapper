@@ -52,7 +52,7 @@ def get_local_ip():
 
 # Get the current IP and set ALLOWED_HOSTS
 current_ip = get_local_ip()
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com','128.61.7.7']
 CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com"]
 #ALLOWED_HOSTS = ['*']
 
@@ -181,7 +181,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
-# REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
+REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
 #print(REDIRECT_URI)
 
 

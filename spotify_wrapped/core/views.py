@@ -18,6 +18,13 @@ from .models import Invite
 from .models import SpotifyWrap
 from django.contrib.auth import login
 
+from dotenv import load_dotenv
+import os
+
+# Load .env file
+load_dotenv()
+
+
 
 def index(request):
     """
@@ -194,6 +201,8 @@ def describe_musicLIGHT(request):
 CLIENT_ID = '85fd30dd498c4fbeac1e658423614b52'
 
 CLIENT_SECRET = '0626ce38d1ad488fa8ae081f31d07b07'
+
+
 #REDIRECT_URI = 'http://localhost:8000/callback/'  # Make sure this matches what you set in the Spotify dashboard
 
 #REDIRECT_URI = "http://128.61.9.117:8000/callback/"
@@ -222,8 +231,8 @@ def spotify_auth_url(request):
     params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
-        #"redirect_uri": redirect_uri,
-        "redirect_uri": 'https://spotifywrapper.onrender.com/callback/',
+        "redirect_uri": redirect_uri,
+        #"redirect_uri": 'https://spotifywrapper.onrender.com/callback/',
         "scope": SCOPE,
         #"show_dialog": "true",  # Force Spotify to show the login dialog
     }
@@ -274,9 +283,9 @@ def get_redirect_uri(request):
     Returns:
         str: The dynamically generated redirect URI.
     """
-    #host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
-    #return f"http://{host}/callback/"
-    return f"https://spotifywrapper.onrender.com/callback/"
+    host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
+    return f"http://{host}/callback/"
+    #return f"https://spotifywrapper.onrender.com/callback/"
 
 
 

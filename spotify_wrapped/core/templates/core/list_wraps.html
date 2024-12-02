@@ -192,7 +192,114 @@
 
         .share-buttons a:hover {
             color: #ffffff;
-        }    
+        }
+        
+/* For screens smaller than 768px (mobile devices) */
+@media (max-width: 768px) {
+        /* Header adjustments */
+        header {
+            flex-direction: column; /* Stack logo and navigation */
+            align-items: center;
+            padding: 0.01rem;
+            font-size: 0.2rem;
+        }
+
+        header h1 {
+            font-size: 1.0rem;
+            text-align: center;
+        }
+
+        nav ul {
+            flex-direction: row; /* Align navigation links horizontally */
+            justify-content: center;
+            gap: px;
+            margin-top: 10px;
+        }
+
+        nav ul li a {
+            font-size: 0.6rem; /* Adjust font size */
+            padding: 0.5rem;
+        }
+
+        /* Main content adjustments */
+        .wraps-container h2 {
+            font-size: 2rem; /* Adjust the font size */
+            margin-bottom: 10px;
+        }
+
+        ul.wraps-list {
+            padding: 0 10px; /* Add horizontal padding for spacing */
+        }
+
+        ul.wraps-list li {
+            flex-direction: column; /* Stack content inside each list item */
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 0.6rem; /* Adjust font size for wrap titles */
+        }
+
+        ul.wraps-list li a {
+            font-size: 0.8rem; /* Adjust font size for wrap titles */
+            margin-bottom: 4px; /* Add spacing */
+        }
+
+        /* Share buttons: Align horizontally */
+        .share-buttons {
+            flex-direction: row; /* Arrange share links in a row */
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .share-buttons a {
+            font-size: 1rem; /* Adjust font size */
+            margin: 0 5px;
+        }
+
+        /* Delete button: Align with share buttons */
+        ul.wraps-list li button {
+            margin-top: 10px;
+            font-size: 1rem;
+            padding: 5px 15px;
+            align-self: center; /* Center-align the button */
+        }
+    }
+
+    /* For extra small devices (max-width: 480px) */
+    @media (max-width: 480px) {
+        header h1 {
+            font-size: 1.2rem; /* Further reduce font size */
+        }
+
+        nav ul {
+            flex-direction: column; /* Stack navigation links vertically */
+            gap: 10px;
+        }
+
+        .wraps-container h2 {
+            font-size: 1.5rem; /* Reduce the size of the wraps header */
+        }
+
+        ul.wraps-list li {
+            padding: 10px; /* Adjust padding */
+        }
+
+        .share-buttons {
+            flex-direction: column; /* Stack share buttons vertically */
+            gap: 5px;
+        }
+
+        .share-buttons a {
+            font-size: 0.9rem; /* Reduce font size */
+        }
+
+        ul.wraps-list li button {
+            font-size: 0.9rem; /* Reduce button font size */
+        }
+    }
+
     </style>
 </head>
 <body>
