@@ -208,4 +208,3 @@ else:
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 LOGIN_URL = 'login'  # This points to the 'login' URL you defined for Spotify login
-
