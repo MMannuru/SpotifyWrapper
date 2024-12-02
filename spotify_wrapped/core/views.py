@@ -234,8 +234,8 @@ def spotify_auth_url(request):
     params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
-        "redirect_uri": redirect_uri,
-        #"redirect_uri": 'https://spotifywrapper.onrender.com/callback/',
+        #"redirect_uri": redirect_uri,
+        "redirect_uri": 'https://spotifywrapper.onrender.com/callback/',
         "scope": SCOPE,
         #"show_dialog": "true",  # Force Spotify to show the login dialog
     }
@@ -286,9 +286,9 @@ def get_redirect_uri(request):
     Returns:
         str: The dynamically generated redirect URI.
     """
-    host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
-    return f"http://{host}/callback/"
-    #return f"https://spotifywrapper.onrender.com/callback/"
+    #host = request.get_host()  # Get the host, e.g., '128.61.9.117:8000'
+    #return f"http://{host}/callback/"
+    return f"https://spotifywrapper.onrender.com/callback/"
 
 
 
