@@ -13,6 +13,17 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
+import environ
+
+# Initialize environment variables
+env = environ.Env()
+
+# Read the .env file
+environ.Env.read_env()  # By default, it looks for a .env file in the same directory as manage.py
+
+# Get the GROQ_API_KEY
+GROQ_API_KEY = env('GROQ_API_KEY', default=None)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,8 +52,8 @@ def get_local_ip():
 
 # Get the current IP and set ALLOWED_HOSTS
 current_ip = get_local_ip()
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com']
-CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com", '10.0.0.45']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', current_ip, 'spotifywrapper.onrender.com', '10.0.0.45']
+CSRF_TRUSTED_ORIGINS = ["https://spotifywrapper.onrender.com"]
 #ALLOWED_HOSTS = ['*']
 
 
