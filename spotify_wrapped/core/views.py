@@ -197,10 +197,13 @@ def describe_musicLIGHT(request):
 
     return render(request, "core/describe_musicLIGHT.html")
 
-# Your Spotify app credentials
-CLIENT_ID = '85fd30dd498c4fbeac1e658423614b52'
+from dotenv import load_dotenv
+import os
 
-CLIENT_SECRET = '0626ce38d1ad488fa8ae081f31d07b07'
+load_dotenv()
+
+CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 
 #REDIRECT_URI = 'http://localhost:8000/callback/'  # Make sure this matches what you set in the Spotify dashboard
@@ -700,7 +703,7 @@ def play_top_tracks(request):
             })
     else:
         return redirect(spotify_auth_url(request))
-    
+
 
 
 def play_top_tracksLIGHT(request):
