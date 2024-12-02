@@ -63,14 +63,16 @@ The goal of this project was to design and develop a Spotify listening statistic
 - **Other Tools**: Django's Email Backend for debugging contact forms.
 
 ---
-
+### **Hosted Site Link**
+https://spotifywrapper.onrender.com/
+---
 ## **Setup and Installation**
 ### **Prerequisites**
 - Python 3.10 or higher
 - Spotify Developer Account
 - Django installed (`pip install django`)
 - Access to the LLM API (if implementing the description feature)
-
+---
 ### **Steps to Run Locally**
 1. Clone the repository:
    ```bash
@@ -97,5 +99,14 @@ Also add groq api key (very easy to get)
 
 6. Access the application:
   http://127.0.0.1:8000
-
+---
+### **Team Website**
+https://sites.google.com/view/team45project1/home
+---
+### **Jira Page** 
+https://chilukam04.atlassian.net/jira/software/projects/C2P2/summary
+---
+## **Github Repo**
+https://github.com/MMannuru/SpotifyWrapper.git
+---
 
