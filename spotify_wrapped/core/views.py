@@ -370,8 +370,6 @@ def spotify_callback(request):
     return redirect('index')  # Ensure 'index' matches your home page URL
 
 
-
-
 import requests
 
 def get_user_top_tracks(token):
@@ -770,7 +768,7 @@ def contact_developers(request):
                 f"Feedback from {name}",
                 message,
                 email,
-                ['dummyemail@gmail.com']
+                ['mokshithm15@gmail.com']
             )
             email_message.send()
             return redirect('thank_you')  # Redirect to a thank you page after submission

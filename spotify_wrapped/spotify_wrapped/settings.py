@@ -138,7 +138,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+ # App-specific password or regular email password
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -189,8 +201,8 @@ if os.getenv("DJANGO_ENV") == "production":
     REDIRECT_URI = 'https://spotifywrapper.onrender.com/callback/'
 else:
     REDIRECT_URI = 'http://128.61.12.28:8000/callback/'
-    
-    
+
+
 
 
 load_dotenv()
